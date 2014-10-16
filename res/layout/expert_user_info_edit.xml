@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginTop="3.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:background="@drawable/info_all_bg" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="4.0dip">
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp115" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/name" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp116" android:singleLine="true" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp99" />
+                    <EditText android:enabled="false" android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/phone" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp100" android:digits="0123456789xX" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp103" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/idcard" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp104" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp117" />
+                    <RadioGroup android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        <RadioButton android:id="@id/male" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sex_male" />
+                        <RadioButton android:id="@id/female" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sex_female" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+            <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/edit_commit" android:background="@drawable/btn_expert" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dip" android:text="@string/layout_temp129" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

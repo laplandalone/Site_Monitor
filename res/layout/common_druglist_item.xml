@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:layout_weight="1.0">
+        <TextView android:gravity="left|center" android:id="@android:id/text1" android:paddingLeft="0.0dip" android:text="@string/list_more" style="@style/list_item_primary" />
+        <LinearLayout android:layout_gravity="left" android:id="@id/secondary" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="20.0dip">
+            <TextView android:gravity="top|left|center" android:id="@android:id/text2" android:layout_weight="7.8" style="@style/list_item_secondary" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:gravity="right" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/logo" android:visibility="gone" android:layout_width="30.0dip" android:layout_height="25.0dip" android:layout_marginTop="5.0dip" android:src="@drawable/hospital_register_logo" android:scaleType="fitXY" />
+        <TextView android:gravity="center_vertical" android:id="@id/textDistance" android:visibility="gone" android:layout_width="wrap_content" android:layout_marginBottom="5.0dip" android:layout_weight="0.15" style="@style/list_item_secondary" />
+    </LinearLayout>
+    <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:src="@drawable/arrow_list_item" />
+</LinearLayout>

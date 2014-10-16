@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/bg_dialog_background" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:id="@id/photo_take" android:background="@drawable/btn_dialog_photo_local__selector" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/health_data_disease_type_1" />
+        <Button android:id="@id/photo_local" android:background="@drawable/btn_dialog_photo_local__selector" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/health_data_disease_type_2" />
+    </LinearLayout>
+    <Button android:id="@id/cancel" android:background="@drawable/btn_dialog_photo_local__selector" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dip" android:text="@string/health_data_disease_type_3" />
+</LinearLayout>

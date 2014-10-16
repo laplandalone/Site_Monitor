@@ -1,0 +1,41 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+public class CertificateInfo implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Expose
+	private String stsWords;
+	@Expose
+	private String stsId;
+	@Expose
+	private List<CertificateInfo> tableStatusList;
+	public String getStsWords() {
+		return stsWords;
+	}
+	public void setStsWords(String stsWords) {
+		this.stsWords = stsWords;
+	}
+	public String getStsId() {
+		return stsId;
+	}
+	public void setStsId(String stsId) {
+		this.stsId = stsId;
+	}
+	public List<CertificateInfo> getTableStatusList() {
+		return tableStatusList;
+	}
+	public void setTableStatusList(List<CertificateInfo> tableStatusList) {
+		this.tableStatusList = tableStatusList;
+	}
+	
+	
+	
+
+}

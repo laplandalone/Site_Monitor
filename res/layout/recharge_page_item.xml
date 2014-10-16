@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/ly1" android:background="@drawable/list_view_selector" android:paddingLeft="13.0dip" android:paddingRight="13.0dip" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/check_box" android:background="@drawable/btn_recharge_sex" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/u_number" android:layout_width="130.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp454" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/u_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="￥5.00" android:layout_weight="0.1" />
+</LinearLayout>

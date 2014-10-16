@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center" android:background="@drawable/btn_style_popup_bg" android:paddingLeft="20.0dip" android:paddingTop="10.0dip" android:paddingRight="20.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="14.0sp" android:textColor="@color/white" android:gravity="center" android:id="@id/popup_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="10.0dip" android:text="@string/layout_temp495" />
+    <Button android:id="@id/hand_login" android:background="@drawable/btn_style_popup" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp496" android:layout_below="@id/popup_title" />
+    <Button android:id="@id/sms_login" android:background="@drawable/btn_style_popup" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/layout_temp497" android:layout_below="@id/hand_login" />
+    <Button android:textColor="@color/white" android:id="@id/cancel" android:background="@drawable/btn_style_popup_cancel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/layout_temp498" android:layout_below="@id/sms_login" />
+</RelativeLayout>

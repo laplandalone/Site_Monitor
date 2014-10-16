@@ -1,0 +1,19 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+public class ReturnMsg {
+		@Expose
+		private List<CustInfo> custList;
+
+		public List<CustInfo> getCustList() {
+			return custList;
+		}
+
+		public void setCustList(List<CustInfo> custList) {
+			this.custList = custList;
+		}
+		
+	}

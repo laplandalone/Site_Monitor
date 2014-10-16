@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <SurfaceView android:id="@id/preview_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </FrameLayout>
+    <RelativeLayout android:background="#ff000000" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <RelativeLayout android:id="@id/relativeLayoutTitleLayout" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="scan" />
+            <Button android:id="@id/buttonGoBack" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="abort" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout android:id="@id/relativeLayoutResult" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ToggleButton android:id="@id/buttonLaser" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp43" android:layout_alignParentTop="true" />
+        <TextView android:textSize="18.0px" android:gravity="center" android:autoLink="all" android:id="@id/textViewResult" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp44" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/basic_text_size" android:textColor="@color/register_time_select" android:id="@id/check_item_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="10.0dip" android:layout_marginBottom="5.0dip" />
+    <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/user_info_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip">
+        <EditText android:textSize="@dimen/larger_text_size" android:gravity="left" android:layout_gravity="center" android:id="@id/check_item_value" android:background="@null" android:focusable="true" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:hint="@string/check_record_title_1" android:maxLines="1" android:layout_weight="5.0" android:inputType="numberDecimal" />
+        <TextView android:textSize="@dimen/larger_text_size" android:ellipsize="end" android:gravity="center" android:layout_gravity="center" android:id="@id/check_item_model" android:layout_width="0.0dip" android:layout_height="wrap_content" android:maxLines="1" android:drawableRight="@drawable/ico_point" android:layout_weight="2.0" />
+    </LinearLayout>
+</LinearLayout>

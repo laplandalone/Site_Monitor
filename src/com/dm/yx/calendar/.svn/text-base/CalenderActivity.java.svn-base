@@ -1,0 +1,160 @@
+package com.hbgz.realnameregestersys.calendar;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.hbgz.realnameregestersys.BaseActivity;
+import com.hbgz.realnameregestersys.R;
+import com.hbgz.realnameregestersys.calendar.XListView.IXListViewListener;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
+import android.content.Intent;
+
+public class CalenderActivity extends BaseActivity implements IXListViewListener{
+
+	private XListView listView;
+	private CalAdapter calAdapter;
+	private TextView titleTxt;
+	private Handler mHandler;
+	private int endLine = 0;
+	private int startLine = -2;
+	private final int MAX_SIZE = 12*2;
+	private final int LOAD_MONTH_COUNT = -3;
+	private Intent mIntent;
+	
+	public static int CHECK_NUM = 0;
+	public static int sYear = 0;
+	public static int sMonth = 0;
+	public static int sDay = 0;
+	public static int eYear = 0;
+	public static int eMonth = 0;
+	public static int eDay = 0;
+	private ArrayList<Integer> list = new ArrayList<Integer>();
+	private String toast = "";
+	private TextView dateTxt;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);  
+		setContentView(R.layout.calendar_main);
+		mIntent = this.getIntent();
+		init();
+	}
+
+	private void makeData(int size){
+		/*限制listview的长度*/
+		if (size != 0) {
+			if ((endLine - startLine) == (MAX_SIZE - 1)) {
+				toast = "无法查看更多";
+			}else {
+				startLine = startLine + LOAD_MONTH_COUNT;
+				toast = "";
+			}
+		}
+		for (int i = startLine; i <= endLine; i++) {
+			list.add(i);
+		}
+	}
+	
+	private void init(){
+		listView = (XListView) findViewById(R.id.calendar_listview);
+		titleTxt = (TextView) findViewById(R.id.top_bar_title_txt);
+		titleTxt.setText("日期选择");
+		listView.setPullLoadEnable(false);
+		makeData(0);
+		dateTxt = (TextView) findViewById(R.id.main_date);
+		calAdapter = new CalAdapter(this , list, CalenderActivity.this, mIntent, dateTxt);
+		listView.setAdapter(calAdapter);
+		listView.setXListViewListener(this);
+		mHandler = new Handler();
+		if (sYear != 0 && eYear != 0) {
+			dateTxt.setText("开始日期：" + sYear + "-" + sMonth + "-" + sDay + "  结束日期：" + eYear + "-" + eMonth + "-" + eDay);
+			dateTxt.setVisibility(View.VISIBLE);
+		}else if (sYear != 0 && eYear == 0) {
+			dateTxt.setText("开始日期：" + sYear + "-" + sMonth + "-" + sDay);
+			dateTxt.setVisibility(View.VISIBLE);
+		}else {
+			dateTxt.setVisibility(View.GONE);
+		}
+		
+	}
+	
+	private void onLoad() {
+		listView.stopRefresh();
+		listView.stopLoadMore();
+		listView.setRefreshTime(toast);
+	}
+	/*下拉*/
+	public void onRefresh() {
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (list != null) {
+					list.clear();
+				}
+				makeData(LOAD_MONTH_COUNT);
+				calAdapter.notifyDataSetChanged();
+				onLoad();
+			}
+		}, 500);
+	}
+	/*上拉*/
+	public void onLoadMore() {
+		listView.stopLoadMore();
+	}
+	
+	public void finish(View v) {
+		Log.d("hbgz", "onBackPressed ");
+		if (sYear != 0 && eYear == 0) {
+			mIntent.putExtra("syear", CalenderActivity.sYear);
+			mIntent.putExtra("smonth", CalenderActivity.sMonth);
+			mIntent.putExtra("sday", CalenderActivity.sDay);
+			mIntent.putExtra("eyear", CalenderActivity.eYear);
+			mIntent.putExtra("emonth", CalenderActivity.eMonth);
+			mIntent.putExtra("eday", CalenderActivity.eDay);
+			setResult(1, mIntent);
+		}
+		finish();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if (sYear != 0 && eYear == 0) {
+			mIntent.putExtra("syear", CalenderActivity.sYear);
+			mIntent.putExtra("smonth", CalenderActivity.sMonth);
+			mIntent.putExtra("sday", CalenderActivity.sDay);
+			mIntent.putExtra("eyear", CalenderActivity.eYear);
+			mIntent.putExtra("emonth", CalenderActivity.eMonth);
+			mIntent.putExtra("eday", CalenderActivity.eDay);
+			setResult(1, mIntent);
+		}
+		super.onBackPressed();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		CHECK_NUM = 0;
+
+	}
+
+	@Override
+	protected void initView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void initValue() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

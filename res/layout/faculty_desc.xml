@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/hospital_background_new" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <com.dm.yx.view.PageScrollView android:id="@id/pageScroll" android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1" android:layout_below="@id/front_bar">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+              <com.dm.yx.adapter.ImgViewPager
+			        android:id="@+id/imgViewPager"
+			        android:layout_width="fill_parent"
+			        android:layout_height="155dp" />
+                <Button android:layout_gravity="left|center" android:id="@id/left" android:background="@drawable/btn_switch_left" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <Button android:layout_gravity="right|center" android:id="@id/right" android:background="@drawable/btn_switch_right" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </FrameLayout>
+            <TextView android:textSize="18.0sp" android:id="@id/content" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="13.0dip" android:text="@string/layout_temp131" />
+        </LinearLayout>
+    </com.dm.yx.view.PageScrollView>
+    <LinearLayout android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="50.0dip" android:layout_marginTop="18.0dip">
+        <Button   android:id="@id/all_doctor" android:background="@drawable/online_doctor_all" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginBottom="5.0dip"  android:layout_weight="1.0" />
+        <Button  android:id="@id/online_doctor" android:layout_marginLeft="10.0dip" android:background="@drawable/online_doctor_ask_btn" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginBottom="5.0dip"  android:layout_weight="1.0"/>
+    </LinearLayout>
+</LinearLayout>

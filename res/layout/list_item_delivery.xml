@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center_vertical" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:baselineAligned="false">
+        <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:layout_weight="1.0">
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="15.0sp" android:textColor="@color/content_light" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/report_send_item_1" />
+                <TextView android:textSize="15.0sp" android:ellipsize="end" android:id="@id/delive_no" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dip">
+                <TextView android:textSize="15.0sp" android:textColor="@color/content_light" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/report_send_item_2" />
+                <TextView android:textSize="15.0sp" android:ellipsize="end" android:id="@id/delive_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" />
+            </LinearLayout>
+        </LinearLayout>
+        <FrameLayout android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textSize="13.0sp" android:id="@id/deliver_state" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:textSize="15.0sp" android:id="@id/deliver_state_btn" android:background="@drawable/btn_report_send_receive" android:focusable="false" android:visibility="gone" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

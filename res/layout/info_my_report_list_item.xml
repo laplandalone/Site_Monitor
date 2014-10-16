@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/report_state" android:layout_width="17.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="6.0dip" android:src="@drawable/arrow_list_item" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/report_l" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toLeftOf="@id/report_state" android:layout_centerVertical="true">
+        <TextView android:textSize="12.0sp" android:textColor="#ff000000" android:id="@id/report_type" android:visibility="gone" android:layout_marginLeft="10.0dip" style="@style/list_item_primary" />
+        <TextView android:textSize="12.0sp" android:textColor="@color/bg_gray" android:id="@id/report_date" android:layout_marginLeft="10.0dip" style="@style/list_item_primary" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_toLeftOf="@id/report_l" android:layout_centerVertical="true">
+        <ImageView android:id="@id/msg_icon" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_msg_bg" />
+        <TextView android:textSize="18.0sp" android:textColor="#ff000000" android:gravity="center_vertical" android:id="@id/report_value" android:paddingRight="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="2.0dip" />
+    </LinearLayout>
+</RelativeLayout>

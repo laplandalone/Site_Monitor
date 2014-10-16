@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <include android:id="@id/step_layout3" layout="@layout/common_step_bottom3" />
+    <include android:visibility="gone" layout="@layout/common_search" />
+    <ProgressBar android:id="@id/loadProgressBar" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:indeterminateDrawable="@drawable/myprogressbar" android:layout_centerInParent="true" />
+    <ListView android:id="@+id/comlist" android:layout_width="fill_parent" android:layout_height="fill_parent" android:divider="@null" />
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:gravity="center" android:layout_marginLeft="10.0dip" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.5">
+
+        <TextView
+            android:id="@+id/text1"
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          
+            android:textColor="@color/TextColorGreen" android:text="2020-20-20"/>
+         <TextView
+            android:id="@+id/text2"
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          
+            android:textColor="@color/TextColorGreen" android:text="星期一"/>
+          
+    </LinearLayout>
+    <TextView android:textColor="@color/TextColorGreen" android:gravity="center" android:id="@+id/text4" android:paddingLeft="5.0dip" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
+    <LinearLayout android:orientation="vertical"  android:gravity="center" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="2.0">
+           <TextView android:textColor="@color/TextColorGreen" android:gravity="center" android:id="@+id/text3" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </LinearLayout>
+      <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"   android:src="@drawable/arrow_list_item" />
+</LinearLayout>

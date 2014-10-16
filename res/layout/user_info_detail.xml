@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginTop="3.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="horizontal" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="4.0dip">
+                <TextView android:textSize="14.0sp" android:textColor="#ff168a92" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp556" />
+                <TextView android:textSize="14.0sp" android:textColor="@color/red" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:text="@string/layout_temp557" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:background="@drawable/info_all_bg" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="4.0dip">
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp558" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/login_name" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp559" android:singleLine="true" android:editable="false" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp560" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/id_card" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp561" android:digits="0123456789xX" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp562" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/real_name" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp563" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp564" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/address" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp565" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp566" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/tel" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp567" android:layout_weight="0.1" android:inputType="numberDecimal" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp568" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/allergic_history" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp569" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp570" />
+                    <Spinner android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/medical_record_type" android:background="@drawable/spinner_selector" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="true" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp571" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/medical_record_code" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp572" android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip">
+                    <TextView android:textColor="@color/red" android:paddingLeft="3.0dip" android:paddingRight="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+                    <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp573" />
+                    <RadioGroup android:orientation="horizontal" android:id="@id/check_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_weight="0.1">
+                        <RadioButton android:id="@id/male" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="@string/layout_temp574" />
+                        <RadioButton android:id="@id/female" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:text="@string/layout_temp575" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+            <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/edit_commit" android:background="@drawable/btn_expert" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dip" android:text="@string/layout_temp576" />
+            <TextView android:textColor="@color/red" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginBottom="10.0dip" android:text="@string/layout_temp577" />
+            <TextView android:textColor="@color/red" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginBottom="10.0dip" android:text="@string/layout_temp578" />
+            <TextView android:textColor="@color/red" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginBottom="10.0dip" android:text="@string/layout_temp579" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

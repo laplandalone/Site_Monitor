@@ -1,0 +1,13 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.io.Serializable;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.yunmai.android.vo.IDCard;
+
+public class MyIDCard implements Serializable{
+	
+
+}

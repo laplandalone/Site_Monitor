@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <include layout="@layout/common_body_list_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="7.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/name" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp148" android:singleLine="true" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/value" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:hint="@string/layout_temp149" android:singleLine="true" android:layout_weight="0.1" />
+                    <Button android:id="@id/barcode_scanning" android:background="@drawable/two_code" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="93.0dip">
+                <Button android:textSize="18.0sp" android:textStyle="bold" android:textColor="#ffffffff" android:id="@id/query_submit" android:background="@drawable/btn_expert" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp150" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="16.0sp" android:textColor="#ff52bbe7" android:gravity="right" android:id="@id/full_check_get" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp151" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff52bbe7" android:gravity="right" android:id="@id/ct_check_get" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp152" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff52bbe7" android:gravity="right" android:id="@id/mri_check_get" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp153" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff52bbe7" android:gravity="right" android:id="@id/x_check_get" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp154" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff52bbe7" android:gravity="right" android:id="@id/super_check_get" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp155" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

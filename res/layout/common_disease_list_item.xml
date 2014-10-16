@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:id="@id/disease_layout" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_weight="1.0">
+        <TextView android:gravity="center_vertical" android:id="@android:id/text1" android:layout_marginLeft="13.0dip" android:text="@string/list_more" style="@style/list_item_disease" />
+        <ImageView android:layout_gravity="top" android:id="@id/disease_icon" android:background="@drawable/disease_notice_logo" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:scaleType="fitXY" />
+    </LinearLayout>
+    <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:src="@drawable/arrow_list_item" />
+</LinearLayout>

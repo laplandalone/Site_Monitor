@@ -1,0 +1,76 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.io.Serializable;
+
+import com.google.gson.annotations.Expose;
+
+public class UserInfo implements Serializable{
+	@Expose
+	private Integer orgId;
+	@Expose
+	private String latnName;
+	@Expose
+	private String channelMemberName;
+	@Expose
+	private String channelOrganizationUnitName;
+	@Expose
+	private Integer staffId;
+	@Expose
+	private Integer latnId;
+	@Expose
+	private String telephone;
+	@Expose
+	private String memberNbr;
+	public Integer getOrgId() {
+		return orgId;
+	}
+	public void setOrgId(Integer orgId) {
+		this.orgId = orgId;
+	}
+	public String getLatnName() {
+		return latnName;
+	}
+	public void setLatnName(String latnName) {
+		this.latnName = latnName;
+	}
+	public String getChannelMemberName() {
+		return channelMemberName;
+	}
+	public void setChannelMemberName(String channelMemberName) {
+		this.channelMemberName = channelMemberName;
+	}
+	public String getChannelOrganizationUnitName() {
+		return channelOrganizationUnitName;
+	}
+	public void setChannelOrganizationUnitName(String channelOrganizationUnitName) {
+		this.channelOrganizationUnitName = channelOrganizationUnitName;
+	}
+	public Integer getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
+	}
+	public Integer getLatnId() {
+		return latnId;
+	}
+	public void setLatnId(Integer latnId) {
+		this.latnId = latnId;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	public String getMemberNbr() {
+		return memberNbr;
+	}
+	public void setMemberNbr(String memberNbr) {
+		this.memberNbr = memberNbr;
+	}
+	
+	
+	
+
+}

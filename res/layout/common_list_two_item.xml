@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <ImageView android:layout_gravity="center_vertical" android:id="@+id/msg_icon"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip"  android:src="@drawable/bg_article_title_logo3" />
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/text1"
+            android:layout_gravity="center_vertical"
+            android:text="健康管家"
+            android:layout_marginLeft="8dip"
+            android:textColor="@color/TextColorGreen"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+       <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="13.0dip" android:src="@drawable/arrow_list_item" />
+</LinearLayout>

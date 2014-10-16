@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/his_people_list_bg" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:textSize="20.0sp" android:textColor="#ff00909b" android:id="@id/text1" android:layout_width="100.0dip" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" />
+            <TextView android:textSize="18.0sp" android:textColor="#ff7e7e7e" android:id="@id/text2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:layout_weight="0.1" />
+            <Button android:id="@id/edit" android:background="@drawable/people_info_edit" android:layout_width="30.0dip" android:layout_height="30.0dip" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/text3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:text="@string/layout_temp366" />
+            <TextView android:textSize="18.0sp" android:textColor="#ff7e7e7e" android:id="@id/text4" android:layout_marginLeft="13.0dip" style="@style/list_item_primary" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

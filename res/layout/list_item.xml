@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="16.0sp" android:id="@id/file_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp254" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
+        <ProgressBar android:id="@id/downloadbar" android:layout_width="fill_parent" android:layout_height="55.0px" android:layout_weight="0.1" android:contentDescription="awewefwf" style="?android:attr/progressBarStyleHorizontal" />
+        <Button android:id="@id/button" android:focusable="false" android:layout_width="wrap_content" android:layout_height="60.0px" android:text="@string/button" />
+    </LinearLayout>
+    <TextView android:gravity="center_horizontal" android:id="@id/result" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:text="0%" />
+</LinearLayout>

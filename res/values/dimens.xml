@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bar_height">48.0dip</dimen>
+    <dimen name="width">20.0dip</dimen>
+    <dimen name="height">6.0dip</dimen>
+    <dimen name="smallest_text_size_tip">10.0sp</dimen>
+    <dimen name="smallest_text_size">12.0sp</dimen>
+    <dimen name="smaller_text_size">13.0sp</dimen>
+    <dimen name="small_text_size">14.0sp</dimen>
+    <dimen name="basic_text_size">15.0sp</dimen>
+    <dimen name="large_text_size">16.0sp</dimen>
+    <dimen name="larger_text_size">17.0sp</dimen>
+    <dimen name="title_text_size">18.0sp</dimen>
+    <dimen name="xlarge_text_size">20.0sp</dimen>
+    <dimen name="largest_text_size">22.0sp</dimen>
+    <dimen name="tool_margins">5.0dip</dimen>
+    <dimen name="min_margins">2.0dip</dimen>
+    <dimen name="margins">10.0dip</dimen>
+    <dimen name="updatebar_content_height">80.0px</dimen>
+    <dimen name="updatebar_height">80.0px</dimen>
+    <dimen name="updatebar_padding">20.0px</dimen>
+</resources>

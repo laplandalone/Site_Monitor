@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginBottom="60.0dip">
+        <include layout="@layout/layout_header" />
+        <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip">
+                <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/user_info_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip">
+                    <TextView android:textSize="17.0sp" android:textColor="@color/red" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/health_data_must_input" />
+                    <TextView android:textSize="17.0sp" android:textColor="@color/bg_gray" android:ellipsize="end" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/drug_remind_title_3" android:maxLines="1" />
+                    <EditText android:textSize="17.0sp" android:ellipsize="end" android:layout_gravity="center" android:id="@id/drug_name" android:background="@null" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:hint="@string/health_data_remind_hint_1" android:maxLines="1" android:layout_weight="2.0" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/user_info_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="17.0sp" android:textColor="@color/red" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/health_data_must_input" />
+                    <TextView android:textSize="17.0sp" android:textColor="@color/bg_gray" android:ellipsize="end" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/drug_remind_title_4" android:maxLines="1" />
+                    <TextView android:textSize="17.0sp" android:ellipsize="end" android:layout_gravity="center" android:id="@id/drug_start_day" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:maxLines="1" android:layout_weight="2.0" />
+                    <ImageButton android:id="@id/remind_add_day" android:background="@null" android:padding="5.0dip" android:focusable="false" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginRight="5.0dip" android:src="@drawable/btn_calendar" android:contentDescription="@string/app_name" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:id="@id/drug_rate_lay" android:padding="15.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="17.0sp" android:textColor="@color/red" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/health_data_must_input" />
+                    <TextView android:textSize="17.0sp" android:textColor="@color/bg_gray" android:ellipsize="end" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/drug_remind_title_5" android:maxLines="1" />
+                    <TextView android:textSize="17.0sp" android:ellipsize="end" android:layout_gravity="center" android:id="@id/drug_rate" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:maxLines="1" android:drawableRight="@drawable/ico_point" android:drawablePadding="10.0dip" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/user_info_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip">
+                    <TextView android:textSize="17.0sp" android:textColor="@color/red" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/health_data_must_input" />
+                    <TextView android:textSize="17.0sp" android:textColor="@color/bg_gray" android:ellipsize="end" android:layout_gravity="center" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/drug_remind_title_6" android:maxLines="1" android:layout_weight="1.0" />
+                    <ImageButton android:id="@id/remind_add_time" android:background="@null" android:padding="5.0dip" android:focusable="false" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/bg_add" android:contentDescription="@string/app_name" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <Button android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/submit" android:background="@drawable/btn_expert" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:layout_alignParentBottom="true" />
+</RelativeLayout>

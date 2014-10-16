@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/detail_background_all" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <LinearLayout android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/icon" android:layout_width="70.0dip" android:layout_height="100.0dip" />
+        <LinearLayout android:orientation="vertical" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceLarge" android:id="@id/name" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0" />
+            <TextView android:id="@id/summary" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="2.0" style="@style/detail_info" />
+        </LinearLayout>
+    </LinearLayout>
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_sex" style="@style/detail_title" />
+                <TextView android:id="@id/sex" style="@style/detail_info" />
+            </LinearLayout>
+            <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:src="@drawable/bg_list_divider_line_2px" />
+            <LinearLayout android:orientation="horizontal" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_position" style="@style/detail_title" />
+                <TextView android:id="@id/position" style="@style/detail_info" />
+            </LinearLayout>
+            <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:src="@drawable/bg_list_divider_line_2px" />
+            <LinearLayout android:orientation="horizontal" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_especial_skill" style="@style/detail_title" />
+                <TextView android:id="@id/especial_skill" style="@style/detail_info" />
+            </LinearLayout>
+            <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:src="@drawable/bg_list_divider_line_2px" />
+            <LinearLayout android:orientation="horizontal" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_week_time" style="@style/detail_title" />
+                <TextView android:id="@id/week_time" style="@style/detail_info" />
+            </LinearLayout>
+            <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:src="@drawable/bg_list_divider_line_2px" />
+            <LinearLayout android:orientation="horizontal" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_place" style="@style/detail_title" />
+                <TextView android:id="@id/place" style="@style/detail_info" />
+            </LinearLayout>
+            <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:src="@drawable/bg_list_divider_line_2px" />
+            <LinearLayout android:orientation="horizontal" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="@string/btn_register_fee" style="@style/detail_title" />
+                <TextView android:id="@id/register_fee" style="@style/detail_info" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:orientation="vertical" android:id="@id/comments" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center_horizontal" android:id="@id/comments" android:background="@drawable/bg_hospital_comment" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <Button android:textSize="24.0px" android:textColor="#ff0f4967" android:layout_gravity="center_vertical" android:id="@id/add_comment" android:background="@drawable/btn_hospital_info_add_comment" android:layout_width="141.0dip" android:layout_height="35.0dip" android:text="@string/btn_add_comment" />
+                <Button android:textSize="24.0px" android:textColor="#ff0f4967" android:layout_gravity="center_vertical" android:id="@id/add_favorite" android:background="@drawable/btn_hospital_info_add_comment" android:layout_width="141.0dip" android:layout_height="35.0dip" android:layout_marginLeft="30.0dip" android:text="@string/btn_favorite" />
+            </LinearLayout>
+        </LinearLayout>
+        <ListView android:id="@android:id/list" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:listSelector="@drawable/bg_list_item_selector" android:drawSelectorOnTop="true" android:cacheColorHint="#00000000" android:divider="@null" />
+    </LinearLayout>
+</LinearLayout>

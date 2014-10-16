@@ -1,0 +1,12 @@
+package com.hbgz.realnameregestersys.tools;
+
+import android.os.Environment;
+
+public class RealNameConstant {
+	//133.0.179.151   61.183.0.35:7110  61.183.0.37:7170  
+	public static final String URL = "http://61.183.0.35:7100/realNameRegister/mobile.htm?method=axis";
+	public static final String UPLOAD_URL = "http://61.183.0.35:7100/realNameRegister/mobile.htm";
+//	public static final String LAUGUAGE_PACKAGE = "http://61.183.0.37:7170/apkpackages/chi_sim.traineddata";
+	
+	public static final String IMG_PATH = Environment.getExternalStorageDirectory().getPath()+"/hbgzocr/";
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/black" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip">
+        <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1">
+            <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="70.0dip">
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip">
+                    <ImageButton android:background="@drawable/guahao_title_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="7.0dip" android:layout_marginRight="5.0dip">
+                    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                        <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/regist_memo1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp194" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp195" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp196" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp197" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp198" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp199" />
+                        <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/regist_memo8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="13.0dip" android:text="@string/layout_temp201" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp202" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp203" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp205" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp206" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp207" />
+                        <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/regist_memo16" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="13.0dip" android:text="@string/layout_temp200" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo17" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_1" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo18" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_2" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo19" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_3" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo20" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_4" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo21" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_5" />
+                        <TextView android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/regist_memo22" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp200_6" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <CheckBox android:textSize="20.0sp" android:textColor="@color/white" android:layout_gravity="center_horizontal" android:id="@id/agree" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:text="@string/layout_temp190" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <CheckBox android:textSize="20.0sp" android:textColor="@color/white" android:layout_gravity="center_horizontal" android:id="@id/no_more" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:text="@string/layout_temp191" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

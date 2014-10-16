@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="8.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="22.0dip" android:textColor="@color/title_unselect" android:gravity="center" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_margin="5.0dip" android:text="@string/layout_temp666" />
+            <DatePicker android:id="@id/date_Pick" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" />
+            <TextView android:layout_marginTop="5.0dip" android:layout_marginBottom="10.0dip" style="@style/info_title" />
+            <Button android:textSize="22.0dip" android:textColor="@color/white" android:id="@id/yc_btn" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:text="@string/layout_temp667" style="@style/main_button" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

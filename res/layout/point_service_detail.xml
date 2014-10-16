@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:id="@id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1">
+            <TextView android:textSize="20.0sp" android:textColor="#ff000000" android:id="@id/title1" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp375" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp376" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp377" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp378" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp379" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp380" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp381" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp382" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp383" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp384" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp385" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp386" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp387" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp388" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp389" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp390" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp391" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp392" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp393" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp394" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp395" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp396" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp397" />
+            <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:id="@id/content" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp398" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

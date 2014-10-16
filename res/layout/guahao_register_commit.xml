@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/hospital_map_title" />
+    <include android:id="@id/step_layout" layout="@layout/common_bottom4" />
+    <ScrollView android:id="@id/register_scroll" android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="#ffd8d8d8" android:layout_width="fill_parent" android:layout_height="36.0dip">
+                <TextView android:textSize="18.0sp" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="26.0dip" android:text="挂号详情" />
+                <LinearLayout android:gravity="right|center" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                    <LinearLayout android:orientation="horizontal" android:id="@id/layout_over" android:background="@drawable/bg_register_detail_content" android:paddingLeft="5.0dip" android:paddingTop="3.0dip" android:paddingRight="5.0dip" android:paddingBottom="3.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip">
+                        <TextView android:textSize="16.0sp" android:textColor="#ff5d4d20" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="取消订单" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="26.0dip" android:layout_marginRight="26.0dip">
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="患者姓名:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_name" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="就诊卡号:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_card" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="门诊日期:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_date" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="门诊时间:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_time" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="挂号科室:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_faculty" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="门诊类型:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_type" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="挂号费用:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_fee" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="排队序号:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_number" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="门诊地点:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_place" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+                    <TextView android:textSize="16.0sp" android:textColor="#ff575757" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="医院流水:" />
+                    <TextView android:textSize="16.0sp" android:textColor="#ff000000" android:gravity="right" android:id="@id/text_water" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="#ffd8d8d8" android:layout_width="fill_parent" android:layout_height="36.0dip">
+                <TextView android:textSize="18.0sp" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="26.0dip" android:text="选择支付" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip">
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/layout_pay_type_1" android:layout_width="fill_parent" android:layout_height="40.0dip">
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/register_pay_type_1" />
+                    <TextView android:textSize="18.0sp" android:textColor="#ff000000" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="支付宝" android:layout_weight="1.0" />
+                    <ImageView android:id="@id/image_pay_type_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_recharge_sex" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/layout_pay_type_2" android:layout_width="fill_parent" android:layout_height="40.0dip">
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/register_pay_type_2" />
+                    <TextView android:textSize="18.0sp" android:textColor="#ff000000" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="工商银行" android:layout_weight="1.0" />
+                    <ImageView android:id="@id/image_pay_type_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_recharge_sex" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/layout_pay_type_3" android:layout_width="fill_parent" android:layout_height="40.0dip">
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/register_pay_type_3" />
+                    <TextView android:textSize="18.0sp" android:textColor="#ff000000" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="先诊疗，后付费" android:layout_weight="1.0" />
+                    <ImageView android:id="@id/image_pay_type_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_recharge_sex" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/nomorl" android:background="@drawable/btn_nomorl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:layout_marginTop="7.0dip" android:layout_marginBottom="5.0dip" android:text="确认订单并支付" />
+</LinearLayout>

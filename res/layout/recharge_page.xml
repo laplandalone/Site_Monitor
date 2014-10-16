@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <TextView android:textSize="16.0sp" android:textColor="#ff0095a0" android:gravity="center_vertical" android:background="@drawable/recharge_page_bg" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp677" />
+    <ListView android:id="@id/list_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.1" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:background="@drawable/recharge_page_bg" android:paddingLeft="6.0dip" android:paddingRight="6.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6.0dip" android:paddingTop="12.0dip" android:paddingRight="6.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+                <TextView android:textSize="18.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" android:layout_marginBottom="6.0dip" android:text="@string/layout_temp459" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+                <Button android:background="@drawable/icbc_select" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
+            <ImageView android:id="@id/check_box" android:background="@drawable/symptom_select_false" android:layout_width="22.0sp" android:layout_height="22.0sp" />
+            <TextView android:textSize="18.0sp" android:id="@id/state_ment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" android:text="@string/layout_temp460" />
+        </LinearLayout>
+        <Button android:textSize="16.0sp" android:textColor="@color/white" android:id="@id/submit" android:background="@drawable/btn_nomorl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip" android:layout_marginBottom="7.0dip" android:text="@string/layout_temp461" />
+    </LinearLayout>
+</LinearLayout>

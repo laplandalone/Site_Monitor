@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <LinearLayout android:orientation="horizontal" android:background="@drawable/sympotom_notice_bg" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="center_vertical" android:background="@drawable/notice_logo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" />
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:textSize="14.0dip" android:textColor="#ff0b5981" android:id="@id/alpha" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/sympotom_notice" />
+    </LinearLayout>
+    <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="0.1">
+        <ProgressBar android:id="@id/progress" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:indeterminateDrawable="@drawable/progressbarcolor" android:layout_centerInParent="true" style="?android:attr/progressBarStyleInverse" />
+        <ListView android:id="@android:id/list" android:layout_width="fill_parent" android:layout_height="fill_parent" android:divider="@null" />
+    </RelativeLayout>
+</LinearLayout>

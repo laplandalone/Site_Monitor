@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="33.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/name" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp600" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="33.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="13.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/id_card" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp601" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="33.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="13.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/phone" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp602" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="33.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="13.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/check_psw" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp603" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="93.0dip">
+                <Button android:textSize="18.0sp" android:textStyle="bold" android:textColor="#ffffffff" android:id="@id/query_submit" android:background="@drawable/btn_nomorl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp604" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

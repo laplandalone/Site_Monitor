@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="40.0dip">
+            <include layout="@layout/layout_header" />
+            <FrameLayout android:id="@id/list_container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginBottom="50.0dip" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/disease_empty_lay" android:background="@color/symptom_question_bg" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/default_page" android:contentDescription="@string/app_name" />
+            <TextView android:textSize="22.0sp" android:textColor="@color/AppBackgroundColor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dip" />
+            <TextView android:textSize="17.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" />
+        </LinearLayout>
+        <Button android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/submit" android:background="@drawable/btn_expert" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:text="添加" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+    <ProgressBar android:id="@id/progress" android:visibility="gone" android:layout_centerInParent="true" style="@style/ListSpinner" />
+</RelativeLayout>

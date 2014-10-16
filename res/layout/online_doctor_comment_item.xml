@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/list_view_selector" android:padding="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <TextView android:textSize="14.0sp" android:textColor="@color/black" android:id="@android:id/text1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="131****8945" />
+        <RatingBar android:id="@id/ratingBar1" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:numStars="5" android:stepSize="1.0" android:isIndicator="true" style="@style/MySmallRatingBar" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <TextView android:textSize="16.0sp" android:textColor="#ff9f9f9f" android:ellipsize="end" android:id="@android:id/text2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <TextView android:textSize="12.0sp" android:textColor="#ff8f8f8f" android:gravity="right" android:id="@id/text3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="2013-03-14 18:17" />
+    </LinearLayout>
+</LinearLayout>

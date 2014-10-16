@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/list_view_selector" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1">
+        <ImageView android:id="@id/msg_icon" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:src="@drawable/info_msg_bg" />
+        <TextView android:textColor="@color/black" android:id="@id/report_name" android:layout_marginLeft="13.0dip" android:text="" android:layout_weight="0.1" style="@style/list_item_primary" />
+        <TextView android:textSize="12.0sp" android:textColor="@color/bg_gray" android:id="@id/report_date" android:visibility="gone" android:layout_marginLeft="13.0dip" android:text="@string/layout_temp248" android:layout_weight="0.1" style="@style/list_item_primary" />
+    </LinearLayout>
+    <TextView android:textSize="18.0sp" android:textColor="#ff000000" android:gravity="center_vertical" android:id="@id/report_value" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:text="" />
+    <ImageView android:gravity="center_vertical" android:layout_gravity="right|center" android:id="@id/report_state" android:layout_width="17.0dip" android:layout_height="wrap_content" android:layout_marginLeft="28.0dip" android:layout_marginRight="6.0dip" android:src="@drawable/arrow_list_item" />
+</LinearLayout>

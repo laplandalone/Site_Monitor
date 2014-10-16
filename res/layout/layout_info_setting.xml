@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/layout_header" />
+    <TextView android:textSize="14.0sp" android:textColor="#ff168a92" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="7.0dip" android:layout_marginRight="10.0dip" android:text="@string/layout_temp582" />
+    <LinearLayout android:orientation="vertical" android:background="@drawable/info_all_bg" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="4.0dip" android:layout_marginRight="10.0dip">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/psChangeLay" android:background="@color/transparent" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="46.0dip">
+            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/user_info_detail" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp584" android:layout_weight="1.0" />
+            <ImageView android:layout_gravity="right|center" android:background="@drawable/arrow_list_item" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip" android:contentDescription="@string/app_name" />
+        </LinearLayout>
+        <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" android:contentDescription="@string/app_name" />
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/updatePsw" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="46.0dip">
+            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp669" android:layout_weight="1.0" />
+            <ToggleButton android:id="@id/toggleButton" android:background="@drawable/info_toggle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip" android:checked="true" android:textOn="" android:textOff="" android:minHeight="0.0dip" />
+        </LinearLayout>
+        <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" android:contentDescription="@string/app_name" />
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="46.0dip">
+            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp669_1" android:layout_weight="1.0" />
+            <ToggleButton android:id="@id/toggleButton_article_1" android:background="@drawable/info_toggle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip" android:checked="true" android:textOn="" android:textOff="" android:minHeight="0.0dip" />
+        </LinearLayout>
+        <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="13.0dip" android:layout_width="fill_parent" android:layout_height="46.0dip">
+            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp669_2" android:layout_weight="1.0" />
+            <ToggleButton android:id="@id/toggleButton_article_2" android:background="@drawable/info_toggle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="13.0dip" android:checked="true" android:textOn="" android:textOff="" android:minHeight="0.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/larger_text_size" android:textColor="#ff1098a3" android:id="@id/check_record_image_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip" />
+    <RadioGroup android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <RadioButton android:textColor="@color/check_record_yin_selector" android:gravity="center" android:id="@id/check_record_image_yin" android:background="@drawable/btn_check_record_yin" android:layout_width="0.0dip" android:layout_height="wrap_content" android:checked="true" android:button="@null" android:minHeight="40.0dip" android:text="-" android:layout_weight="1.0" />
+        <RadioButton android:textColor="@color/check_record_yang_selector" android:gravity="center" android:id="@id/check_record_image_yang" android:background="@drawable/btn_check_record_yang" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" android:button="@null" android:minHeight="40.0dip" android:text="+" android:layout_weight="1.0" />
+    </RadioGroup>
+</LinearLayout>

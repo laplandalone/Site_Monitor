@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="8.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:background="@drawable/bg_list_item_single" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginLeft="5.0dip" android:layout_marginRight="5.0dip">
+                <TextView android:text="@string/bmi_height" style="@style/info_title" />
+                <EditText android:id="@id/bmi_height1" android:singleLine="true" android:inputType="numberDecimal" style="@style/info_edit" />
+                <TextView android:layout_marginRight="10.0dip" android:text="@string/bmi_height_unit" style="@style/info_title" />
+            </LinearLayout>
+            <LinearLayout android:background="@drawable/bg_list_item_single" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginLeft="5.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip">
+                <TextView android:text="@string/bmi_weight" style="@style/info_title" />
+                <EditText android:id="@id/bmi_weight1" android:singleLine="true" android:numeric="integer" style="@style/info_edit" />
+"
+<TextView android:layout_marginRight="10.0dip" android:text="@string/bmi_weight_unit" style="@style/info_title" />
+            </LinearLayout>
+            <TextView android:layout_marginTop="5.0dip" android:layout_marginBottom="10.0dip" style="@style/info_title" />
+            <Button android:textSize="22.0dip" android:textColor="@color/white" android:id="@id/bmi_compute" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:text="@string/bmi_compute" style="@style/main_button" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

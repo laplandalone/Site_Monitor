@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="top" android:orientation="vertical" android:background="@null" android:paddingLeft="13.0dip" android:paddingTop="13.0dip" android:paddingRight="13.0dip" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:background="@drawable/patient_ask_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <ImageView android:id="@id/show_img" android:background="@drawable/unload_img" android:layout_width="66.0dip" android:layout_height="66.0dip" android:layout_marginLeft="13.0dip" />
+    </LinearLayout>
+    <TextView android:textColor="@color/bg_gray" android:gravity="left" android:id="@id/send_time" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="6.0dip" android:text="  " />
+</LinearLayout>

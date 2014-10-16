@@ -1,0 +1,101 @@
+package com.hbgz.realnameregestersys.adapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import com.hbgz.realnameregestersys.R;
+import com.hbgz.realnameregestersys.UserDetailsActivity;
+import com.hbgz.realnameregestersys.UserListActivity;
+import com.hbgz.realnameregestersys.bean.CustInfo;
+import com.hbgz.realnameregestersys.tools.RealNameUtil;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+public class UserListAdapter extends BaseAdapter{
+	
+	private Context mContext;
+	private List<CustInfo> userInfoes;
+	private SimpleDateFormat sdf;
+	
+	public UserListAdapter(Context mContext, List<CustInfo> userInfoes) {
+		super();
+		this.mContext = mContext;
+		this.userInfoes = userInfoes;
+		sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+	}
+
+	@Override
+	public int getCount() {
+		if (userInfoes == null) {
+			return 0;
+		}
+		return userInfoes.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		ViewHolder viewHolder = null;
+		if (view == null) {
+			viewHolder = new ViewHolder();
+			view = LayoutInflater.from(mContext).inflate(R.layout.user_list_item, null);
+			viewHolder.custRegDateTextview = (TextView) view.findViewById(R.id.list_user_regdate);
+			viewHolder.custNbrTextview = (TextView) view.findViewById(R.id.list_user_nbr);
+			view.setOnClickListener(clickListener);
+			view.setTag(R.id.list_item_tag,viewHolder);
+		} else {
+			viewHolder = (ViewHolder) view.getTag(R.id.list_item_tag);
+		}
+		if (position % 2 == 0) {
+			view.setBackgroundColor(mContext.getResources().getColor(R.color.cust_list_item_bg));
+		} else {
+			view.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+		}
+		CustInfo userInfo = userInfoes.get(position);
+		Date date = new Date(userInfo.getRegisterDate().getTime());
+		String dateStr = sdf.format(date);
+		viewHolder.custRegDateTextview.setText(dateStr);
+		viewHolder.custNbrTextview.setText(userInfo.getCustAccNbr());
+		view.setTag(position);
+		return view;
+	}
+	
+	class ViewHolder {
+		public TextView custRegDateTextview;
+		public TextView custNbrTextview;
+	}
+	
+	private OnClickListener clickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			try {
+				Integer position = (Integer) v.getTag();
+				Intent intent = new Intent(mContext,UserDetailsActivity.class);
+				intent.putExtra("user_info", userInfoes.get(position));
+				mContext.startActivity(intent);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	};
+
+}

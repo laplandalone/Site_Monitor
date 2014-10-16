@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/layout_header" />
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="#ff3c7377" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="@dimen/title_text_size" android:textColor="#ffffffff" android:layout_gravity="center_vertical" android:id="@id/depart" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_weight="2.0" />
+                <TextView android:textSize="@dimen/title_text_size" android:textColor="#ffffffff" android:gravity="left" android:layout_gravity="center_vertical" android:id="@id/name" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="2.0" />
+            </LinearLayout>
+            <FrameLayout android:id="@id/list_container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/doctor_empty_lay" android:background="@color/symptom_question_bg" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/default_page" android:contentDescription="@string/app_name" />
+            <TextView android:textSize="22.0sp" android:textColor="@color/AppBackgroundColor" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:text="@string/health_data_doctor_title_remind_1" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

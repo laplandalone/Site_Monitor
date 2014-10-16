@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/top_buttons" android:background="@drawable/bg_search" android:layout_width="fill_parent" android:layout_height="45.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <Button android:id="@id/title_button1" android:background="@drawable/btn_left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="76.0dip" />
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/gap1" android:layout_width="wrap_content" android:layout_height="28.0dip" android:src="@drawable/btn_gap" android:scaleType="fitXY" />
+        <Button android:id="@id/title_button2" android:background="@drawable/btn_center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="76.0dip" />
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/gap2" android:layout_width="wrap_content" android:layout_height="28.0dip" android:src="@drawable/btn_gap" android:scaleType="fitXY" />
+        <Button android:id="@id/title_button3" android:background="@drawable/btn_right" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="76.0dip" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ListView android:id="@android:id/list" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@null" android:cacheColorHint="#00000000" android:divider="@null" android:layout_weight="0.1" />
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/add" android:background="@drawable/btn_expert" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="13.0dip" android:layout_marginTop="18.0dip" android:layout_marginBottom="5.0dip" android:text="@string/layout_temp367" />
+    </LinearLayout>
+</LinearLayout>

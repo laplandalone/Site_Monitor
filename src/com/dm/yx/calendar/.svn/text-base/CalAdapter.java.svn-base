@@ -1,0 +1,190 @@
+package com.hbgz.realnameregestersys.calendar;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.hbgz.realnameregestersys.R;
+
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+public class CalAdapter extends BaseAdapter{
+
+	private Context context;
+	private Calendar calendar;
+	private ArrayList<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+//	private int size;
+	private ArrayList<Integer> arrayList;
+	private Activity mActivity;
+	private Intent mIntent;
+	private TextView dateTxt;
+	
+	public CalAdapter(Context context,ArrayList<Integer> arrayList, Activity activity, 
+			Intent intent, TextView dateTxt){
+		Log.e("hbgz", "CalAdapter " );
+		this.context = context;
+		this.arrayList = arrayList;
+		this.mActivity = activity;
+		this.mIntent = intent;
+		this.dateTxt = dateTxt;
+		calendar = new GregorianCalendar();
+	}
+	
+	@Override
+	public int getCount() {
+		
+		if (arrayList == null ) {
+			return 0;
+		}
+		return arrayList.size();
+		
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		ViewHolder viewHolder = null;
+		if (view == null) {
+			view = LayoutInflater.from(context).inflate(R.layout.calendar_list_item, null);
+			viewHolder = new ViewHolder();
+			viewHolder.title = (TextView) view.findViewById(R.id.list_item_title);
+			viewHolder.gridView = (NoScrollGridView) view.findViewById(R.id.list_item_gridview);
+			view.setTag(viewHolder);
+		}else {
+			viewHolder = (ViewHolder) view.getTag();
+		}
+		if (position < arrayList.size()) {
+			
+			makeListData(Integer.valueOf(arrayList.get(position)), viewHolder.title);
+			GridViewAdapter adapter = new GridViewAdapter(context, list, mActivity, mIntent, CalAdapter.this, dateTxt);
+			viewHolder.gridView.setAdapter(adapter);
+		}
+		
+		return view;
+	}
+	
+	private class ViewHolder {
+		public TextView title;
+		public NoScrollGridView gridView;
+	}
+	
+	/**
+	 * 获取指定月份的天数
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public int getDayNum(int year,int month){
+//		Log.e("hbgz", "getDayNum " );
+		int days = 0; 
+		Calendar cal = new GregorianCalendar();   
+		cal.set(Calendar.YEAR, year);   
+		cal.set(Calendar.MONTH, month);   
+		days = cal.getActualMaximum(Calendar.DAY_OF_MONTH); 
+		return days;
+	}
+	
+	/**
+	 * 获取指定月份的第一天是星期几，从周日算起
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public int firstDayOfMonth(int year,int month){
+//		Log.e("hbgz", "firstDayOfMonth " );
+		int days = 0; 
+		Calendar cal = new GregorianCalendar();   
+		cal.set(Calendar.YEAR, year);   
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		days = cal.get(Calendar.DAY_OF_WEEK);
+		return days;
+	}
+
+	/**
+	 * 获取指定月份的行数
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public int rowOfMonth(int year,int month){
+//		Log.e("hbgz", "rowOfMonth " );
+		int fristDay = firstDayOfMonth(year, month);
+        int monthDay = getDayNum(year, month);
+        
+        int lastDay = (monthDay - (7 - fristDay+1)) % 7;
+        int rowNum = (monthDay - (7 - fristDay+1)) / 7;
+        
+        if (lastDay == 0) {
+        	rowNum = rowNum + 1;
+		}else {
+			rowNum = rowNum + 2;
+		}
+		
+		return rowNum;
+	}
+	
+	/**
+	 * 配置月份日期数据
+	 * @param position
+	 */
+	public void makeListData(int position, TextView title){
+		calendar.setTime(new Date());
+		calendar.add(Calendar.MONTH, position);
+		int mYear = calendar.get(Calendar.YEAR);
+		int mMonth = calendar.get(Calendar.MONTH);
+
+		title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+		title.setText(mYear + "年" + String.valueOf(mMonth+1) + "月");
+		
+		int monthSize = rowOfMonth(mYear, mMonth) * 7;
+		if (list != null && !list.isEmpty()) {
+			list.clear();
+		}
+		int num = 1;
+		int firstTmp = firstDayOfMonth(mYear, mMonth) - 1;
+		
+		for (int i = 0; i < monthSize; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("year", mYear);
+			map.put("month", mMonth);
+			if (i >= firstTmp && i < (getDayNum(mYear, mMonth) + firstTmp)) {
+				map.put("day", num);
+				num ++ ;
+			}else {
+				map.put("day", 0);
+			}
+			list.add(map);
+		}
+		
+	}
+	
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drug_input_type">
+        <item>口服</item>
+        <item>注射</item>
+        <item>表皮</item>
+        <item>吸入</item>
+        <item>灌肠</item>
+        <item>眼部</item>
+        <item>鼻腔</item>
+        <item>肛门</item>
+    </string-array>
+    <string-array name="drug_dose">
+        <item>mg</item>
+        <item>g</item>
+        <item>μg</item>
+        <item>ml</item>
+        <item>U</item>
+        <item>片</item>
+        <item>半片</item>
+        <item>粒</item>
+        <item>支</item>
+        <item>滴</item>
+    </string-array>
+    <string-array name="drug_times">
+        <item>每日一次</item>
+        <item>每日二次</item>
+        <item>每日三次</item>
+        <item>每日四次</item>
+        <item>每日六次</item>
+        <item>每日十二次</item>
+        <item>每日二十四次</item>
+        <item>每日四十八次</item>
+    </string-array>
+    <string-array name="drug_remind_rate">
+        <item>1天</item>
+        <item>2天</item>
+        <item>3天</item>
+        <item>4天</item>
+        <item>5天</item>
+    </string-array>
+    <string-array name="date_weeks">
+        <item>星期日</item>
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+    </string-array>
+</resources>

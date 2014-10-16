@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="90.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <LinearLayout
+      android:id="@id/doctor_photo_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center" >
+
+      <ImageView
+          android:id="@+id/news_photo"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/faculty_normal"
+          android:layout_marginLeft="5.0dip"
+          />
+
+  </LinearLayout>
+
+        <LinearLayout android:orientation="vertical"  android:layout_weight="1.0"  android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="8.0dip" >
+           <TextView android:textColor="@color/TextColorGreen" android:id="@+id/comtext1" android:layout_marginLeft="10.0dip" style="@style/list_item_primary" />
+        </LinearLayout>
+         <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content"  android:src="@drawable/arrow_list_item" />
+</LinearLayout>

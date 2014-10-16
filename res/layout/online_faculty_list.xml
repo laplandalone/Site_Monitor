@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/hospital_background_new" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <TextView android:id="@+id/textTitle" android:textSize="14.0sp" android:textColor="#ffd3951d" android:gravity="left" android:background="@drawable/bg_floor_text_desc" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp271" />
+ <ListView android:orientation="vertical" android:id="@+id/asklist" android:paddingLeft="0.0dip" android:paddingRight="0.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+</LinearLayout>

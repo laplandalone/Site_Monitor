@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<regions>
+    <main id="4" name="头部" rect="199,79,62,75">
+        <sub id="8" name="眼" rect="159,45,16,9" />
+        <sub id="8" name="眼" rect="178,45,16,9" />
+        <sub id="9" name="五官" rect="166,55,10,10" />
+        <sub id="9" name="五官" rect="169,64,17,6" />
+        <sub id="9" name="五官" rect="142,62,8,21" />
+        <sub id="9" name="五官" rect="189,62,8,21" />
+        <sub id="16" name="面部" rect="150,69,7,18" />
+        <sub id="16" name="面部" rect="179,69,7,18" />
+    </main>
+    <main id="10" name="颈部" rect="179,95,35,20" />
+    <main id="3" name="胸部" rect="209,148,96,51" />
+    <main id="2" name="腹部" rect="205,218,88,75" />
+    <main id="13" name="会阴" rect="182,270,41,50" />
+    <main id="18" name="四肢" vertexs="105,97,121,156,67,257,0,297,0,242" />
+    <main id="18" name="四肢" vertexs="215,97,199,156,253,257,320,297,320,242" />
+    <main id="18" name="四肢" vertexs="111,235,63,532,136,532,160,258" />
+    <main id="18" name="四肢" vertexs="209,235,257,532,184,532,160,258" />
+</regions>

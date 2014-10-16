@@ -1,0 +1,88 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+public class CustInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Expose
+	private Integer custId;
+	@Expose
+	private String certNbr;
+	@Expose
+	private String custName;
+	@Expose
+	private String custAccNbr;
+	@Expose
+	private String certAddr;
+	@Expose
+	private String certType;
+	@Expose
+	private DateInfo registerDate;
+	@Expose
+	private String state;
+	@Expose
+	private List<ImageInfo> image;
+	public Integer getCustId() {
+		return custId;
+	}
+	public void setCustId(Integer custId) {
+		this.custId = custId;
+	}
+	public String getCertNbr() {
+		return certNbr;
+	}
+	public void setCertNbr(String certNbr) {
+		this.certNbr = certNbr;
+	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+	public String getCustAccNbr() {
+		return custAccNbr;
+	}
+	public void setCustAccNbr(String custAccNbr) {
+		this.custAccNbr = custAccNbr;
+	}
+	public String getCertAddr() {
+		return certAddr;
+	}
+	public void setCertAddr(String certAddr) {
+		this.certAddr = certAddr;
+	}
+	public String getCertType() {
+		return certType;
+	}
+	public void setCertType(String certType) {
+		this.certType = certType;
+	}
+	public DateInfo getRegisterDate() {
+		return registerDate;
+	}
+	public void setRegisterDate(DateInfo registerDate) {
+		this.registerDate = registerDate;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public List<ImageInfo> getImage() {
+		return image;
+	}
+	public void setImage(List<ImageInfo> image) {
+		this.image = image;
+	}
+	
+	
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/hospital_map_title" />
+    <ListView android:id="@android:id/list" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@drawable/bg_list_item_selector" android:drawSelectorOnTop="true" android:cacheColorHint="#00000000" android:divider="@null" android:layout_weight="0.1" />
+    <LinearLayout android:id="@id/layout_4" android:layout_width="fill_parent" android:layout_height="60.0dip" android:layout_alignParentBottom="true">
+        <Button android:textSize="20.0dip" android:textColor="@color/white" android:layout_gravity="center" android:id="@android:id/button1" android:background="@drawable/btn_symptom_question" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/btn_check_possible_diseas" style="@style/main_button" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<regions>
+    <main id="4" name="头部" rect="188,66,57,53" />
+    <main id="10" name="颈部" rect="189,76,61,17" />
+    <main id="6" name="背部" rect="197,175,83,87" />
+    <main id="15" name="臀部" rect="205,265,96,60" />
+    <main id="14" name="腰部" rect="198,205,83,30" />
+    <main id="18" name="四肢" vertexs="99,96,118,150,29,297,0,297,0,230" />
+    <main id="18" name="四肢" vertexs="221,96,202,150,291,297,320,297,320,230" />
+    <main id="18" name="四肢" vertexs="102,258,160,264,118,542,63,542" />
+    <main id="18" name="四肢" vertexs="218,258,160,264,202,542,257,542" />
+</regions>

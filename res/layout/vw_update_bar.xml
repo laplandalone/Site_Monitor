@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/bg_common" android:layout_width="fill_parent" android:layout_height="@dimen/updatebar_padding"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:background="@color/bg_common" android:layout_width="fill_parent" android:layout_height="@dimen/updatebar_content_height">
+        <TextView android:gravity="center" android:id="@id/tv_title" android:background="@null" android:layout_width="fill_parent" android:layout_height="46.0dip" android:text="" />
+        <FrameLayout android:layout_gravity="center_vertical" android:id="@id/iv_content" android:layout_width="40.0dip" android:layout_height="40.0dip" android:layout_marginLeft="15.0dip" android:layout_centerVertical="true" />
+    </FrameLayout>
+    <ImageView android:layout_width="fill_parent" android:layout_height="1.0dip" android:src="@drawable/divider_horizontal_timeline" android:scaleType="fitXY" />
+</LinearLayout>

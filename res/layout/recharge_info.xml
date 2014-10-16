@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="5.0dip">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/recharge_info_left" />
+            <ImageView android:background="@drawable/recharge_background" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" />
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/recharge_info_right" />
+        </LinearLayout>
+        <ListView android:id="@id/listView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:listSelector="#00000000" android:cacheColorHint="#00000000" android:divider="@null" />
+        <LinearLayout android:background="@drawable/recharge_info_buttom" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

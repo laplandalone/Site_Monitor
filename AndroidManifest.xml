@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.5" package="com.dm.yx">
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17"/>
+
+    <uses-permission android:name="android.permission.CAMERA">
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
+    </uses-permission>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- LBS -->
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限,wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
+    </uses-permission>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE">
+    </uses-permission>
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS">
+    </uses-permission>
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS">
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS">
+    </uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE">
+    </uses-permission>
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_GPS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="cQtssrjFdekGlvQwUG90M6jY"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.autofocus"/>
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name=".application.RegApplication" android:theme="@style/AppTheme">
+        <meta-data android:name="UMENG_APPKEY" android:value="53ccc48056240b1b82032960"/>
+        <meta-data android:name="UMENG_CHANNEL" android:value="haochilao"/>
+		<activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+        <!-- 微信分享回调 -->
+        
+        <activity android:label="@string/app_name" android:name="com.dm.yx.WelcomeActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="MainPageActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.faculty.OfficeDoctorListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.RegisteredMain" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.faculty.DoctorListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.faculty.DoctorDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.FacultyExpertListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.ExpertDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.ExpertListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.ExpertRegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.ConfirmOrderActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.OnLineExpertListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.OnLineFacultyDescActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.OnLineFacultyListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.AskExpertListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.news.NewsActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.healthtools.HealthToolsActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.QuestionActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.AskQuestionMsgActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.TalkActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.hospital.HospitalDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.UserMainActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.CommonOrderRegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+      
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.RegisterNextActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.UserUpdateActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.HisOrderActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.order.UserOrderActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.TabQuestionActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.news.NewsDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.other.OtherActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+
+         <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.other.NewVersionActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+           <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.user.MyHealthActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+           
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.HospitalActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+           <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.news.NewsTypeActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+          <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.other.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.MyTalkActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+          
+        <service android:name="com.dm.yx.view.other.CheckNewVersion">
+        </service>
+        <service android:name="com.dm.yx.view.other.DownloadService">
+        </service>
+    <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name="com.dm.yx.wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+<activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.tencent.tauth.AuthActivity" android:noHistory="true">
+<intent-filter>
+<action android:name="android.intent.action.VIEW"/>
+<category android:name="android.intent.category.DEFAULT"/>
+<category android:name="android.intent.category.BROWSABLE"/>
+<data android:scheme="tencent添加你的App Id"/>
+</intent-filter>
+</activity>
+<activity android:name="com.tencent.connect.common.AssistActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+ <activity android:name="com.alipay.android.app.sdk.WapPayActivity" android:screenOrientation="portrait"></activity>
+</application>
+
+</manifest>

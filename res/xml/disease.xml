@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Location Name="常见疾病" Code="1">
+    <State Name="感冒" Code="641" />
+    <State Name="慢性支气管炎" Code="350" />
+    <State Name="冠状动脉性心脏病" Code="855" />
+    <State Name="慢性胃炎" Code="104" />
+    <State Name="消化性溃疡" Code="114" />
+    <State Name="尿路感染" Code="663" />
+    <State Name="糖尿病" Code="213" />
+    <State Name="甲亢" Code="299" />
+    <State Name="贫血" Code="854" />
+    <State Name="风湿性关节炎" Code="156" />
+    <State Name="病毒性肝炎" Code="52" />
+    <State Name="高血压" Code="124" />
+    <State Name="单纯性甲状腺肿" Code="301" />
+    <State Name="痔疮" Code="839" />
+    <State Name="中风" Code="588" />
+    <State Name="胆结石" Code="199" />
+    <State Name="急性阑尾炎" Code="92" />
+    <State Name="肾结石" Code="457" />
+    <State Name="前列腺增生" Code="464" />
+    <State Name="颈椎病" Code="415" />
+    <State Name="腰椎间盘突出症" Code="265" />
+    <State Name="乳腺增生" Code="416" />
+    <State Name="乳房纤维瘤" Code="403" />
+    <State Name="子宫肌瘤" Code="462" />
+    <State Name="盆腔炎" Code="393" />
+    <State Name="小儿肺炎" Code="510" />
+    <State Name="小儿腹泻" Code="856" />
+    <State Name="皮肤过敏" Code="698" />
+    <State Name="白内障" Code="433" />
+    <State Name="青光眼" Code="477" />
+</Location>

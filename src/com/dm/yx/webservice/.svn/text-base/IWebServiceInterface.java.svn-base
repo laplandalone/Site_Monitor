@@ -1,0 +1,42 @@
+package com.hbgz.realnameregestersys.webservice;
+
+import com.lidroid.xutils.http.RequestParams;
+
+
+public interface IWebServiceInterface {
+	
+
+	/**
+	 * 实名注册
+	 * @param custAccNbr
+	 * @param certType
+	 * @param custName
+	 * @param certAddr
+	 * @param imageUrl
+	 * @return
+	 */
+	public RequestParams regesterRealName(String custAccNbr,String certType,String custName,
+			String certAddr,String imageUrl) ;
+	/**
+	 * 查询证件类型
+	 * @param tableName 常量 CUST
+	 * @param columnName 常量 CERTIFICATE_TYPE
+	 * @param stsId
+	 * @return
+	 */
+	public RequestParams getCertificateType(String tableName,String columnName,String stsId) ;
+	/**
+	 * 获取登记信息列表
+	 * @return
+	 */
+	public RequestParams queryUserList(Integer pageNum,Integer pageSize ,String operatorNbr,String startTime,String endTime);
+	/**
+	 * 校验用户信息是否合法
+	 * @param physicsNbr
+	 * @return
+	 */
+	public RequestParams checkUserInfo(String physicsNbr);
+	
+	public RequestParams checkNewVersion(String param);
+	
+}

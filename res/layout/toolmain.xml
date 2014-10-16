@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip">
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <ImageView android:id="@id/tool_button1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/tools1" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp543" android:layout_below="@id/tool_button1" android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <ImageView android:id="@id/tool_button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/tools2" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp544" android:layout_below="@id/tool_button2" android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <ImageView android:id="@id/tool_button3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/tools3" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp545" android:layout_below="@id/tool_button3" android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <ImageView android:id="@id/tool_button4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/tools4" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp546" android:layout_below="@id/tool_button4" android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip">
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0" />
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0" />
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,250 @@
+package com.hbgz.realnameregestersys.calendar;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Map;
+
+import com.hbgz.realnameregestersys.R;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+public class GridViewAdapter extends BaseAdapter{
+
+	private ArrayList<Map<String, Object>> list;
+	private Context context;
+	private Activity mActivity;
+	private Intent mIntent;
+	private CalAdapter calAdapter;
+	private Calendar calendar;
+	private int caldroidSkyBlue;
+	private int gray;
+	private int transparent;
+	private TextView dateTxt;
+	
+	public GridViewAdapter(Context context, ArrayList<Map<String, Object>> list, Activity activity, 
+			Intent intent, CalAdapter calAdapter, TextView dateTxt){
+		this.context = context;
+		this.list = list;
+		this.mActivity = activity;
+		this.mIntent = intent;
+		this.calAdapter = calAdapter;
+		this.dateTxt = dateTxt;
+		calendar = new GregorianCalendar();
+		caldroidSkyBlue = 0xffA3E8F7;
+		gray = 0x30999999;
+		transparent = 0x00000000;
+	}
+	
+	@Override
+	public int getCount() {
+		if (list == null) {
+			return 0;
+		}
+		return list.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		ViewHolder viewHolder = null;
+		if (view == null) {
+			view = LayoutInflater.from(context).inflate(R.layout.calendar_gridview_item, null);
+			viewHolder = new ViewHolder();
+			viewHolder.text = (TextView) view.findViewById(R.id.gridview_text);
+			view.setTag(R.id.viewholder, viewHolder);
+		}else {
+			viewHolder = (ViewHolder) view.getTag(R.id.viewholder);
+		}
+		
+		MyDate myDate = new MyDate();
+		myDate.year = list.get(position).get("year").toString();
+		myDate.month = list.get(position).get("month").toString();
+		myDate.day = list.get(position).get("day").toString();
+		
+		if (myDate.year.equals(String.valueOf(CalenderActivity.sYear)) && myDate.month.equals(String.valueOf(CalenderActivity.sMonth)) 
+				&& myDate.day.equals(String.valueOf(CalenderActivity.sDay))) {
+			viewHolder.text.setBackgroundColor(caldroidSkyBlue);
+			viewHolder.text.setText(myDate.day + "\n开始");
+		}else if (myDate.year.equals(String.valueOf(CalenderActivity.eYear)) && myDate.month.equals(String.valueOf(CalenderActivity.eMonth)) 
+				&& myDate.day.equals(String.valueOf(CalenderActivity.eDay))) {
+			viewHolder.text.setBackgroundColor(caldroidSkyBlue);
+			viewHolder.text.setText(myDate.day + "\n结束");
+		}else {
+			if ("0".equals(myDate.day)) {
+				viewHolder.text.setText("\n");
+				viewHolder.text.setTextColor(transparent);
+				viewHolder.text.setEnabled(false);
+				viewHolder.text.setBackgroundColor(transparent);
+			}else {
+				if (afterToday(myDate)) {
+					viewHolder.text.setEnabled(false);
+					viewHolder.text.setTextColor(Color.GRAY);
+					viewHolder.text.setBackgroundColor(Color.WHITE);
+				}else {
+					viewHolder.text.setEnabled(true);
+					viewHolder.text.setTextColor(Color.BLACK);
+					viewHolder.text.setBackgroundColor(gray);
+				}
+				if (changeBackground(myDate)) {
+					viewHolder.text.setBackgroundColor(caldroidSkyBlue);
+				}else {
+					viewHolder.text.setBackgroundColor(gray);
+				}
+				viewHolder.text.setText(myDate.day + "\n");
+			}
+		}
+		viewHolder.text.setTag(R.id.date, myDate);
+		viewHolder.text.setOnClickListener(textlistener);
+		return view;
+	}
+	
+	private boolean afterToday(MyDate myDate){
+		calendar.setTime(new Date());
+		Calendar newCal = Calendar.getInstance();
+		newCal.set(Integer.valueOf(myDate.year), Integer.valueOf(myDate.month), Integer.valueOf(myDate.day));
+		if (newCal.after(calendar)) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean changeBackground(MyDate myDate){
+		if (CalenderActivity.sYear == 0 || CalenderActivity.eYear == 0) {
+			return false;
+		}
+		Calendar startCal = Calendar.getInstance();
+		Calendar endCal = Calendar.getInstance();
+		Calendar thisCal = Calendar.getInstance();
+		startCal.set(CalenderActivity.sYear, CalenderActivity.sMonth, CalenderActivity.sDay);
+		endCal.set(CalenderActivity.eYear, CalenderActivity.eMonth, CalenderActivity.eDay);
+		thisCal.set(Integer.valueOf(myDate.year), Integer.valueOf(myDate.month), Integer.valueOf(myDate.day));
+		if (thisCal.after(startCal) && thisCal.before(endCal)) {
+			return true;
+		}
+		return false;
+	}
+	
+	private class ViewHolder {
+		public TextView text;
+	}
+	
+	private class MyDate{
+		public String year;
+		public String month;
+		public String day;
+	}
+	
+	private OnClickListener textlistener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			MyDate mMyDate = (MyDate) v.getTag(R.id.date);
+			if (mMyDate == null || "".equals(mMyDate.day) || "0".equals(mMyDate.day)) {
+				return;
+			}
+			
+			
+			if (CalenderActivity.CHECK_NUM == 0) {
+				//第一次点击
+				if (CalenderActivity.sYear != 0 || CalenderActivity.eYear != 0) {
+					refresh();
+					Log.i("hbgz", "refresh");
+				}
+				Log.i("hbgz", "onClick = 1");
+				TextView startDateTxt = (TextView) v;
+				startDateTxt.setBackgroundColor(caldroidSkyBlue);
+				startDateTxt.setText(mMyDate.day + "\n开始");
+				
+				CalenderActivity.sYear = Integer.valueOf(mMyDate.year);
+				CalenderActivity.sMonth = Integer.valueOf(mMyDate.month);
+				CalenderActivity.sDay = Integer.valueOf(mMyDate.day);
+				dateTxt.setText("开始日期：" + CalenderActivity.sYear + "-" + CalenderActivity.sMonth + "-" + CalenderActivity.sDay);
+				dateTxt.setVisibility(View.VISIBLE);
+				++CalenderActivity.CHECK_NUM;
+				
+			}else if (CalenderActivity.CHECK_NUM == 1) {
+				//第2次点击
+				Log.i("hbgz", "onClick = 2");
+				Calendar oldCal = Calendar.getInstance();
+				Calendar newCal = Calendar.getInstance();
+				oldCal.set(CalenderActivity.sYear, CalenderActivity.sMonth, CalenderActivity.sDay);
+				newCal.set(Integer.valueOf(mMyDate.year), Integer.valueOf(mMyDate.month), Integer.valueOf(mMyDate.day));
+				//点击在第一次点击的后面，设置结束日期
+				if (oldCal.before(newCal)) {
+					
+					TextView endDateTxt = (TextView) v;
+					endDateTxt.setBackgroundColor(caldroidSkyBlue);
+					endDateTxt.setText(mMyDate.day + "\n结束");
+					
+					CalenderActivity.eYear = Integer.valueOf(mMyDate.year);
+					CalenderActivity.eMonth = Integer.valueOf(mMyDate.month);
+					CalenderActivity.eDay = Integer.valueOf(mMyDate.day);
+//					++CalenderActivity.CHECK_NUM;
+					calAdapter.notifyDataSetChanged();
+					dateTxt.setText("开始日期：" + CalenderActivity.sYear + "-" + CalenderActivity.sMonth + "-" + CalenderActivity.sDay
+							+ "\n结束日期：" + CalenderActivity.eYear + "-" + CalenderActivity.eMonth + "-" + CalenderActivity.eDay);
+					dateTxt.setVisibility(View.VISIBLE);
+					returnDate();
+				}
+				//点击在第一次点击的前面，重置开始日期
+				if (oldCal.after(newCal)) {
+					TextView startDateTxt = (TextView) v;
+					startDateTxt.setBackgroundColor(caldroidSkyBlue);
+					startDateTxt.setText(mMyDate.day + "\n开始");
+					
+					CalenderActivity.sYear = Integer.valueOf(mMyDate.year);
+					CalenderActivity.sMonth = Integer.valueOf(mMyDate.month);
+					CalenderActivity.sDay = Integer.valueOf(mMyDate.day);
+					calAdapter.notifyDataSetChanged();
+					dateTxt.setText("开始日期：" + CalenderActivity.sYear + "-" + CalenderActivity.sMonth + "-" + CalenderActivity.sDay);
+					dateTxt.setVisibility(View.VISIBLE);
+				}
+			}
+		}
+	};
+	
+	private void returnDate(){
+		mIntent.putExtra("syear", CalenderActivity.sYear);
+		mIntent.putExtra("smonth", CalenderActivity.sMonth);
+		mIntent.putExtra("sday", CalenderActivity.sDay);
+		mIntent.putExtra("eyear", CalenderActivity.eYear);
+		mIntent.putExtra("emonth", CalenderActivity.eMonth);
+		mIntent.putExtra("eday", CalenderActivity.eDay);
+		mActivity.setResult(1, mIntent);
+		mActivity.finish();
+	}
+	
+	private void refresh(){
+		CalenderActivity.sYear = 0;
+		CalenderActivity.sMonth = 0;
+		CalenderActivity.sDay = 0;
+		
+		CalenderActivity.eYear = 0;
+		CalenderActivity.eMonth = 0;
+		CalenderActivity.eDay = 0;
+		calAdapter.notifyDataSetChanged();
+	}
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/main" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:background="@drawable/bg_guahao_used" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="16.0dip" android:textColor="#ffffffff" android:gravity="center" android:layout_gravity="center_vertical" android:paddingLeft="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/system_user_info_setting" android:layout_weight="2.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:background="@drawable/bg_guahao_list" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:background="@null" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="58.0dip">
+                <TextView android:textSize="16.0dip" android:textColor="#ff767676" android:layout_gravity="center_vertical" android:paddingLeft="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/settings_age" android:layout_weight="2.0" />
+                <EditText android:textSize="16.0dip" android:layout_gravity="center_vertical" android:id="@id/age" android:background="@drawable/bg_settings_edit" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" android:inputType="number" />
+            </LinearLayout>
+            <View android:background="#ffa5a5a5" android:layout_width="fill_parent" android:layout_height="1.0px" />
+            <LinearLayout android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="56.0dip">
+                <TextView android:textSize="16.0dip" android:textColor="#ff767676" android:layout_gravity="center_vertical" android:paddingLeft="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/settings_sex" android:layout_weight="22.0" />
+                <Button android:layout_gravity="center_vertical" android:id="@android:id/button1" android:background="@drawable/btn_title_man" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" />
+                <Button android:layout_gravity="center_vertical" android:id="@android:id/button2" android:background="@drawable/btn_title_women" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" />
+            </LinearLayout>
+            <View android:background="#ffa5a5a5" android:layout_width="fill_parent" android:layout_height="1.0px" />
+            <TextView android:textColor="#ff767676" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/shengming" android:inputType="textMultiLine" />
+            <TextView android:textColor="#ff767676" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:text="@string/layout_temp536" android:inputType="textMultiLine" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:background="@null" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="56.0dip" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <Button android:textSize="18.0sp" android:textColor="#ff025f8e" android:id="@id/ok" android:background="@drawable/bt_edition_update_button" android:layout_width="90.0dip" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/btn_ok" />
+                <Button android:textSize="18.0sp" android:textColor="#ff025f8e" android:id="@id/cancel" android:background="@drawable/bt_edition_update_button" android:layout_width="90.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:text="@string/btn_cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="250.0dip" android:layout_height="100.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center" android:id="@id/dialog_loading_text" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <ProgressBar android:layout_width="30.0dip" android:layout_height="30.0dip" android:layout_marginTop="10.0dip" android:indeterminateDrawable="@drawable/animated_rotate_loading" />
+</LinearLayout>

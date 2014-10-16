@@ -1,0 +1,84 @@
+package com.hbgz.realnameregestersys.bean;
+
+import java.io.Serializable;
+
+import com.google.gson.annotations.Expose;
+
+public class DateInfo implements Serializable{
+	
+	@Expose
+	private Integer date;
+	@Expose
+	private Integer day;
+	@Expose
+	private Integer hours;
+	@Expose
+	private Integer minutes;
+	@Expose
+	private Integer month;
+	@Expose
+	private Integer nanos;
+	@Expose
+	private Long time;
+	@Expose
+	private Integer timezoneOffset;
+	@Expose
+	private Integer year;
+	public Integer getDate() {
+		return date;
+	}
+	public void setDate(Integer date) {
+		this.date = date;
+	}
+	public Integer getDay() {
+		return day;
+	}
+	public void setDay(Integer day) {
+		this.day = day;
+	}
+	public Integer getHours() {
+		return hours;
+	}
+	public void setHours(Integer hours) {
+		this.hours = hours;
+	}
+	public Integer getMinutes() {
+		return minutes;
+	}
+	public void setMinutes(Integer minutes) {
+		this.minutes = minutes;
+	}
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+	public Integer getNanos() {
+		return nanos;
+	}
+	public void setNanos(Integer nanos) {
+		this.nanos = nanos;
+	}
+	public Long getTime() {
+		return time;
+	}
+	public void setTime(Long time) {
+		this.time = time;
+	}
+	public Integer getTimezoneOffset() {
+		return timezoneOffset;
+	}
+	public void setTimezoneOffset(Integer timezoneOffset) {
+		this.timezoneOffset = timezoneOffset;
+	}
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	
+
+}

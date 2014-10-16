@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:id="@id/detail" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="13.0dip">
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="40.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/name" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp547" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
+                    <EditText android:textSize="19.0sp" android:textColor="#ffafafaf" android:id="@id/idcard" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp548" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip" />
+                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip" />
+                <LinearLayout android:gravity="right|center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.0dip">
+                    <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/add" android:background="@drawable/btn_nomorl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/layout_temp549" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

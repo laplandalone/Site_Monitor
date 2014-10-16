@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@drawable/hospital_background_new" android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/app_title" />
+
+   <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+         <com.dm.yx.adapter.ImgViewPager
+             android:id="@+id/imgViewPager"
+             android:layout_width="fill_parent"
+             android:layout_height="160dp" >
+         </com.dm.yx.adapter.ImgViewPager>
+
+			    <LinearLayout
+			        android:id="@+id/vb"
+			        android:layout_width="match_parent"
+			        android:layout_height="8dp"
+			        android:layout_marginTop="3dip"
+			        android:gravity="center"
+			        android:orientation="horizontal" >
+			    </LinearLayout>
+    </LinearLayout>
+          
+    <LinearLayout android:layout_marginTop="8.0dip"   android:layout_marginLeft="20.0dip"  android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content">
+	    <ImageView android:id="@+id/logo"  android:background="@drawable/vip" android:layout_width="50.0dip" android:layout_height="50.0dip" />
+	    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+	        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	            <TextView android:textSize="18.0sp" android:textColor="#ff31b0b7" android:id="@+id/hospitalName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="亚洲心脏病医院"/>
+	        </LinearLayout>
+	        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+	            <TextView android:textSize="14.0sp" android:textColor="@color/black" android:ellipsize="end" android:id="@+id/remark" android:paddingTop="3.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="冠心病、搭桥换瓣、房颤、先心病治疗等" />
+	        </LinearLayout>
+	    </LinearLayout>
+   </LinearLayout>
+			
+
+      <LinearLayout
+          android:id="@+id/line2"
+          android:layout_width="fill_parent"
+          android:layout_height="260.dip"
+          android:gravity="center"
+          android:orientation="horizontal"
+          >
+
+         <LinearLayout
+             android:visibility="invisible"
+             android:id="@+id/arrow_left"
+             android:layout_width="wrap_content"
+             android:layout_height="40.0dip"
+             android:orientation="horizontal" >
+          <ImageView android:background="@drawable/arrow_left" android:layout_width="40.0dip" android:layout_height="40.0dip" />
+          </LinearLayout>
+     
+         <ScrollView android:layout_width="fill_parent" android:layout_height="260.dip" android:layout_weight="0.1">
+	        <LinearLayout  android:id="@+id/line1" android:gravity="center_vertical" android:orientation="vertical" android:background="@drawable/guahao_title_bg" android:layout_width="fill_parent" android:layout_height="260.dip">
+				<TextView
+		               android:id="@id/description"
+		               android:layout_width="wrap_content"
+		               android:layout_height="240.dip"
+		               android:paddingLeft="5.0dip"
+		               android:paddingRight="5.0dip"
+		               android:text="@string/layout_temp287"
+		               android:textColor="@color/TextColorGray"
+		               android:textSize="14.0sp" />
+	           </LinearLayout>
+          </ScrollView>
+          <LinearLayout
+              android:visibility="invisible"
+               android:id="@+id/arrow_right"
+              android:layout_width="wrap_content"
+              android:layout_height="40.0dip"
+              android:layout_marginLeft="6.0dip"
+              android:orientation="horizontal" >
+           <ImageView android:background="@drawable/arrow_right" android:layout_width="40.0dip" android:layout_height="40.0dip" />
+          </LinearLayout>
+      </LinearLayout>
+      
+        
+      <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip">
+            <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="68.0dip" android:layout_marginTop="25.0dip">
+              <ImageView android:id="@+id/phone114" android:layout_gravity="right" android:background="@drawable/phone" android:layout_width="wrap_content" android:layout_height="35.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

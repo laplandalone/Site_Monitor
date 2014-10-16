@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/symptom_question_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/common_title" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="8.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:background="@drawable/bg_list_item_single" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginLeft="5.0dip" android:layout_marginRight="5.0dip">
+                <TextView android:text="@string/smoke_year" style="@style/info_title" />
+                <EditText android:id="@id/smoke_year" android:inputType="numberDecimal" style="@style/info_edit" />
+                <TextView android:layout_marginRight="10.0dip" android:text="@string/smoke_unit" style="@style/info_title" />
+            </LinearLayout>
+            <LinearLayout android:background="@drawable/bg_list_item_single" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginLeft="5.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip">
+                <TextView android:text="@string/each_count" style="@style/info_title" />
+                <EditText android:id="@id/smoke_count" android:inputType="numberDecimal" style="@style/info_edit" />
+                <TextView android:layout_marginRight="10.0dip" android:text="@string/each_unit" style="@style/info_title" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:background="@drawable/bg_list_item_single" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginLeft="5.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="5.0dip">
+"
+<TextView android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="46.0dip" android:layout_marginLeft="10.0dip" android:text="@string/layout_temp499" />
+"
+<RadioGroup android:orientation="horizontal" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content">
+"
+<RadioButton android:id="@id/radio1" android:layout_width="60.0dip" android:layout_height="fill_parent" android:checked="true" android:text="@string/layout_temp500" />
+                    <RadioButton android:id="@id/radio2" android:layout_width="60.0dip" android:layout_height="fill_parent" android:text="@string/layout_temp501" />
+                    <RadioButton android:id="@id/radio3" android:layout_width="60.0dip" android:layout_height="fill_parent" android:text="@string/layout_temp502" />
+                </RadioGroup>
+            </LinearLayout>
+            <TextView android:layout_marginTop="5.0dip" android:layout_marginBottom="10.0dip" style="@style/info_title" />
+            <Button android:textSize="22.0dip" android:textColor="@color/white" android:id="@id/smoke_btn" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:text="@string/smoke_test" style="@style/main_button" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

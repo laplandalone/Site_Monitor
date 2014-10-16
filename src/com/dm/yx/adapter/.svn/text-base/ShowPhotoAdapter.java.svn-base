@@ -1,0 +1,114 @@
+package com.hbgz.realnameregestersys.adapter;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import com.hbgz.realnameregestersys.R;
+import com.lidroid.xutils.BitmapUtils;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
+
+public class ShowPhotoAdapter extends BaseAdapter{
+	
+	private Context mContext;
+	private List<String> imagesUrl;
+	private BitmapUtils bitmapUtils;
+	
+//	private BitmapFactory.Options options;
+
+	public ShowPhotoAdapter(Context mContext, List<String> imagesUrl) {
+		super();
+		this.mContext = mContext;
+		this.imagesUrl = imagesUrl;
+		bitmapUtils = new BitmapUtils(mContext);
+		bitmapUtils.configDefaultBitmapMaxSize(50, 50);
+		bitmapUtils.clearCache();
+//		options = new BitmapFactory.Options(); 
+//		options.inPreferredConfig = Config.ARGB_8888;
+//		options.inPurgeable = true;// 允许可清除
+//		options.inInputShareable = true;// 以上options的两个属性必须联合使用才会有效果
+	}
+
+	@Override
+	public int getCount() {
+//		if (imagesUrl == null || imagesUrl.size() == 0) {
+			return 5;
+//		}
+//		return imagesUrl.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		ImageView imageView = null;
+		if (view == null) {
+			view =  LayoutInflater.from(mContext).inflate(R.layout.showphoto_gridview_item, null);
+			imageView = (ImageView) view.findViewById(R.id.show_photo_image);
+			view.setTag(imageView);
+		} else {
+			imageView = (ImageView) view.getTag();
+		}
+		String url = null;
+		try {
+			url = imagesUrl.get(position);
+		} catch(IndexOutOfBoundsException e) {
+			
+		}
+		if (url != null) {
+//			Bitmap bitmap = compressImage(url);
+//			imageView.setImageBitmap(bitmap);
+			
+			bitmapUtils.display(imageView, url);
+		} else {
+			imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dash));
+		}
+		return view;
+	}
+	
+//	private Bitmap compressImage(String url) {
+//
+//		Bitmap image = BitmapFactory.decodeFile(url,options);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+//		int options = 100;
+//		while ( baos.toByteArray().length / 1024>100) {	//循环判断如果压缩后图片是否大于100kb,大于继续压缩		
+//			baos.reset();//重置baos即清空baos
+//			image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+//			options -= 10;//每次都减少10
+//		}
+//		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+//		
+//		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+//		return bitmap;
+//	}
+	
+
+}

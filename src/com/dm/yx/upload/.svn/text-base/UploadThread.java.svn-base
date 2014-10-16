@@ -1,0 +1,89 @@
+package com.hbgz.realnameregestersys.upload;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.hbgz.realnameregestersys.bean.UserInfo;
+import com.hbgz.realnameregestersys.tools.RealNameConstant;
+import com.hbgz.realnameregestersys.tools.RealNameUtil;
+
+
+import android.os.Handler;
+import android.os.Message;
+
+public class UploadThread implements Runnable{
+
+	
+	private FormFile[] formFile;
+	private Handler mHandler;
+	private String custAccNbr;
+	private String certType;
+	private String certNbr;
+	private String custName;
+	private String certAddr;
+	
+
+	public UploadThread(FormFile[] formFile, Handler mHandler,
+			String custAccNbr, String certType, String certNbr, String custName,String certAddr) {
+		super();
+		this.formFile = formFile;
+		this.mHandler = mHandler;
+		this.custAccNbr = custAccNbr;
+		this.certType = certType;
+		this.certNbr = certNbr;
+		this.custName = custName;
+		this.certAddr = certAddr;
+	}
+
+	@Override
+	public void run() {
+//		for (FormFile file:formFile) {
+			String result = uploadFile(formFile);
+			Message msg= mHandler.obtainMessage();
+			if (msg != null) {
+				msg.obj = result;
+				msg.arg1 = 1001;
+				mHandler.sendMessage(msg);
+			}
+//		}
+	}
+	
+	/**
+     * 上传图片到服务器
+     * 
+     * @param imageFile 包含路径
+     */
+    public String uploadFile(FormFile[] formFiles) {
+        try {
+            
+
+        	UserInfo userInfo = RealNameUtil.getUserInfo();
+        	if (userInfo == null) {
+        		RealNameUtil.LOG_D(getClass(), "userInfo is null");
+        		return null;
+        	}
+            //请求普通信息
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("method", "uploadFile");
+            params.put("custAccNbr", custAccNbr);
+            params.put("certType", certType);
+            params.put("certNbr", certNbr);
+            params.put("custName", custName);
+            params.put("certAddr", certAddr);
+            params.put("channelId", userInfo.getOrgId().toString());
+            params.put("operatorNbr", userInfo.getTelephone());
+            params.put("regionId", userInfo.getLatnId().toString());
+            params.put("staffId", userInfo.getStaffId().toString());
+            params.put("channelName", userInfo.getChannelOrganizationUnitName());
+            params.put("name", userInfo.getChannelMemberName());
+            RealNameUtil.LOG_D(getClass(), "url certType=" + certType);
+
+            String result = SocketHttpRequester.post(RealNameConstant.UPLOAD_URL, params, formFiles);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+}

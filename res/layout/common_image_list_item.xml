@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@drawable/list_view_selector" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="center_vertical" android:id="@+id/icon" android:layout_width="35.0dip" android:layout_height="35.0dip" android:layout_marginLeft="10.0dip" android:scaleType="fitXY" />
+    <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip" android:layout_weight="1.0">
+        <TextView android:id="@android:id/text1" android:layout_marginLeft="10.0dip" style="@style/list_item_primary" />
+    </LinearLayout>
+    <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/arrow_list_item" />
+</LinearLayout>
