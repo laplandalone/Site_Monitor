@@ -27,4 +27,6 @@ public class HealthConstant
 
 	@SuppressWarnings("rawtypes")
 	public static final Enum WECHAT = SHARE_MEDIA.WEIXIN;  //微信分享名称
+	
+	public static  final String PUSH_KEY = "UQAsMdIZovAWYR15pAonXUK0"; //push key
 }

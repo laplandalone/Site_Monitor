@@ -97,6 +97,16 @@ public class HealthUtil {
 			return null;
 		}
 		
+		public static void writeBindPush(boolean flag)
+		{
+			userPreferences.edit().putBoolean("isBind", flag).commit();
+		}
+		
+		public static boolean readBindPush() 
+		{
+			return userPreferences.getBoolean("isBind", false);
+		}
+		
 		public static void writeHospitalId(String hospitalId)
 		{
 			userPreferences.edit().putString("hospitalId", hospitalId).commit();

@@ -15,6 +15,8 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.dm.yx.adapter.ImgViewPager;
 import com.dm.yx.model.HospitalT;
 import com.dm.yx.tools.HealthConstant;
@@ -75,6 +77,7 @@ public class WelcomeActivity extends BaseActivity
 		bitmapUtils.closeCache();
 		ViewUtils.inject(this);
 		addActivity(this);
+		bindPush();
 		initView();
 		initValue();
 	
@@ -83,7 +86,19 @@ public class WelcomeActivity extends BaseActivity
 		startService(intent);
 	}
 	
-    
+	/**
+	 * bind push server 
+	 * @param 
+	 * @return void
+	 * author xuchun
+	 */
+    private void bindPush() {
+    	if (!HealthUtil.readBindPush()) {
+    		HealthUtil.LOG_D(getClass(), "bind push server ing...");
+    		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, HealthConstant.PUSH_KEY);
+    	}
+    }
+	
 	/**
 	 * 初始化图片
 	 */
