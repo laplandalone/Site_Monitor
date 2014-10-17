@@ -18,7 +18,7 @@
                     android:paddingLeft="10.0dip"
                     android:text="@string/layout_temp221"
                     android:textColor="@color/black"
-                    android:textSize="16.0sp" />
+                    android:textSize="15.0sp" />
  
                 <ListView
                     android:id="@+id/comlist"
@@ -42,7 +42,7 @@
                         android:paddingLeft="10.0dip"
                         android:text="更多"
                         android:textColor="@color/TextColorGreen"
-                        android:textSize="16.0sp" />
+                        android:textSize="15.0sp" />
                     <ImageView
                         android:id="@+id/hospital_more_img"
                         android:layout_width="50.0dip"
@@ -67,23 +67,23 @@
                     android:paddingLeft="10.0dip"
                     android:text="交通指南"
                     android:textColor="@color/black"
-                    android:textSize="16.0sp" />
+                    android:textSize="15.0sp" />
                      
-                    <TextView android:textSize="16.0sp" android:textColor="@color/TextColorGreen" android:id="@+id/yaxinline1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline1"/>
-                	<TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@+id/yaxinline2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline2"/>
-                	<TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@+id/yaxinline3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline3"/>
-                	<TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@+id/yaxinline4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline4"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/TextColorGreen" android:id="@+id/yaxinline5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline5"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline6"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline7"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline8"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline9"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline10"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline11"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline12"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline13"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline14"/>
-                	<TextView android:textSize="16.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline15"/>  
+                    <TextView android:textSize="15.0sp" android:textColor="@color/TextColorGreen" android:id="@+id/yaxinline1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline1"/>
+                	<TextView android:textSize="15.0sp" android:textColor="@color/black" android:id="@+id/yaxinline2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline2"/>
+                	<TextView android:textSize="15.0sp" android:textColor="@color/black" android:id="@+id/yaxinline3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline3"/>
+                	<TextView android:textSize="15.0sp" android:textColor="@color/black" android:id="@+id/yaxinline4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline4"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/TextColorGreen" android:id="@+id/yaxinline5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline5"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline6"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline7"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline8"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline9"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline10"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline11"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline12"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline13"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline14"/>
+                	<TextView android:textSize="15.0sp" android:visibility="gone" android:textColor="@color/black" android:id="@+id/yaxinline15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1"  android:text="@string/yaxinline15"/>  
                 
                 	<LinearLayout
                     android:id="@+id/yaxinmore"
@@ -101,7 +101,7 @@
                         android:paddingLeft="10.0dip"
                         android:text="更多"
                         android:textColor="@color/TextColorGreen"
-                        android:textSize="16.0sp" />
+                        android:textSize="15.0sp" />
                     <ImageView
                         android:id="@+id/hospital_more_img"
                         android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                     android:paddingLeft="10.0dip"
                     android:text="@string/layout_temp223"
                     android:textColor="@color/black"
-                    android:textSize="16.0sp" />
+                    android:textSize="15.0sp" />
 
                 <TextView
                     android:id="@+id/website"
@@ -127,11 +127,11 @@
                     android:layout_marginBottom="5.0dip"
                     android:layout_marginTop="5.0dip"
                     android:autoLink="web"
-                    android:paddingLeft="16.0dip"
+                    android:paddingLeft="15.0dip"
                     android:paddingRight="13.0dip"
                     android:text="http://www.wahh.com.cn/"
                     android:textColor="@color/TextColorGreen"
-                    android:textSize="16.0sp" />
+                    android:textSize="15.0sp" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -147,10 +147,11 @@
                         android:paddingLeft="10.0dip"
                         android:text="@string/layout_temp229"
                         android:textColor="@color/black"
-                        android:textSize="16.0sp" />
+                        android:textSize="15.0sp" />
                 </LinearLayout>
 
-                <TextView
+              
+                <com.dm.yx.view.XRTextView
                     android:id="@+id/description"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -158,10 +159,12 @@
                     android:maxLines="9"
                     android:paddingLeft="5.0dip"
                     android:paddingRight="5.0dip"
+                    android:layout_alignParentLeft="true"
+ 					android:layout_alignParentRight="true"
                     android:text="@string/layout_temp287"
                     android:textColor="@color/black"
-                    android:textSize="14.0sp" />
-
+                    android:textSize="15.0sp" />
+				
                 <LinearLayout
                     android:id="@id/more_detail"
                     android:layout_width="wrap_content"
@@ -177,11 +180,10 @@
                          android:id="@+id/descText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="7.0dip"
                         android:paddingLeft="10.0dip"
                         android:text="@string/layout_temp231"
                         android:textColor="@color/TextColorGreen"
-                        android:textSize="16.0sp" />
+                        android:textSize="15.0sp" />
                       <ImageView
                         android:id="@+id/hospital_more_img"
                          android:layout_width="wrap_content"
