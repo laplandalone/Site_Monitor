@@ -15,9 +15,9 @@
             <ImageView android:layout_gravity="top|right|center" android:id="@+id/delete3" android:background="@drawable/ok_new" android:layout_width="30.0dip" android:layout_height="30.0dip" />
         </FrameLayout>
     </LinearLayout>
-    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="wrap_content">
         <Button android:id="@+id/input_img" android:background="@drawable/input_img" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_marginLeft="10.0dip" />
-        <EditText android:id="@+id/ask_again_text" android:background="@drawable/btn_comment" android:layout_width="wrap_content" android:visibility="invisible" android:layout_height="35.0dip" android:layout_margin="5.0dip" android:layout_weight="0.1" />
+        <EditText android:id="@+id/ask_again_text" android:layout_width="wrap_content" android:visibility="invisible" android:layout_height="wrap_content" android:layout_marginRight="5.0dp" android:layout_weight="0.1" />
         <Button  android:id="@+id/submit_question" android:layout_marginLeft="7.0dip" android:background="@drawable/ask_question" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_marginRight="10.0dip"/>
     </LinearLayout>
     <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/chooes_buttom" android:background="@drawable/menu_bg" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content">

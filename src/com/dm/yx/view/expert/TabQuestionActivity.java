@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dm.yx.BaseActivity;
@@ -56,6 +57,7 @@ public class TabQuestionActivity extends BaseActivity implements OnItemClickList
 	@ViewInject(R.id.settings)
 	private ImageView settings;
 	private ListView list;
+	private RelativeLayout contentnull;
 	String doctorId;
 	String userId;
 	String questionType = "";
@@ -184,7 +186,7 @@ public class TabQuestionActivity extends BaseActivity implements OnItemClickList
 			 bitmapUtils.display(imageView,photoUrl);
 		 }
 		this.list = (ListView) view2.findViewById(R.id.list);
-		
+		contentnull = (RelativeLayout) view2.findViewById(R.id.contentnull);
 		Button questionBtn = (Button) view2.findViewById(R.id.submit);
 		
 		viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
@@ -329,6 +331,10 @@ public class TabQuestionActivity extends BaseActivity implements OnItemClickList
 		QuestionDoctorListAdapter adapter = new QuestionDoctorListAdapter(TabQuestionActivity.this, questionTs);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
+		if (this.questionTs.size() == 0) {
+			list.setVisibility(View.GONE);
+			contentnull.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override

@@ -54,14 +54,18 @@ public class QuestionDoctorListAdapter extends BaseAdapter
 		
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.online_doctor_question_item, null);
 			TextView textView = (TextView) convertView.findViewById(R.id.telephone);
+			TextView createTime = (TextView) convertView.findViewById(R.id.create_time);
 			TextView content = (TextView) convertView.findViewById(R.id.contentItem);
 			UserQuestionT questionT = questionTs.get(position);
-			String phone=questionT.getUserTelephone()+"";
+			String phone = questionT.getUserTelephone()+"";
+			String phone1 = "";
 			if(phone.length()==11)
 			{
-				phone=phone.substring(0,7);
+				phone1 = phone.substring(0, 3);
+				phone = phone.substring(7, 11);
 			}
-			textView.setText(phone+"**** "+questionT.getCreateDate());
+			textView.setText(phone1 + " **** " + phone);
+			createTime.setText(questionT.getCreateDate());
 			content.setText(questionT.getContent());
 			// doctorPosition.setText(doctors.get(position).getPost());
 			// facultyName.setText(doctors.get(position).getSkill());
