@@ -69,6 +69,7 @@ public class TalkAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.ask_text_item, null);
 			TextView textView = (TextView) convertView.findViewById(R.id.content);
 			LinearLayout imgLine = (LinearLayout) convertView.findViewById(R.id.imgline);
+			ImageView userHead =(ImageView) convertView.findViewById(R.id.userHead);
 			textView.setText(questionT.getContent());
 			String img = questionT.getImgUrl();
 			if(img!=null)
@@ -77,8 +78,10 @@ public class TalkAdapter extends BaseAdapter
 			String[] imgs=img.split(",");
 			if(imgs.length>0 && imgs[0]!=null && !"".equals(imgs[0]))
 			{
+				 userHead.setVisibility(View.VISIBLE);
 				 imgLine.setVisibility(View.VISIBLE);
 				 ImageView img1=(ImageView) convertView.findViewById(R.id.img1);
+				 bitmapUtils.configDefaultLoadingImage(R.drawable.default_loading);
 				 bitmapUtils.display(img1,HealthConstant.question_img_Url+imgs[0]);
 				 Uri mUri = Uri.parse(HealthConstant.question_img_Url+imgs[0]);
 				 img1.setTag(mUri);
@@ -98,6 +101,7 @@ public class TalkAdapter extends BaseAdapter
 			if(imgs.length>1 && imgs[1]!=null && !"".equals(imgs[1]))
 			{
 				 ImageView img2=(ImageView) convertView.findViewById(R.id.img2);
+				 bitmapUtils.configDefaultLoadingImage(R.drawable.default_loading);
 				 bitmapUtils.display(img2,HealthConstant.question_img_Url+imgs[1]);
 				 Uri mUri = Uri.parse(HealthConstant.question_img_Url+imgs[1]);
 				 img2.setTag(mUri);
@@ -118,6 +122,7 @@ public class TalkAdapter extends BaseAdapter
 			if(imgs.length>2 && imgs[2]!=null && !"".equals(imgs[2]))
 			{
 				 ImageView img3=(ImageView) convertView.findViewById(R.id.img3);
+				 bitmapUtils.configDefaultLoadingImage(R.drawable.default_loading);
 				 bitmapUtils.display(img3,HealthConstant.question_img_Url+imgs[2]);
 				 Uri mUri = Uri.parse(HealthConstant.question_img_Url+imgs[2]);
 				 img3.setTag(mUri);

@@ -8,6 +8,6 @@ package com.lurencun.android.toolkit;
 
 public final class R {
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f0201ce;
+		public static final int ic_launcher = 0x7f0201cf;
 	}
 }

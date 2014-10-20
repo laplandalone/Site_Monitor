@@ -116,9 +116,9 @@
           <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.other.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
             <activity android:configChanges="orientation|keyboardHidden" android:name="com.dm.yx.view.expert.MyTalkActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
           
-        <service android:name="com.dm.yx.view.other.CheckNewVersion">
+        <service android:name="com.yx.online.view.other.CheckNewVersion">
         </service>
-        <service android:name="com.dm.yx.view.other.DownloadService">
+        <service android:name="com.yx.online.view.other.DownloadService">
         </service>
     <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name="com.dm.yx.wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 <activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.tencent.tauth.AuthActivity" android:noHistory="true">
