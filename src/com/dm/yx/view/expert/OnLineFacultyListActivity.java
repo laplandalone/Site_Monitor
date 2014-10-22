@@ -6,9 +6,13 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ import com.dm.yx.model.Team;
 import com.dm.yx.model.TeamList;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.tools.pinyinUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -44,14 +49,21 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 	
 	private ListView list;
 	
-	private List<Map<String, Object>> unhandList = new ArrayList<Map<String, Object>>();
+	private LinearLayout searchLayout;
+	
+	@ViewInject(R.id.edit)
+	private EditText edit;
+	
 	private TeamList teamList;
+	FacultyListAdapter adapter ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_list);
 		this.list = (ListView) findViewById(R.id.comlist);
+		this.searchLayout = (LinearLayout) findViewById(R.id.search);
+		searchLayout.setVisibility(View.VISIBLE);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
@@ -72,6 +84,41 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 	{
 		// TODO Auto-generated method stub
 		title.setText("专家列表");
+		edit.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+			
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) 
+			{
+				// TODO Auto-generated method stub
+				
+				String text = edit.getText().toString();
+				text=pinyinUtil.getPinyin(text);
+				List<Team> teams = new ArrayList<Team>();
+				for(int i=0;i<teamList.getTeams().size();i++)
+				{
+					Team team = teamList.getTeams().get(i);
+					String pinYin=team.getPinYin();
+					if(pinYin!=null && pinYin.contains(text))
+					{
+						teams.add(team);
+					}
+				}
+				adapter.setTeams(teams);
+				adapter.notifyDataSetChanged();
+			}
+		});
 	}
 
 	@Override
@@ -164,7 +211,7 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject returnObj = jsonObject.getAsJsonObject("returnMsg");
 		this.teamList = HealthUtil.json2Object(returnObj.toString(), TeamList.class);
-		FacultyListAdapter adapter = new FacultyListAdapter(OnLineFacultyListActivity.this, teamList);
+		adapter = new FacultyListAdapter(OnLineFacultyListActivity.this, teamList);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 		

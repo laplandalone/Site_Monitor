@@ -45,6 +45,15 @@ public class Doctor implements Serializable
 	@Expose
 	public String telephone;
 	
+	@Expose
+	public String pinYin;
+	
+	public String getPinYin() {
+		return pinYin;
+	}
+	public void setPinYin(String pinYin) {
+		this.pinYin = pinYin;
+	}
 	public String getOnlineFlag()
 	{
 		return onlineFlag;

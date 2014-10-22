@@ -6,9 +6,13 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,10 +20,14 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.adapter.ExpertListAdapter;
+import com.dm.yx.adapter.FacultyListAdapter;
 import com.dm.yx.model.Doctor;
 import com.dm.yx.model.DoctorList;
+import com.dm.yx.model.Team;
+import com.dm.yx.model.TeamList;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.tools.pinyinUtil;
 import com.dm.yx.view.faculty.DoctorDetailActivity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -50,7 +58,15 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 
 	private String teamId;
 	private DoctorList doctorList;
-	private List<Map<String, Object>> unhandList = new ArrayList<Map<String, Object>>();
+	
+	private LinearLayout searchLayout;
+	
+	@ViewInject(R.id.edit)
+	private EditText edit;
+	
+	private TeamList searchList = new TeamList();
+	ExpertListAdapter adapter ;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -60,6 +76,8 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		this.teamId=getIntent().getStringExtra("teamId");
 		ViewUtils.inject(this);
 		addActivity(this);
+		this.searchLayout = (LinearLayout) findViewById(R.id.search);
+		searchLayout.setVisibility(View.VISIBLE);
 		initView();
 		initValue();
 	}
@@ -70,6 +88,41 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		textTitle.setVisibility(View.GONE);
 		// TODO Auto-generated method stubtotal_count
 		title.setText("医生列表");
+		edit.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+			
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) 
+			{
+				// TODO Auto-generated method stub
+				
+				String text = edit.getText().toString();
+				text=pinyinUtil.getPinyin(text);
+				List<Doctor> doctors = new ArrayList<Doctor>();
+				for(int i=0;i<doctorList.getDoctors().size();i++)
+				{
+					Doctor doctor = doctorList.getDoctors().get(i);
+					String pinYin=doctor.getPinYin();
+					if(pinYin!=null && pinYin.contains(text))
+					{
+						doctors.add(doctor);
+					}
+				}
+				adapter.setDoctors(doctors);
+				adapter.notifyDataSetChanged();
+			}
+		});
 	}
 
 	@Override
@@ -168,7 +221,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject returnObj = jsonObject.getAsJsonObject("returnMsg");
 		this.doctorList = HealthUtil.json2Object(returnObj.toString(), DoctorList.class);
-		ExpertListAdapter adapter = new ExpertListAdapter(OnLineExpertListActivity.this, doctorList);
+		this.adapter = new ExpertListAdapter(OnLineExpertListActivity.this, doctorList);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 	}

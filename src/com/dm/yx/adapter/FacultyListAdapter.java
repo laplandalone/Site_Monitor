@@ -19,6 +19,14 @@ public class FacultyListAdapter extends BaseAdapter
 
 	private List<Team> teams ;
 
+	public List<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
+
 	public FacultyListAdapter(Context context,  TeamList unhandList)
 	{
 		this.mContext = context;

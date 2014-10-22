@@ -23,6 +23,14 @@ public class ExpertListAdapter  extends BaseAdapter
 
 	private BitmapUtils bitmapUtils;
 	
+	public List<Doctor> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<Doctor> doctors) {
+		this.doctors = doctors;
+	}
+
 	public ExpertListAdapter(Context context, DoctorList doctorList)
 	{
 		this.mContext=context;

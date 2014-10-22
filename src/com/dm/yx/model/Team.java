@@ -16,6 +16,16 @@ public class Team implements Serializable
 	@Expose
 	public String imgUrl;
 	
+	@Expose
+	public String pinYin;
+	
+	
+	public String getPinYin() {
+		return pinYin;
+	}
+	public void setPinYin(String pinYin) {
+		this.pinYin = pinYin;
+	}
 	public String getImgUrl()
 	{
 		return imgUrl;
