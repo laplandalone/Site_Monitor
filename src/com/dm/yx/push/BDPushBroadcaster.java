@@ -26,6 +26,8 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 	public void onBind(Context arg0, int arg1, String arg2, String arg3,
 			String arg4, String arg5) {
 		mContext = arg0;
+		HealthUtil.writePushChannelId(arg3);
+		HealthUtil.writePushUserlId(arg4);
 		HealthUtil.LOG_D(getClass(), "channelID: " + arg3 + " userID: " + arg4);
 		if (arg1 == 0) {
 			HealthUtil.LOG_D(getClass(), "bind success");

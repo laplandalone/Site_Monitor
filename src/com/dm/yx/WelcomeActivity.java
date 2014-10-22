@@ -80,7 +80,8 @@ public class WelcomeActivity extends BaseActivity
 		bindPush();
 		initView();
 		initValue();
-	
+		System.out.println(HealthUtil.readPushChannelId());
+		System.out.println(HealthUtil.readPushUserId());
 		Intent intent = new Intent(this, CheckNewVersion.class);
 		intent.putExtra("flag", "auto");
 		startService(intent);

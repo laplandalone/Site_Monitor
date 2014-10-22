@@ -97,6 +97,26 @@ public class HealthUtil {
 			return null;
 		}
 		
+		public static void writePushChannelId(String flag)
+		{
+			userPreferences.edit().putString("pushChannelId", flag).commit();
+		}
+		
+		public static String readPushChannelId() 
+		{
+			return userPreferences.getString("pushChannelId", "");
+		}
+		
+		public static void writePushUserlId(String flag)
+		{
+			userPreferences.edit().putString("pushUserlId", flag).commit();
+		}
+		
+		public static String readPushUserId() 
+		{
+			return userPreferences.getString("pushUserlId", "");
+		}
+		
 		public static void writeBindPush(boolean flag)
 		{
 			userPreferences.edit().putBoolean("isBind", flag).commit();
@@ -119,14 +139,7 @@ public class HealthUtil {
 		
 		public static String readHospitalName() 
 		{
-			if("101".equals(readHospitalId()))
-			{
-				return  "清华阳光口腔医院";
-			}else if("102".equals(readHospitalId()))
-			{
 				return  "亚洲心脏病医院";
-			}
-			return userPreferences.getString("hospitalName", "");
 		}
 		
 		public static void writeLoginAuto(String loginAuto)
