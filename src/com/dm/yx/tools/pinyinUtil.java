@@ -33,6 +33,35 @@ public class pinyinUtil {
 	}
 
 	/**
+	 * 是否是字母
+	 * @param src
+	 * @return
+	 */
+	public static boolean checkFirstChar(String src)
+	{
+		StringBuffer sb = new StringBuffer();
+		if (src != null && !src.trim().equalsIgnoreCase("")) 
+		{
+			char[] srcChar;
+			srcChar = src.toCharArray();
+			char c = srcChar[0];
+			// 是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)
+			if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) 
+			{
+				return false;
+			} else if (((int) c >= 65 && (int) c <= 90)
+					|| ((int) c >= 97 && (int) c <= 122)) 
+			{
+				
+				return true;
+			} else {
+				return false; 
+			}
+		}
+		return false;
+		
+	}
+	/**
 	 * 获取拼音集合
 	 * 
 	 * @author wyh
@@ -59,11 +88,13 @@ public class pinyinUtil {
 			{
 				char c = srcChar[i];
 				// 是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)
-				if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) {
-					try {
-						temp[i] = PinyinHelper.toHanyuPinyinStringArray(
-								srcChar[i], hanYuPinOutputFormat);
-					} catch (BadHanyuPinyinOutputFormatCombination e) {
+				if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) 
+				{
+					try
+					{
+						temp[i] = PinyinHelper.toHanyuPinyinStringArray(srcChar[i], hanYuPinOutputFormat);
+					} catch (BadHanyuPinyinOutputFormatCombination e)
+					{
 						e.printStackTrace();
 					}
 				} else if (((int) c >= 65 && (int) c <= 90)

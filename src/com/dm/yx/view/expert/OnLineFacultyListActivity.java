@@ -51,8 +51,8 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 	
 	private LinearLayout searchLayout;
 	
-	@ViewInject(R.id.edit)
-	private EditText edit;
+//	@ViewInject(R.id.edit)
+//	private EditText edit;
 	
 	private TeamList teamList;
 	FacultyListAdapter adapter ;
@@ -62,8 +62,8 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_list);
 		this.list = (ListView) findViewById(R.id.comlist);
-		this.searchLayout = (LinearLayout) findViewById(R.id.search);
-		searchLayout.setVisibility(View.VISIBLE);
+//		this.searchLayout = (LinearLayout) findViewById(R.id.search);
+//		searchLayout.setVisibility(View.VISIBLE);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
@@ -84,41 +84,41 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 	{
 		// TODO Auto-generated method stub
 		title.setText("专家列表");
-		edit.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
-			
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void afterTextChanged(Editable s) 
-			{
-				// TODO Auto-generated method stub
-				
-				String text = edit.getText().toString();
-				text=pinyinUtil.getPinyin(text);
-				List<Team> teams = new ArrayList<Team>();
-				for(int i=0;i<teamList.getTeams().size();i++)
-				{
-					Team team = teamList.getTeams().get(i);
-					String pinYin=team.getPinYin();
-					if(pinYin!=null && pinYin.contains(text))
-					{
-						teams.add(team);
-					}
-				}
-				adapter.setTeams(teams);
-				adapter.notifyDataSetChanged();
-			}
-		});
+//		edit.addTextChangedListener(new TextWatcher() {
+//			
+//			@Override
+//			public void onTextChanged(CharSequence s, int start, int before, int count) {
+//				// TODO Auto-generated method stub
+//			
+//			}
+//			
+//			@Override
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//				// TODO Auto-generated method stub
+//			}
+//			
+//			@Override
+//			public void afterTextChanged(Editable s) 
+//			{
+//				// TODO Auto-generated method stub
+//				
+//				String text = edit.getText().toString();
+//				text=pinyinUtil.getPinyin(text);
+//				List<Team> teams = new ArrayList<Team>();
+//				for(int i=0;i<teamList.getTeams().size();i++)
+//				{
+//					Team team = teamList.getTeams().get(i);
+//					String pinYin=team.getPinYin();
+//					if(pinYin!=null && pinYin.contains(text))
+//					{
+//						teams.add(team);
+//					}
+//				}
+//				adapter.setTeams(teams);
+//				adapter.notifyDataSetChanged();
+//			}
+//		});
 	}
 
 	@Override

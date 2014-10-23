@@ -103,19 +103,37 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 				// TODO Auto-generated method stub
 				
 				String text = edit.getText().toString();
-				text=pinyinUtil.getPinyin(text);
-				List<Doctor> doctors = new ArrayList<Doctor>();
-				for(int i=0;i<doctorList.getDoctors().size();i++)
+				if (text != null && !text.trim().equalsIgnoreCase("")) 
 				{
-					Doctor doctor = doctorList.getDoctors().get(i);
-					String pinYin=doctor.getPinYin();
-					if(pinYin!=null && pinYin.contains(text))
+					String searchtext=pinyinUtil.getPinyin(text);
+					boolean firstFlag = pinyinUtil.checkFirstChar(text);
+					List<Doctor> doctors = new ArrayList<Doctor>();
+					for(int i=0;i<doctorList.getDoctors().size();i++)
 					{
-						doctors.add(doctor);
+						Doctor doctor = doctorList.getDoctors().get(i);
+						String pinYin=doctor.getPinYin();
+						String name = doctor.getName();
+						if(firstFlag)
+						{
+							if(pinYin!=null && pinYin.contains(searchtext))
+							{
+								doctors.add(doctor);
+							}
+						}else
+						{
+							if(text!=null && name.contains(text))
+							{
+								doctors.add(doctor);
+							}
+						}
 					}
-				}
-				adapter.setDoctors(doctors);
+					adapter.setDoctors(doctors);
+					adapter.notifyDataSetChanged();
+			}else
+			{
+				adapter.setDoctors(doctorList.getDoctors());
 				adapter.notifyDataSetChanged();
+			}
 			}
 		});
 	}
