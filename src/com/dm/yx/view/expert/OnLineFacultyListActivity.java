@@ -1,17 +1,10 @@
 package com.dm.yx.view.expert;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,7 +17,6 @@ import com.dm.yx.model.Team;
 import com.dm.yx.model.TeamList;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.tools.pinyinUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -104,7 +96,7 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 //				// TODO Auto-generated method stub
 //				
 //				String text = edit.getText().toString();
-//				text=pinyinUtil.getPinyin(text);
+//				text=pinyinUtil.getPi nyin(text);
 //				List<Team> teams = new ArrayList<Team>();
 //				for(int i=0;i<teamList.getTeams().size();i++)
 //				{

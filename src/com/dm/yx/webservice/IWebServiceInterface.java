@@ -53,4 +53,6 @@ public interface IWebServiceInterface {
 	
 	public RequestParams getRsaSign(String orderdId);
 	
+	public RequestParams getTimeRegister(String doctorName);
+	
 }

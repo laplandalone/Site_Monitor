@@ -146,5 +146,10 @@ public class WebServiceInterfaceImpl implements IWebServiceInterface{
 		return HealthUtil.getRequestParams("BUS20024", new String[]{"orderdId"},new Object[]{orderdId});
 	}
 	
+	@Override
+	public RequestParams getTimeRegister(String doctorName)
+	{
+		return HealthUtil.getRequestParams("BUS20034", new String[]{"doctorName" },new Object[]{doctorName});
+	}
 	
 }

@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
-import com.dm.yx.adapter.ExpertListAdapter;
 import com.dm.yx.adapter.FacultyListAdapter;
+import com.dm.yx.adapter.OrderExpertAdapter;
+import com.dm.yx.model.OrderExpert;
+import com.dm.yx.model.OrderExpertList;
 import com.dm.yx.model.Team;
 import com.dm.yx.model.TeamList;
 import com.dm.yx.tools.HealthConstant;
@@ -64,8 +66,13 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 	@ViewInject(R.id.edit)
 	private EditText edit;
 	
-	FacultyListAdapter adapter ;
+	private FacultyListAdapter adapter ;
 	
+	private OrderExpertAdapter  orderExpertAdapter;
+	
+	private OrderExpertList expertList;
+	
+	private String adpterFlag="faculty";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -111,21 +118,18 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 				public void afterTextChanged(Editable s) 
 				{
 					// TODO Auto-generated method stub
-					
 					String text = edit.getText().toString();
-					text=pinyinUtil.getPinyin(text);
-					List<Team> teams = new ArrayList<Team>();
-					for(int i=0;i<teamList.getTeams().size();i++)
+					if (text != null && !text.trim().equalsIgnoreCase("")) 
 					{
-						Team team = teamList.getTeams().get(i);
-						String pinYin=team.getPinYin();
-						if(pinYin!=null && pinYin.contains(text))
-						{
-							teams.add(team);
-						}
+						RequestParams param = webInterface.getTimeRegister(text);
+						invokeWebServer(param, GET_ORDER_LIST);
+					}else
+					{
+						list.setAdapter(adapter);
+						adapter.setTeams(teamList.getTeams());
+						adapter.notifyDataSetChanged();
+						adpterFlag="faculty";
 					}
-					adapter.setTeams(teams);
-					adapter.notifyDataSetChanged();
 				}
 			});
 	}
@@ -214,6 +218,9 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 			case GET_LIST_MORE:
 				returnMsg(arg0.result, GET_LIST_MORE);
 				break;
+			case GET_ORDER_LIST:
+				returnMsg(arg0.result, GET_ORDER_LIST);
+				break;
 			}
 		}
 
@@ -229,38 +236,63 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject returnObj = jsonObject.getAsJsonObject("returnMsg");
-		this.teamList = HealthUtil.json2Object(returnObj.toString(), TeamList.class);
-		if( teamList.getTeams().size()==0)
+		switch (code) 
 		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
-		}
-		adapter = new FacultyListAdapter(FacultyExpertListActivity.this, teamList);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
+			case GET_LIST:
+				this.teamList = HealthUtil.json2Object(returnObj.toString(), TeamList.class);
+				if( teamList.getTeams().size()==0)
+				{
+					layout.setVisibility(View.VISIBLE);
+					list.setVisibility(View.GONE);
+				}
+				adapter = new FacultyListAdapter(FacultyExpertListActivity.this, teamList);
+				this.list.setAdapter(adapter);
+				this.list.setOnItemClickListener(this);
+				break;
+			case GET_ORDER_LIST:
+				this.expertList = HealthUtil.json2Object(returnObj.toString(), OrderExpertList.class);
+				orderExpertAdapter = new OrderExpertAdapter(FacultyExpertListActivity.this, expertList);
+				this.list.setAdapter(orderExpertAdapter);
+				this.list.setOnItemClickListener(this);
+				adpterFlag="expert";
+			default:
+				break;
+			}
+		
 
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		// TODO Auto-generated method stub
-		if("expert".equals(orderType))
+		if(adpterFlag.equals("expert"))
 		{
-			Intent intent = new Intent(FacultyExpertListActivity.this, ExpertListActivity.class);
-			Team team = teamList.getTeams().get(position);
+			Intent intent = new Intent(FacultyExpertListActivity.this,ExpertDetailActivity.class);
+			OrderExpert expert =expertList.getOrders().get(position);
 			Bundle bundle = new Bundle();
-			bundle.putSerializable("team", team);
+			bundle.putSerializable("expert", expert);
 			intent.putExtras(bundle);
 			startActivity(intent);
-		}else if("normal".equals(orderType))
+		}else
 		{
-			Intent intent = new Intent(FacultyExpertListActivity.this, CommonOrderRegisterActivity.class);
-			Team team = teamList.getTeams().get(position);
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("team", team);
-			intent.putExtras(bundle);
-			startActivity(intent);
+			// TODO Auto-generated method stub
+			if("expert".equals(orderType))
+			{
+				Intent intent = new Intent(FacultyExpertListActivity.this, ExpertListActivity.class);
+				Team team = teamList.getTeams().get(position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("team", team);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}else if("normal".equals(orderType))
+			{
+				Intent intent = new Intent(FacultyExpertListActivity.this, CommonOrderRegisterActivity.class);
+				Team team = teamList.getTeams().get(position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("team", team);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
 		}
 	}
 
