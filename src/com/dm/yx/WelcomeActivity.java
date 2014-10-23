@@ -80,8 +80,6 @@ public class WelcomeActivity extends BaseActivity
 		bindPush();
 		initView();
 		initValue();
-		System.out.println(HealthUtil.readPushChannelId());
-		System.out.println(HealthUtil.readPushUserId());
 		Intent intent = new Intent(this, CheckNewVersion.class);
 		intent.putExtra("flag", "auto");
 		startService(intent);
@@ -136,7 +134,7 @@ public class WelcomeActivity extends BaseActivity
 	 * 清华阳光医院：hospital_id:101
 	 * @param v
 	 */
-	@OnClick(R.id.line1)
+	@OnClick(R.id.access)
 	public void toMain(View v)
 	{
 		Intent intent = new Intent(WelcomeActivity.this, MainPageActivity.class);
@@ -193,10 +191,23 @@ public class WelcomeActivity extends BaseActivity
 		int minCircleWhith=(screenWidth-spaceX)/4;//其他服务下，小圆圈图片宽度
 		int minCircleHeight=minCircleWhith*190/160;// 其他服务下，小圆圈图片高度 ： 190/160图片比例
 		int myPagerHight=scrrenHeight-minCircleHeight*5-imgPagerHeigth;
+		
 		myPager.setLayoutParams(new LinearLayout.LayoutParams(screenWidth,myPagerHight));
 		
-		layout2.setLayoutParams(new LinearLayout.LayoutParams(screenWidth,scrrenHeight-screenWidth-intersectionPoint));
+		int logoHight=(screenWidth-180)*150/440;
 		
+		//int left, int top, int right, int bottom
+		LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(screenWidth-180, logoHight);
+		
+		LinearLayout.LayoutParams linearLayout1 = new LinearLayout.LayoutParams(screenWidth/2-30, screenWidth/2-30);
+		
+		linearLayout.setMargins((screenWidth-(screenWidth-180))/2,15,0, 0);
+		
+		linearLayout1.setMargins((screenWidth-(screenWidth/2-30))/2,5,0, 0);
+		
+		layout1.setLayoutParams(linearLayout);
+		
+		layout2.setLayoutParams(linearLayout1);
 	
 		
 		initViewPager();// 初始化图片
