@@ -194,16 +194,16 @@ public class WelcomeActivity extends BaseActivity
 		
 		myPager.setLayoutParams(new LinearLayout.LayoutParams(screenWidth,myPagerHight));
 		
-		int logoHight=(screenWidth-180)*150/440;
+		int logoHight=(screenWidth-400)*150/440;
 		
 		//int left, int top, int right, int bottom
-		LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(screenWidth-180, logoHight);
+		LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(screenWidth-400, logoHight);
 		
 		LinearLayout.LayoutParams linearLayout1 = new LinearLayout.LayoutParams(screenWidth/2-30, screenWidth/2-30);
 		
-		linearLayout.setMargins((screenWidth-(screenWidth-180))/2,15,0, 0);
+		linearLayout.setMargins((screenWidth-(screenWidth-400))/2,15,0, 0);
 		
-		linearLayout1.setMargins((screenWidth-(screenWidth/2-30))/2,5,0, 0);
+		linearLayout1.setMargins((screenWidth-(screenWidth/2-30))/2,35,0, 0);
 		
 		layout1.setLayoutParams(linearLayout);
 		
