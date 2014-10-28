@@ -61,9 +61,7 @@ public class UserCheckActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		name.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		idcard.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		userCard.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		
 	}
 	
 

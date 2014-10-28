@@ -11,6 +11,7 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.expert.QuestionActivity;
 import com.dm.yx.view.order.UserOrderActivity;
@@ -68,6 +69,13 @@ public class UserMainActivity extends BaseActivity
 		startActivity(intent);
 	}
 
+	@OnClick(R.id.item_layout3)
+	public void contact(View v)
+	{
+		Intent intent = new Intent(UserMainActivity.this, ContactListActivity.class);
+		startActivity(intent);
+	}
+	
 	@OnClick(R.id.user_info_detail)
 	public void updateUser(View v)
 	{

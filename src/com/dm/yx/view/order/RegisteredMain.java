@@ -166,7 +166,7 @@ public class RegisteredMain extends BaseActivity
 			HealthUtil.infoAlert(RegisteredMain.this, "请先阅读并同意声明");
 			return;
 		}
-		Intent intent = new Intent(RegisteredMain.this,FacultyExpertListActivity.class);
+		Intent intent = new Intent(RegisteredMain.this,ParentTeamActivity.class);
 		intent.putExtra("orderType", "expert");
 		startActivity(intent);
 	

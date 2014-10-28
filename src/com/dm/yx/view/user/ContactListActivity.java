@@ -1,4 +1,6 @@
-package com.dm.yx.view.expert;
+package com.dm.yx.view.user;
+
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,19 +9,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
-import com.dm.yx.adapter.FacultyListAdapter;
-import com.dm.yx.model.Team;
-import com.dm.yx.model.TeamList;
+import com.dm.yx.adapter.ContactListAdapter;
+import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -29,102 +35,65 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-/**
- * 在线专家科室列表
- * 
- */
-public class OnLineFacultyListActivity extends BaseActivity implements OnItemClickListener
+public class ContactListActivity extends BaseActivity implements OnItemClickListener
 {
-
 	@ViewInject(R.id.title)
 	private TextView title;
+	@ViewInject(R.id.contentnull)
+	private RelativeLayout layout;
 	
+	private User user;
 	private ListView list;
-	
-	private LinearLayout searchLayout;
-	
-//	@ViewInject(R.id.edit)
-//	private EditText edit;
-	
-	private TeamList teamList;
-	FacultyListAdapter adapter ;
+	private List<UserContactT> contactTs;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_list);
-		this.list = (ListView) findViewById(R.id.comlist);
-//		this.searchLayout = (LinearLayout) findViewById(R.id.search);
-//		searchLayout.setVisibility(View.VISIBLE);
+		this.list=(ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
 		initValue();
-
-	}
-
-	@OnClick(R.id.back)
-	public void toHome(View v)
-	{
-		Intent intent = new Intent(OnLineFacultyListActivity.this,MainPageActivity.class);
-		startActivity(intent);
-		exit();
 	}
 
 	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		title.setText("专家列表");
-//		edit.addTextChangedListener(new TextWatcher() {
-//			
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before, int count) {
-//				// TODO Auto-generated method stub
-//			
-//			}
-//			
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//				// TODO Auto-generated method stub
-//			}
-//			
-//			@Override
-//			public void afterTextChanged(Editable s) 
-//			{
-//				// TODO Auto-generated method stub
-//				
-//				String text = edit.getText().toString();
-//				text=pinyinUtil.getPi nyin(text);
-//				List<Team> teams = new ArrayList<Team>();
-//				for(int i=0;i<teamList.getTeams().size();i++)
-//				{
-//					Team team = teamList.getTeams().get(i);
-//					String pinYin=team.getPinYin();
-//					if(pinYin!=null && pinYin.contains(text))
-//					{
-//						teams.add(team);
-//					}
-//				}
-//				adapter.setTeams(teams);
-//				adapter.notifyDataSetChanged();
-//			}
-//		});
+		title.setText("我的联系人");
 	}
 
+
+	@OnClick(R.id.back)
+	public void toHome(View v)
+	{
+		Intent intent = new Intent(ContactListActivity.this, MainPageActivity.class);
+		startActivity(intent);
+		exit();
+	}
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initView();
+		initValue();
+	}
 	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-		// getListRst();
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String hospitalId=HealthUtil.readHospitalId();
-		RequestParams param = webInterface.queryTeamList(hospitalId,"1",null);
+		this.user=HealthUtil.getUserInfo();
+		String userId=user.getUserId();
+		RequestParams param = webInterface.getUserContact (userId);
 		invokeWebServer(param, GET_LIST);
 	}
-
+	
 	/**
 	 * 链接web服务
 	 * 
@@ -167,7 +136,7 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 			{
 				// list.stopLoadMore();
 			}
-			HealthUtil.infoAlert(OnLineFacultyListActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(ContactListActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -201,24 +170,25 @@ public class OnLineFacultyListActivity extends BaseActivity implements OnItemCli
 		JsonElement jsonElement = jsonParser.parse(json);
 		
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonObject returnObj = jsonObject.getAsJsonObject("returnMsg");
-		this.teamList = HealthUtil.json2Object(returnObj.toString(), TeamList.class);
-		adapter = new FacultyListAdapter(OnLineFacultyListActivity.this, teamList);
+		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
+		Gson gson = new Gson();
+		this.contactTs =gson.fromJson(jsonArray, new TypeToken<List<UserContactT>>(){}.getType());
+		if(this.contactTs.size()==0)
+		{
+			layout.setVisibility(View.VISIBLE);
+			list.setVisibility(View.GONE);
+		}
+		ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 		
 	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(OnLineFacultyListActivity.this, OnLineFacultyDescActivity.class);
-		Team team =teamList.getTeams().get(position);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("team", team);
-		intent.putExtras(bundle);
-		startActivity(intent);
+		
+		
+//		startActivity(intent);
 	}
-
 }

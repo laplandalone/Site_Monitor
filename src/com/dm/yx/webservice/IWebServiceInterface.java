@@ -8,7 +8,7 @@ public interface IWebServiceInterface {
 	
 	public RequestParams queryDoctorList(String expertType,String onLineType,String teamId);
 	
-	public RequestParams queryTeamList(String hospitalId,String expertType);
+	public RequestParams queryTeamList(String hospitalId,String expertType,String parentId);
 	
 	public RequestParams queryOrderDoctorList(String hospitalId,String teamId,String doctorIdT);
 	
@@ -55,4 +55,7 @@ public interface IWebServiceInterface {
 	
 	public RequestParams getTimeRegister(String doctorName);
 	
+	public RequestParams addUserContact(String userContact);
+	
+	public RequestParams getUserContact(String userId);
 }

@@ -13,9 +13,9 @@ public class WebServiceInterfaceImpl implements IWebServiceInterface{
 	}
 
 	@Override
-	public RequestParams queryTeamList(String hospitalId,String expertType)
+	public RequestParams queryTeamList(String hospitalId,String expertType,String parentId)
 	{
-		return HealthUtil.getRequestParams("BUS2002", new String[]{"hospitalId","expertType"},new Object[]{hospitalId,expertType});
+		return HealthUtil.getRequestParams("BUS2002", new String[]{"hospitalId","expertType","parentId"},new Object[]{hospitalId,expertType,parentId});
 	}
 
 	@Override
@@ -150,6 +150,17 @@ public class WebServiceInterfaceImpl implements IWebServiceInterface{
 	public RequestParams getTimeRegister(String doctorName)
 	{
 		return HealthUtil.getRequestParams("BUS20034", new String[]{"doctorName" },new Object[]{doctorName});
+	}
+	
+	@Override
+	public RequestParams addUserContact(String userContact)
+	{
+		return HealthUtil.getRequestParams("BUS20036", new String[]{"contact"},new Object[]{userContact});
+	}
+
+	@Override
+	public RequestParams getUserContact(String userId) {
+		return HealthUtil.getRequestParams("BUS20037", new String[]{"userId"},new Object[]{userId});
 	}
 	
 }

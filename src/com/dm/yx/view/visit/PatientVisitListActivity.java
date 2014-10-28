@@ -52,28 +52,28 @@ public class PatientVisitListActivity extends BaseActivity
 	@OnClick(R.id.asd)
 	public void asd(View v)
 	{
-//		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-//		intent.putExtra("url", "http://hiseemedical.com:10821/visit/asd.html");
-//		intent.putExtra("title", "心先手术随访");
-//		startActivity(intent);
+		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
+		intent.putExtra("url", "http://hiseemedical.com:10821/visit/asd.html");
+		intent.putExtra("title", "先心手术随访");
+		startActivity(intent);
 		
-		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/asd.html");    
-		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
-//		1it.setClassName("com.tencent.mtt","com.tencent.mtt.SplashActivity");
-		startActivity(it);
+//		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/asd.html");    
+//		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+////		1it.setClassName("com.tencent.mtt","com.tencent.mtt.SplashActivity");
+//		startActivity(it);
 		
 	}
 	
 	@OnClick(R.id.mvr)
 	public void mvr(View v)
 	{
-//		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-//		intent.putExtra("url", "http://hiseemedical.com:10821/visit/mvr.html");
-//		intent.putExtra("title", "房颤手术随访");
-//		startActivity(intent);
-		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
-		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
-		startActivity(it);
+		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
+		intent.putExtra("url", "http://hiseemedical.com:10821/visit/mvr.html");
+		intent.putExtra("title", "房颤手术随访");
+		startActivity(intent);
+//		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
+//		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+//		startActivity(it);
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class PatientVisitListActivity extends BaseActivity
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-		title.setText("随访");
+		title.setText("患者随访");
 	}
 
 }

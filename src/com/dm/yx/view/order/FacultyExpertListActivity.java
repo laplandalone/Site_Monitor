@@ -74,6 +74,8 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 	
 	private String adpterFlag="faculty";
 	
+	private String parentId="0";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -141,6 +143,7 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 		// TODO Auto-generated method stub
 		// getListRst();
 		String orderTypeT=getIntent().getStringExtra("orderType");
+		String parentId=getIntent().getStringExtra("parentId");
 		this.hospitalId=HealthUtil.readHospitalId();
 		if(orderTypeT!=null && !"".equals(orderTypeT))
 		{
@@ -153,7 +156,7 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 		{
 			expertFlag="1";
 		}
-		RequestParams param = webInterface.queryTeamList(this.hospitalId,expertFlag);/*专家预约挂号*/
+		RequestParams param = webInterface.queryTeamList(this.hospitalId,expertFlag,parentId);/*专家预约挂号*/
 		invokeWebServer(param, GET_LIST);
 	}
 

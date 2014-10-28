@@ -904,13 +904,13 @@
     <string name="layout_temp96">*</string>
     <string name="layout_temp97">真实姓名:</string>
     <string name="layout_temp98">真实姓名</string>
-    <string name="layout_temp99">手机号码</string>
+    <string name="layout_temp99">手机号码:</string>
     <string name="layout_temp100">手机号码</string>
     <string name="layout_temp101">性 别:</string>
     <string name="layout_temp102">挂号信息</string>
-    <string name="layout_temp103">身份证号</string>
+    <string name="layout_temp103">身份证号:</string>
     <string name="layout_temp104">身份证号</string>
-    <string name="layout_temp105">就诊卡号</string>
+    <string name="layout_temp105">就诊卡号:</string>
     <string name="layout_temp106">就诊卡号</string>
     <string name="layout_temp107">挂号信息属个人隐私，请妥善保管，防止泄漏。</string>
     <string name="layout_temp108">更新提醒</string>
@@ -1382,7 +1382,7 @@
     <string name="layout_temp610">手机号码5</string>
     <string name="layout_temp611">分享</string>
     <string name="layout_temp612">帐号(注册的手机号):</string>
-    <string name="layout_temp613">密        码:</string>
+    <string name="layout_temp613">密 码:</string>
     <string name="layout_temp614">记住密码</string>
     <string name="layout_temp615">自动登录</string>
     <string name="layout_temp616">登录</string>

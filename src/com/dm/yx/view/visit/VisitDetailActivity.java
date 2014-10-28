@@ -36,14 +36,8 @@ public class VisitDetailActivity extends BaseActivity
 		web.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 		ViewUtils.inject(this);
 		addActivity(this);
-//		initView();
-//		initValue();
-		String url = getIntent().getStringExtra("url");
-		Uri uri = Uri.parse(url);    
-		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
-		startActivity(it);  
-		
-
+		initView();
+		initValue();
 	}
 
 	@OnClick(R.id.back)
