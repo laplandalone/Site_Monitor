@@ -11,8 +11,8 @@ import android.app.Application;
 public class RegApplication extends Application
 {
 
-	private static RegApplication applicationContext;
-	private List<Activity> activityList = new LinkedList<Activity>();
+	public static RegApplication applicationContext;
+	public List<Activity> activityList = new LinkedList<Activity>();
 	public RegApplication()
 	{
 		super();

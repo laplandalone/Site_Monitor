@@ -100,6 +100,7 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 	{
 		// TODO Auto-generated method stub
 		 title.setText("门诊列表");
+		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		 edit.addTextChangedListener(new TextWatcher() {
 				
 				@Override

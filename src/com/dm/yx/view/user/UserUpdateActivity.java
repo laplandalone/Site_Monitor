@@ -94,6 +94,11 @@ public class UserUpdateActivity extends BaseActivity
 		{
 			femaleRadio.setChecked(true);
 		}
+		
+		realNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		idCardET.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		psw.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		confirmPsw.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
 
 	@OnClick(R.id.back)

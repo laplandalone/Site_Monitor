@@ -356,6 +356,8 @@ public class RegisterActivity extends BaseActivity
 	{
 		// TODO Auto-generated method stub
 		title.setText("用户注册");
+		userNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		confirmNum.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
 
 	@Override

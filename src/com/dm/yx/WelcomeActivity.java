@@ -41,17 +41,14 @@ public class WelcomeActivity extends BaseActivity
 	@ViewInject(R.id.logo)
 	private ImageView logo;
 
-	@ViewInject(R.id.line1)
-	private LinearLayout layout1;
+//	@ViewInject(R.id.line1)
+//	private LinearLayout layout1;
 	
 	@ViewInject(R.id.line2)
 	private LinearLayout layout2;
 
 	@ViewInject(R.id.hospitalName)
 	private TextView hospitalName;
-	
-	@ViewInject(R.id.remark)
-	private TextView remark;
 	
 	@ViewInject(R.id.description)
 	private TextView description;
@@ -205,7 +202,7 @@ public class WelcomeActivity extends BaseActivity
 		
 		linearLayout1.setMargins((screenWidth-(screenWidth/2-30))/2,35,0, 0);
 		
-		layout1.setLayoutParams(linearLayout);
+//		layout1.setLayoutParams(linearLayout);
 		
 		layout2.setLayoutParams(linearLayout1);
 	

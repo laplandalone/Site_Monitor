@@ -84,8 +84,17 @@ public class ConfirmOrderActivity extends BaseActivity
 	@ViewInject(R.id.feelayout)
 	private LinearLayout linearLayout2;
 	
+	@ViewInject(R.id.order_cancel)
+	private Button orderCancel;
+	
 	@ViewInject(R.id.taobao)
-	private Button taobaoBtn;
+	private Button taobao;
+	
+	@ViewInject(R.id.order_cancel_line)
+	private LinearLayout order_cancel_line;
+	
+	@ViewInject(R.id.cancel_single)
+	private LinearLayout cancel_single;
 	
 	private String orderId="";
 	private String orderState="";
@@ -117,15 +126,31 @@ public class ConfirmOrderActivity extends BaseActivity
 		exit();
 	}
 	
-	@OnClick(R.id.taobao)
-	public void pay(View v)
+	@OnClick(R.id.order_cancel)
+	public void cancel(View v)
 	{		
-//		RequestParams param = webInterface.getRsaSign(this.orderId);
-//		invokeWebServer(param, RSA_SIGN);
 		dialog.setMessage("正在取消,请稍后...");
 		dialog.show();
 		RequestParams param = webInterface.orderPay(orderId, "00X");
 		invokeWebServer(param, PAY_STATE);
+	}
+	
+	@OnClick(R.id.order_cancel_single)
+	public void cancelSingle(View v)
+	{		
+		dialog.setMessage("正在取消,请稍后...");
+		dialog.show();
+		RequestParams param = webInterface.orderPay(orderId, "00X");
+		invokeWebServer(param, PAY_STATE);
+	}
+	
+	@OnClick(R.id.taobao)
+	public void pay(View v)
+	{		
+		dialog.setMessage("正在取消,请稍后...");
+		dialog.show();
+		RequestParams param = webInterface.getRsaSign(this.orderId);
+		invokeWebServer(param, RSA_SIGN);
 	}
 	
    
@@ -158,7 +183,7 @@ public class ConfirmOrderActivity extends BaseActivity
 			{
 				if("9000".equals(map.get("resultStatus")))/*支付成功*/
 				{
-					RequestParams param = webInterface.orderPay(orderId, "101");
+					RequestParams param = webInterface.orderPay(orderId, "00A");
 					invokeWebServer(param, PAY_STATE);
 				}else
 				{
@@ -210,13 +235,21 @@ public class ConfirmOrderActivity extends BaseActivity
 	@Override
 	protected void initValue()
 	{
-		if(!"00X".equals(orderState) && "102".equals(orderHospitalId))
+		
+		if(!"00X".equals(orderState))
 		{
-			taobaoBtn.setVisibility(View.VISIBLE);
-		}
-		if("101".equals(orderHospitalId))
-		{
-			mark.setVisibility(View.GONE);
+			if("101".equals(payState))
+			{
+				cancel_single.setVisibility(View.VISIBLE);
+			}else
+			{
+				order_cancel_line.setVisibility(View.VISIBLE);
+			}
+			
+			if("101".equals(orderHospitalId))
+			{
+				mark.setVisibility(View.GONE);
+			}
 		}
 	}
 	
@@ -305,7 +338,8 @@ public class ConfirmOrderActivity extends BaseActivity
 		      if("true".equals(payRst))
 		      {
 		    	  HealthUtil.infoAlert(ConfirmOrderActivity.this, "取消成功");
-		    	  taobaoBtn.setVisibility(View.GONE);
+		    	  orderCancel.setVisibility(View.GONE);
+		    	  taobao.setVisibility(View.GONE);
 		      }
 		      break;
 		      default:

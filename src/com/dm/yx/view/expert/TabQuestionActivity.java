@@ -234,7 +234,6 @@ public class TabQuestionActivity extends BaseActivity implements OnItemClickList
 				intent.putExtra("doctorId", doctor.getDoctorId());
 				intent.putExtra("teamId", doctor.getTeamId());
 				startActivity(intent);
-				finish();
 			}
 		});
 	}

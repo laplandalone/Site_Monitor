@@ -77,6 +77,9 @@ public class HisOrderActivity extends BaseActivity
 	{
 		title.setText("个人信息");
 		editIdCard.setOnKeyListener(onKeyListener);  
+		editName.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		editPhone.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		editIdCard.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
 
 	@Override

@@ -125,6 +125,7 @@ public class AskQuestionMsgActivity extends BaseActivity
 	protected void initView()
 	{
 		title.setText("免费提问");
+		contentET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
 
 	@OnClick(R.id.input_img)
@@ -359,9 +360,9 @@ public class AskQuestionMsgActivity extends BaseActivity
 			return;
 		}
 
-		if(content.length()>300)
+		if(content.length()>100)
 		{
-			HealthUtil.infoAlert(this, "提问内容过长,最多300字");
+			HealthUtil.infoAlert(this, "提问内容过长,最多100字");
 			return;
 		}
 		if (this.user == null )

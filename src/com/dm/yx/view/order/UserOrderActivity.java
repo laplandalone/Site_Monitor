@@ -198,6 +198,7 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 		intent.putExtra("hospitalId", registerOrderT.getHospitalId());
 		intent.putExtra("payState", registerOrderT.getPayState());
 		intent.putExtra("orderId", registerOrderT.getOrderId());
+		intent.putExtra("orderState", registerOrderT.getOrderState());
 		intent.putExtra("doctorName", registerOrderT.getDoctorName());
 		intent.putExtra("registerTime", registerOrderT.getRegisterTime());
 		intent.putExtra("fee", registerOrderT.getOrderFee());

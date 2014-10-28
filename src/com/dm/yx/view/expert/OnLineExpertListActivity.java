@@ -58,7 +58,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 
 	private String teamId;
 	private DoctorList doctorList;
-	
+	private List<Doctor>  doctors;
 	private LinearLayout searchLayout;
 	
 	@ViewInject(R.id.edit)
@@ -67,6 +67,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 	private TeamList searchList = new TeamList();
 	ExpertListAdapter adapter ;
 	
+	String adpterFlag="normal";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -88,6 +89,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		textTitle.setVisibility(View.GONE);
 		// TODO Auto-generated method stubtotal_count
 		title.setText("医生列表");
+		edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		edit.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -111,8 +113,13 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 				if (text != null && !text.trim().equalsIgnoreCase("")) 
 				{
 					String searchtext=pinyinUtil.getPinyin(text);
-					List<Doctor> doctors = new ArrayList<Doctor>();
+					doctors = new ArrayList<Doctor>();
 					boolean firstFlag = pinyinUtil.checkFirstChar(text);
+				
+					if(firstFlag)
+					{
+						searchtext=searchtext.toLowerCase();
+					}
 					for(int i=0;i<doctorList.getDoctors().size();i++)
 					{
 						Doctor doctor = doctorList.getDoctors().get(i);
@@ -132,10 +139,12 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 							}
 						}
 					}
+					adpterFlag="search";
 					adapter.setDoctors(doctors);
 					adapter.notifyDataSetChanged();
 			}else
 			{
+				adpterFlag="normal";
 				adapter.setDoctors(doctorList.getDoctors());
 				adapter.notifyDataSetChanged();
 			}
@@ -248,7 +257,14 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 	{
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(OnLineExpertListActivity.this,DoctorDetailActivity.class);
-		Doctor doctor = doctorList.getDoctors().get(position);
+		Doctor doctor=null;
+		if(adpterFlag.equals("normal"))
+		{
+			 doctor = doctorList.getDoctors().get(position);
+		}else
+		{
+			doctor = doctors.get(position);
+		}
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("doctor", doctor);
 		intent.putExtras(bundle);

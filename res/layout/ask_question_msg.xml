@@ -14,5 +14,5 @@
         android:hint="@string/layout_temp20"
         android:padding="3.0dip" />
 
-    <include layout="@layout/ask_button" />
+    <include layout="@layout/common_ask_button" />
 </LinearLayout>

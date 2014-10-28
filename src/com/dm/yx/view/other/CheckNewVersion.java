@@ -1,5 +1,7 @@
 package com.dm.yx.view.other;
 
+import java.io.File;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,6 +30,7 @@ public class CheckNewVersion extends Service{
 	private final static int CHECK_NEWVERSION = 1;
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();
 	private String flag;
+	File file = new File(HealthConstant.Download_path); 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -59,6 +62,32 @@ public class CheckNewVersion extends Service{
 	
 	}
 	
+	public void deleteFile(File file)
+	{ 
+
+        if (file.exists() == false) 
+        { 
+            return; 
+        } else { 
+            if (file.isFile()) { 
+                file.delete(); 
+                return; 
+            } 
+            if (file.isDirectory()) { 
+                File[] childFile = file.listFiles(); 
+                if (childFile == null || childFile.length == 0) { 
+                    file.delete(); 
+                    return; 
+                } 
+                for (File f : childFile) { 
+                    deleteFile(f); 
+                } 
+                file.delete(); 
+            } 
+        } 
+    } 
+ 
+
 	/**
 	 * 链接服务器
 	 * 
@@ -128,7 +157,8 @@ public class CheckNewVersion extends Service{
 				String applicationVersionCode = returnJson.getString("applicationVersionCode");
 				String versionName = HealthUtil.getVersionName();
 				if(!versionName.equals(applicationVersionCode))
-				{
+				{   
+					deleteFile(file);
 					Bundle bundle = new Bundle();
 					bundle.putString("remark", remark);
 					bundle.putString("applicationUrl", applicationUrl);

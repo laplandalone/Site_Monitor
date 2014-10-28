@@ -54,13 +54,18 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 	
 	private DoctorList doctorList;
 	
+	List<Doctor> doctors;
+	
 	private LinearLayout searchLayout;
 	
 	@ViewInject(R.id.edit)
 	private EditText edit;
 	
 	private TeamList searchList = new TeamList();
+	
 	ExpertListAdapter adapter ;
+	
+	String adpterFlag="normal";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -83,6 +88,7 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 	{
 		// TODO Auto-generated method stub 2130903241
 		title.setText("在线医生");
+		edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
 			edit.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -107,7 +113,11 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 				{
 					String searchtext=pinyinUtil.getPinyin(text);
 					boolean firstFlag = pinyinUtil.checkFirstChar(text);
-					List<Doctor> doctors = new ArrayList<Doctor>();
+					if(firstFlag)
+					{
+						searchtext=searchtext.toLowerCase();
+					}
+					doctors = new ArrayList<Doctor>();
 					for(int i=0;i<doctorList.getDoctors().size();i++)
 					{
 						Doctor doctor = doctorList.getDoctors().get(i);
@@ -127,10 +137,12 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 							}
 						}
 					}
+					adpterFlag="search";
 					adapter.setDoctors(doctors);
 					adapter.notifyDataSetChanged();
 			}else
 			{
+				adpterFlag="normal";
 				adapter.setDoctors(doctorList.getDoctors());
 				adapter.notifyDataSetChanged();
 			}
@@ -242,7 +254,15 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 	{
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(AskExpertListActivity.this,TabQuestionActivity.class);
-		Doctor doctor = doctorList.getDoctors().get(position);
+		Doctor doctor=null;
+		if(adpterFlag.equals("normal"))
+		{
+			 doctor = doctorList.getDoctors().get(position);
+		}else
+		{
+			doctor = doctors.get(position);
+		}
+		
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("doctor", doctor);
 		intent.putExtras(bundle);

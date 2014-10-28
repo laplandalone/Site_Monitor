@@ -46,7 +46,7 @@
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="28.0dip" android:layout_marginTop="18.0dip">
                 <ImageButton android:layout_gravity="center" android:id="@+id/ready" android:background="@drawable/symptom_select_true" android:layout_width="28.0dip" android:layout_height="28.0dip" />
-                <TextView android:textSize="16.0sp" android:textColor="#ff7a7a7a" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="我已阅读并同意声明" android:singleLine="true" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff7a7a7a" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="我已阅读并同意须知" android:singleLine="true" />
             </LinearLayout>
             <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="40.0dip" android:layout_marginTop="18.0dip">
                 <Button   android:id="@id/expert" android:background="@drawable/expert_order_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip"  android:layout_weight="1.0" />

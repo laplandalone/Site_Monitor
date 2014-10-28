@@ -116,7 +116,7 @@ public class OnLineFacultyDescActivity extends BaseActivity
 	@Override
 	protected void initView()
 	{
-		title.setText("分类介绍");
+		title.setText(this.team.getTeamName()+"介绍");
 		// TODO Auto-generated method stub
 		InitViewPager();// 初始化图片
 		myPager.start(this, listViews, 4000, null, R.layout.ad_bottom_item, R.id.ad_item_v,

@@ -26,8 +26,9 @@ import com.dm.yx.view.news.NewsTypeActivity;
 import com.dm.yx.view.order.RegisteredMain;
 import com.dm.yx.view.other.OtherActivity;
 import com.dm.yx.view.user.LoginActivity;
-import com.dm.yx.view.user.MyHealthActivity;
+import com.dm.yx.view.user.UserCheckActivity;
 import com.dm.yx.view.user.UserMainActivity;
+import com.dm.yx.view.visit.PatientVisitListActivity;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -265,14 +266,15 @@ public class MainPageActivity extends BaseActivity
 	@OnClick(R.id.main_img5)
 	public void toMyHealth(View v)
 	{
-		Intent intent = new Intent(MainPageActivity.this, MyHealthActivity.class);
+		Intent intent = new Intent(MainPageActivity.this, UserCheckActivity.class);
 		startActivity(intent);
 	}
 
 	@OnClick(R.id.main_img7)
 	public void toUserVisit(View v)
 	{
-		HealthUtil.infoAlert(MainPageActivity.this, "正在建设中...");
+		Intent intent = new Intent(MainPageActivity.this, PatientVisitListActivity.class);
+		startActivity(intent);
 	}
 	
 	@OnClick(R.id.LinearLayout_more)

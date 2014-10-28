@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.dm.yx.application.RegApplication;
 import com.dm.yx.webservice.IWebServiceInterface;
@@ -38,16 +40,15 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final int AUTH_CODE = 10010;
 	public static final int CHECK_AUTH_CODE = 10011;
 	public static final int SET_PSW = 10012;
-	public static final int PAY_STATE=10003;
-	public static final int RSA_SIGN=10004;
-	public static final int GET_ORDER_LIST=10005;
+	public static final int PAY_STATE = 10003;
+	public static final int RSA_SIGN = 10004;
+	public static final int GET_ORDER_LIST = 10005;
 	protected ProgressDialog dialog;
 
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog = new ProgressDialog(this);
@@ -80,7 +81,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
+		// getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -103,20 +104,39 @@ public abstract class BaseActivity extends FragmentActivity {
 		}
 		return false;
 	}
-	
-	protected OnKeyListener onKeyListener = new OnKeyListener() {  
-        
-        @Override  
-        public boolean onKey(View v, int keyCode, KeyEvent event) {  
-            if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){  
-                /*隐藏软键盘*/  
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
-                if(inputMethodManager.isActive()){  
-                    inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);  
-                }  
-                return true;  
-            }  
-            return false;  
-        }  
-    }; 
+
+	protected OnKeyListener onKeyListener = new OnKeyListener() {
+
+		@Override
+		public boolean onKey(View v, int keyCode, KeyEvent event) {
+			if (keyCode == KeyEvent.KEYCODE_ENTER
+					&& event.getAction() == KeyEvent.ACTION_DOWN) {
+				/* 隐藏软键盘 */
+				InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				if (inputMethodManager.isActive()) {
+					inputMethodManager.hideSoftInputFromWindow(
+							v.getApplicationWindowToken(), 0);
+				}
+				return true;
+			}
+			return false;
+		}
+	};
+
+	public static OnFocusChangeListener onFocusAutoClearHintListener = new OnFocusChangeListener() {
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			EditText textView = (EditText) v;
+			String hint;
+			if (hasFocus) {
+				hint = textView.getHint().toString();
+				textView.setTag(hint);
+				textView.setHint("");
+			} else {
+				hint = textView.getTag().toString();
+				textView.setHint(hint);
+			}
+		}
+	};
+
 }

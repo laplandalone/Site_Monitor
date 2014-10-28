@@ -12,7 +12,7 @@
             android:text="健康管家"
             android:layout_marginLeft="8dip"
             android:textColor="@color/TextColorGreen"
-            android:textSize="15.0sp" />
+            style="@style/list_item_primary" />
     </LinearLayout>
        <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="13.0dip" android:src="@drawable/arrow_list_item" />
 </LinearLayout>

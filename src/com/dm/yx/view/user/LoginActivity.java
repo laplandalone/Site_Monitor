@@ -135,6 +135,9 @@ public class LoginActivity extends BaseActivity
 	{
 		// TODO Auto-generated method stub
 		title.setText("用户登录");
+		userName.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		password.setOnFocusChangeListener(onFocusAutoClearHintListener);
+
 	}
 
 	@Override

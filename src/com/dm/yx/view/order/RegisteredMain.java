@@ -169,7 +169,7 @@ public class RegisteredMain extends BaseActivity
 		Intent intent = new Intent(RegisteredMain.this,FacultyExpertListActivity.class);
 		intent.putExtra("orderType", "expert");
 		startActivity(intent);
-		finish();
+	
 	}
 
 	@OnClick(R.id.back)

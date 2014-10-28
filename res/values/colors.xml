@@ -7,7 +7,8 @@
     <color name="AppBackgroundColor">#ffc0e7fa</color>
     <color name="TextColorBlack">#ff000000</color>
     <color name="TextColorWhite">#ffffffff</color>
-    <color name="TextColorBlue">#2EAA86</color>
+      <color name="TextColorBlue">#2EAA86</color>
+    <color name="TextColorBlueTitle">#5BBBE5</color>
     <color name="TextColorGreen">#63AE59</color>
     <color name="TextColorGray">#ff505050</color>
     <color name="TextColorRed">#ffe26926</color>

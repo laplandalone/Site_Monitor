@@ -90,7 +90,8 @@ public class NewVersionActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void onSuccess(ResponseInfo<File> arg0) {
+			public void onSuccess(ResponseInfo<File> arg0)
+			{
 				updateBtn.setText("下载完成,点击安装");
 				isDownloadCompleted = true;
 				installApkByGuide(HealthConstant.Download_path+"DigitalMedical" + mApplicationVersionCode + ".apk");
@@ -107,7 +108,8 @@ public class NewVersionActivity extends BaseActivity implements OnClickListener{
 					updateBtn.setText("点击安装");
 					updateBtn.setEnabled(true);
 					installApkByGuide(HealthConstant.Download_path+"DigitalMedical" + mApplicationVersionCode + ".apk");
-				} else {
+				} else
+				{
 					updateBtn.setText("点击重试");
 					updateBtn.setEnabled(true);
 				}
@@ -140,10 +142,9 @@ public class NewVersionActivity extends BaseActivity implements OnClickListener{
 	}
 
 	@Override
-	public void onBackPressed() {
-		if ("N".equalsIgnoreCase(mForceUpdateFlag)) {
+	public void onBackPressed()
+	{
 			super.onBackPressed();
-		}
 	}
 	
 	@Override

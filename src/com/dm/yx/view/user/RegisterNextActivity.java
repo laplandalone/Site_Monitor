@@ -95,6 +95,8 @@ public class RegisterNextActivity extends BaseActivity
 	{
 		// TODO Auto-generated method stub
 		title.setText("输入密码");
+		passwordET.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		confirmPasswordET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
 
 	@Override

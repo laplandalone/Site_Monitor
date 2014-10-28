@@ -821,7 +821,7 @@
     <string name="layout_temp17">如何获取MRI医嘱号>></string>
     <string name="layout_temp18">如何获取X线医嘱号>></string>
     <string name="layout_temp19">如何获取超声医嘱号>></string>
-    <string name="layout_temp20">*请尽量详细描述您的病情，包括年龄、性别、主要病症、检查结果，并写下您想获得的帮助(最多输入300字)… …</string>
+    <string name="layout_temp20">*请尽量详细描述您的病情，包括年龄、性别、主要病症、检查结果，并写下您想获得的帮助(最多输入100字)… …</string>
     <string name="layout_temp21">用心服务,满意一百</string>
     <string name="layout_temp22">手机挂号</string>
     <string name="layout_temp23">掌上实时挂号、叫号查询</string>
@@ -1039,7 +1039,7 @@
     <string name="layout_temp218">更新提醒</string>
     <string name="layout_temp219">清华阳光口腔医院</string>
     <string name="layout_temp220">地址: 浙江省杭州市庆春路79号</string>
-    <string name="layout_temp221">医院地图</string>
+    <string name="layout_temp221">医院导航</string>
     <string name="layout_temp222">途经医院公交路线：</string>
     <string name="layout_temp223">官方网址</string>
     <string name="layout_temp224">【医院电话】</string>
