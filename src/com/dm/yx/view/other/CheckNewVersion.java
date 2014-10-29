@@ -15,14 +15,14 @@ import android.widget.Toast;
 
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.webservice.IWebServiceInterface;
-import com.dm.yx.webservice.WebServiceInterfaceImpl;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lurencun.android.webservice.IWebServiceInterface;
+import com.lurencun.android.webservice.WebServiceInterfaceImpl;
 
 public class CheckNewVersion extends Service{
 
@@ -153,6 +153,7 @@ public class CheckNewVersion extends Service{
 			{
 				String remark = returnJson.getString("remark");
 				String applicationUrl = returnJson.getString("applicationUrl");
+				HealthUtil.writeAppUrl(applicationUrl);
 				String forceUpdateFlag = returnJson.getString("forceUpdateFlag");
 				String applicationVersionCode = returnJson.getString("applicationVersionCode");
 				String versionName = HealthUtil.getVersionName();

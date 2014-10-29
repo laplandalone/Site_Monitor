@@ -18,10 +18,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.dm.yx.application.RegApplication;
-import com.dm.yx.webservice.IWebServiceInterface;
-import com.dm.yx.webservice.WebServiceInterfaceImpl;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.HttpHandler;
+import com.lurencun.android.webservice.IWebServiceInterface;
+import com.lurencun.android.webservice.WebServiceInterfaceImpl;
 
 public abstract class BaseActivity extends FragmentActivity {
 

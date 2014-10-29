@@ -51,19 +51,20 @@ public class OtherActivity extends BaseActivity{
 	protected void initView() 
 	{
 	   title.setText("更多");
-	   mController.setShareContent("我正在使用‘掌上亚心’安卓版手机应用，手机预约专家号、专家在线与医生零距离沟通等功能等你体验！http://www.hiseemedical.com:10821/DM_YX.apk");
+	   String url=HealthUtil.readAppUrl();
+	   mController.setShareContent("我正在使用‘掌上亚心’安卓版手机应用，手机预约专家号、专家在线与医生零距离沟通等功能等你体验！"+url);
 		// 设置分享图片, 参数2为图片的url地址
 //	   mController.setShareMedia(new UMImage(this,"http://www.umeng.com/images/pic/banner_module_social.png"));
 		// 设置分享图片，参数2为本地图片的资源引用
 //	   mController.setShareMedia(new UMImage(this, R.drawable.ic_launcher));
 	   mController.getConfig().setPlatformOrder(SHARE_MEDIA.SMS,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN,SHARE_MEDIA.SINA);
-	   mController.getConfig().removePlatform( SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN,SHARE_MEDIA.TENCENT);
+	   mController.getConfig().removePlatform( SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN,SHARE_MEDIA.TENCENT,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QZONE);
 	   
 	   //添加QQ平台
 	   UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
 				"100424468", "c7394704798a158208a74ab60104f0ba");
 		
-	    qqSsoHandler.setTargetUrl("http://www.hiseemedical.com:10821/DM_YX.apk");
+	    qqSsoHandler.setTargetUrl(url);
 		qqSsoHandler.addToSocialSDK();
 		
 		//添加短信平台
@@ -71,7 +72,7 @@ public class OtherActivity extends BaseActivity{
 		smsHandler.addToSocialSDK();
 		
 		// 添加微信平台
-		UMWXHandler wxHandler = new UMWXHandler(this,"wx655d7918ef562780");
+		UMWXHandler wxHandler = new UMWXHandler(this,"wxb3476dcbf317b16d");
 		wxHandler.addToSocialSDK();
 	}
 

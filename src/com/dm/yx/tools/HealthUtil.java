@@ -137,6 +137,16 @@ public class HealthUtil {
 			return userPreferences.getString("hospitalId", "102");
 		}
 		
+		public static void writeAppUrl(String url)
+		{
+			userPreferences.edit().putString("url", url).commit();
+		}
+		
+		public static String readAppUrl() 
+		{
+			return userPreferences.getString("url", "http://www.hiseemedical.com:10821/dmyx.apk");
+		}
+		
 		public static String readHospitalName() 
 		{
 				return  "亚洲心脏病医院";

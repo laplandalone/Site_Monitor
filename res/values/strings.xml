@@ -920,7 +920,7 @@
     <string name="layout_temp112">费用</string>
     <string name="layout_temp113">预约号</string>
     <string name="layout_temp114">基本信息</string>
-    <string name="layout_temp115">患者姓名</string>
+    <string name="layout_temp115">患者姓名:</string>
     <string name="layout_temp116">患者姓名</string>
     <string name="layout_temp117">患者性别</string>
     <string name="layout_temp118">确认预约</string>
