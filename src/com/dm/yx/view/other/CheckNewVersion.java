@@ -55,6 +55,7 @@ public class CheckNewVersion extends Service{
 		jsonObject.put("applicationType", "CUST");
 		jsonObject.put("deviceType", "ANDROID");
 		jsonObject.put("hospitalId", HealthUtil.readHospitalId());
+		jsonObject.put("telephone", HealthUtil.readUserPhone());
 		RequestParams param = webInterface.checkNewVersion(jsonObject.toString());
 		connectWebServer(param,CHECK_NEWVERSION);
 	} catch (JSONException e) {

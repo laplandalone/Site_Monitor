@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.dm.yx.application.RegApplication;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.HttpHandler;
+import com.lurencun.android.utils.ParamUtil;
 import com.lurencun.android.webservice.IWebServiceInterface;
 import com.lurencun.android.webservice.WebServiceInterfaceImpl;
 

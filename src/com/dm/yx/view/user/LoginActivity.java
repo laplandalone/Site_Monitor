@@ -27,6 +27,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.lurencun.android.utils.ParamUtil;
 
 public class LoginActivity extends BaseActivity
 {
@@ -192,8 +193,8 @@ public class LoginActivity extends BaseActivity
 			HealthUtil.writeUserPhone("");
 			HealthUtil.writeUserPassword("");
 		}
-
-		RequestParams param = webInterface.queryUser(telephone, passwordT);
+		
+		RequestParams param = webInterface.queryUser(telephone, passwordT,HealthUtil.readHospitalId());
 		invokeWebServer(param, USER_LOGIN);
 	}
 	/**
@@ -288,6 +289,8 @@ public class LoginActivity extends BaseActivity
 					HealthUtil.writeUserInfo(returnMsg.toString());
 					User user = HealthUtil.getUserInfo();
 					HealthUtil.writeUserId(user.getUserId());
+					HealthUtil.writeUserPhone(user.getTelephone());
+					ParamUtil.setUserId(user.getUserId());		
 					HealthUtil.infoAlert(LoginActivity.this, "登录成功");
 					this.setResult(RESULT_OK, getIntent());
 					finish();
