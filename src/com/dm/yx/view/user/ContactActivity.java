@@ -220,13 +220,6 @@ public class ContactActivity extends BaseActivity
 			String executeType = jsonObject.get("executeType").getAsString();
 			if ("success".equals(executeType))
 			{
-				
-				Gson gson = new Gson();
-				String userStr = gson.toJson(userT);
-				
-				HealthUtil.writeUserInfo(userStr);
-				HealthUtil.writeUserId(userT.getUserId());
-				
 				HealthUtil.infoAlert(ContactActivity.this, "添加联系人成功.");
 				finish();
 			} else

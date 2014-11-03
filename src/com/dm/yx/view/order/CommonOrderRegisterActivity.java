@@ -309,9 +309,9 @@ public class CommonOrderRegisterActivity extends BaseActivity
 		dialog.setMessage("正在预约,请稍后...");
 		dialog.show();
 		String hospitalId=HealthUtil.readHospitalId();
-		RequestParams param = webInterface.addUserRegisterOrder(hospitalId,userId, registerId, doctorId, doctorName, userOrderNum, fee, registerTime, userName,
-				userNo, userTelephone, sex, teamId, teamName);
-		invokeWebServer(param, ADD_REGISTER_ORDER);
+//		RequestParams param = webInterface.addUserRegisterOrder(hospitalId,userId, registerId, doctorId, doctorName, userOrderNum, fee, registerTime, userName,
+//				userNo, userTelephone, sex, teamId, teamName);
+//		invokeWebServer(param, ADD_REGISTER_ORDER);
 
 	}
 

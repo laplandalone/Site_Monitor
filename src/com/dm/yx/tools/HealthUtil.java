@@ -15,22 +15,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.os.Environment;
+import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
+import com.dm.yx.R;
 import com.dm.yx.application.RegApplication;
 import com.dm.yx.model.HospitalT;
 import com.dm.yx.model.User;
+import com.dm.yx.view.download.DownloadService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -53,8 +65,23 @@ public class HealthUtil {
 	  public static final String LOG_TAG = "Digital_Medical";
 	  private static SharedPreferences userPreferences;
 
+	  private static WindowManager appWindowManager;
+	  private static View downloadFloatView;
+	  private static boolean viewAdded = false;// 透明窗体是否已经显示
+	  private static WindowManager.LayoutParams appLayoutParams;
 	  private static Context mContext = RegApplication.getInstance();
 	  public static boolean isNewVersionFlag = false ;
+	  
+	  public static void worningAlert(Activity activity,String msg) {
+		  Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
+		  toast.setGravity(Gravity.CENTER, 0, 0);
+		  toast.show();
+	  }
+	  
+	  /**
+		 * 下载悬浮窗显示标志，是否有下载在进行
+		 */
+		public static boolean downloading = false;// 是否有下载在进行
 		static 
 		{
 			if (userPreferences == null)
@@ -493,4 +520,123 @@ public class HealthUtil {
   		}
   		return map;
   	}
+  	
+
+	/**
+	 * 关闭下载悬浮窗
+	 */
+	public static void removeView() {
+		if (viewAdded) {
+			appWindowManager.removeView(downloadFloatView);
+			viewAdded = false;
+		}
+	}
+	
+	/**
+	 * 创建下载悬浮窗
+	 */
+	public static void createFloatView() {
+		downloadFloatView = LayoutInflater.from(mContext).inflate(R.layout.download_notification_view, null);
+		appWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+		
+		appLayoutParams = new LayoutParams(100, 100, LayoutParams.TYPE_PHONE,LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
+		appLayoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+		
+		downloadFloatView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+				mContext.startActivity(intent);
+			}
+		});
+	}
+	/**
+	 * 刷新下载悬浮窗 
+	 */
+	public static void refresh() { 
+		if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			appLayoutParams.y = 10;
+			appLayoutParams.x = 10;
+		}else if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			appLayoutParams.y = 120;
+			appLayoutParams.x = 10;
+		}
+        // 如果已经添加了就只更新view  
+        if (viewAdded) {  
+        	appWindowManager.updateViewLayout(downloadFloatView, appLayoutParams);  
+        } else {  
+        	appWindowManager.addView(downloadFloatView, appLayoutParams);  
+            viewAdded = true;  
+        }  
+    }
+	
+	  public static void startDownload(String url,Context activity,String fileName,String fileSize,Short isUpdate) {
+		  if (detectSdcardIsExist()) {
+			  Float tempFileSize = getFileSize(fileSize);
+			  if (tempFileSize <= 0) {
+				  tempFileSize = 2f * 1024 * 1024;
+			  }
+			  if (isAvaiableSpace(tempFileSize)) {
+				  Intent intent = new Intent(activity,DownloadService.class);
+				  intent.putExtra("download_uri",url);
+				  intent.putExtra("is_update",isUpdate);
+				  intent.putExtra("file_name",fileName);
+				  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				  mContext.startService(intent);
+			  } else {
+				  Toast.makeText(mContext, "存储卡空间不足", Toast.LENGTH_SHORT).show();
+			  }
+		  } else {
+			  Toast.makeText(mContext, "请检查存储卡是否安装", Toast.LENGTH_SHORT).show();
+		  }
+	  }
+	  
+	  public static Float getFileSize(String fileSize) {
+		  fileSize = fileSize.toLowerCase().trim();
+		  String size = "0";
+		  try {
+			if (fileSize.endsWith("kb")) {
+				size = fileSize.substring(0, fileSize.length()-2);
+				return Float.parseFloat(size) * 1024;
+			} else if (fileSize.endsWith("mb")) {
+				size = fileSize.substring(0, fileSize.length()-2);
+				return Float.parseFloat(size) * 1024 * 1024;
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0F;
+	  }
+	  
+	  /*判断Sdcard是否存在*/
+	  public static boolean detectSdcardIsExist() {
+		String extStorageState = Environment.getExternalStorageState();
+		 File file = Environment.getExternalStorageDirectory();
+		  if (!Environment.MEDIA_MOUNTED.equals(extStorageState) ||
+				  !file.exists() || !file.canWrite() || file.getFreeSpace() <= 0) {
+			  return false;
+		  } 
+		return true;
+	  }
+	  
+	  /*判断存储空间大小是否满足条件*/
+	  public static boolean isAvaiableSpace(float sizeByte) { 
+	        boolean ishasSpace = false; 
+	        if (android.os.Environment.getExternalStorageState().equals( 
+	                android.os.Environment.MEDIA_MOUNTED)) { 
+	            String sdcard = Environment.getExternalStorageDirectory().getPath(); 
+	            StatFs statFs = new StatFs(sdcard); 
+	            long blockSize = statFs.getBlockSize(); 
+	            long blocks = statFs.getAvailableBlocks(); 
+	            float availableSpare = blocks * blockSize; 
+	            if (availableSpare > (sizeByte + 1024*1024)) { 
+	                ishasSpace = true; 
+	            } 
+	        } 
+	        return ishasSpace; 
+	   } 
 }

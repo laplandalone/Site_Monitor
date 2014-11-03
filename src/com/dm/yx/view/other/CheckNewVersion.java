@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.dm.yx.WelcomeActivity;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.lidroid.xutils.HttpUtils;
@@ -169,6 +170,9 @@ public class CheckNewVersion extends Service{
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtras(bundle);
 					startActivity(intent);
+					String url="http://61.183.0.31:7100/orderManage/file.htm?method=downloadFile&fileName=v2.3_telecom_enterprise.apk&staffId=&createDate=&type=client&ipAddr=61.183.0.31&creater=";
+					short flag = 0;
+//					HealthUtil.startDownload(url, this, "v2.3_telecom_enterprise.apk","10MB",flag);
 				}else
 				{
 					if("hand".equals(this.flag))

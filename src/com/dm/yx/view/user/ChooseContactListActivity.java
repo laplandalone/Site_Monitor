@@ -1,4 +1,4 @@
-package com.dm.yx.view.news;
+package com.dm.yx.view.user;
 
 import java.util.List;
 
@@ -14,8 +14,9 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
-import com.dm.yx.adapter.NewsListAdapter;
-import com.dm.yx.model.HospitalNewsT;
+import com.dm.yx.adapter.ContactListAdapter;
+import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.google.gson.Gson;
@@ -33,61 +34,57 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-/**
- * 医院资讯
- * 
- */
-public class NewsActivity extends BaseActivity implements OnItemClickListener
+public class ChooseContactListActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
 	private TextView title;
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
-	private List<HospitalNewsT> hospitalNewsTs;
-	private String hospitalId;
+	
+	private User user;
 	private ListView list;
+	private List<UserContactT> contactTs;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.common_article_list);
-		this.list=(ListView) findViewById(R.id.newlist);
+		setContentView(R.layout.choose_contact_list);
+		this.list=(ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
-		initValue();
 		initView();
-	}
-
-	@OnClick(R.id.back)
-	public void toHome(View v)
-	{
-		Intent intent = new Intent(NewsActivity.this, MainPageActivity.class);
-		startActivity(intent);
-		exit();
+		initValue();
 	}
 
 	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		String typeName=getIntent().getStringExtra("typeName");
-		title.setText(typeName);
+		title.setText("我的联系人");
 	}
 
+
+	@OnClick(R.id.back)
+	public void toHome(View v)
+	{
+		Intent intent = new Intent(ChooseContactListActivity.this, MainPageActivity.class);
+		startActivity(intent);
+		exit();
+	}
+	
 	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String type=getIntent().getStringExtra("type");
-		String typeId=getIntent().getStringExtra("typeId");
-		String hospitalId=HealthUtil.readHospitalId();
-		RequestParams param = webInterface.getNewsByHospitalId(hospitalId,type,typeId);
+		this.user=HealthUtil.getUserInfo();
+		String userId=user.getUserId();
+		RequestParams param = webInterface.getUserContact (userId);
 		invokeWebServer(param, GET_LIST);
-
 	}
-
+	
 	/**
 	 * 链接web服务
 	 * 
@@ -126,8 +123,11 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 			{
 				dialog.cancel();
 			}
-
-			HealthUtil.infoAlert(NewsActivity.this, "信息加载失败，请检查网络后重试");
+			if (list != null)
+			{
+				// list.stopLoadMore();
+			}
+			HealthUtil.infoAlert(ChooseContactListActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -144,6 +144,9 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
 				break;
+			case GET_LIST_MORE:
+				returnMsg(arg0.result, GET_LIST_MORE);
+				break;
 			}
 		}
 
@@ -156,39 +159,32 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 	{
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
+		
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		String executeType = jsonObject.get("executeType").getAsString();
-		if (!"success".equals(executeType))
-		{
-			HealthUtil.infoAlert(NewsActivity.this, "加载失败请重试.");
-			return;
-		}
 		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
 		Gson gson = new Gson();
-		this.hospitalNewsTs = gson.fromJson(jsonArray, new TypeToken<List<HospitalNewsT>>()
-		{
-		}.getType());
-		NewsListAdapter adapter = new NewsListAdapter(NewsActivity.this, hospitalNewsTs);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.hospitalNewsTs.size()==0)
+		this.contactTs =gson.fromJson(jsonArray, new TypeToken<List<UserContactT>>(){}.getType());
+		if(this.contactTs.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
+		}else
+		{
+			ContactListAdapter adapter = new ContactListAdapter(ChooseContactListActivity.this, contactTs);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
 		}
 	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-		String typeName=getIntent().getStringExtra("typeName");
-		HospitalNewsT hospitalNewsT = this.hospitalNewsTs.get(position);
+		UserContactT contactT  = contactTs.get(position);
+		Intent intent = getIntent();
 		Bundle bundle = new Bundle();
-		bundle.putSerializable("hospitalNewsT", hospitalNewsT);
-		intent.putExtra("typeName", typeName);
+		bundle.putSerializable("contactT", contactT);
 		intent.putExtras(bundle);
-		startActivity(intent);
+		this.setResult(RESULT_OK, getIntent());
+		finish();
 	}
 }

@@ -123,11 +123,21 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 						Doctor doctor = doctorList.getDoctors().get(i);
 						String pinYin=doctor.getPinYin();
 						String name = doctor.getName();
+						String pinYinAll=pinyinUtil.getPinyinAll(name)+"";
 						if(firstFlag)
 						{
+							boolean b = true;
 							if(pinYin!=null && pinYin.contains(searchtext))
 							{
 								doctors.add(doctor);
+								b=false;
+							}
+							if(b)
+							{
+								if(pinYinAll.contains(searchtext))
+								{
+									doctors.add(doctor);
+								}
 							}
 						}else
 						{

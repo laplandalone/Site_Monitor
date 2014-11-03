@@ -160,16 +160,24 @@ public class RegisteredMain extends BaseActivity
 	
 	@OnClick(R.id.expert)
 	public void expertOrder(View v)
-	{
-		if(!readFlag)
+		{if(!readFlag)
 		{
 			HealthUtil.infoAlert(RegisteredMain.this, "请先阅读并同意声明");
 			return;
 		}
-		Intent intent = new Intent(RegisteredMain.this,ParentTeamActivity.class);
-		intent.putExtra("orderType", "expert");
-		startActivity(intent);
-	
+		String channel=getIntent().getStringExtra("registerChannel");
+		if("doctor".equals(channel))
+		{
+			String name=getIntent().getStringExtra("doctorName");
+			Intent intent = new Intent(RegisteredMain.this, FacultyExpertListActivity.class);
+			intent.putExtra("doctorName", name);
+			startActivity(intent);
+		}else
+		{
+			Intent intent = new Intent(RegisteredMain.this,ParentTeamActivity.class);
+			intent.putExtra("orderType", "expert");
+			startActivity(intent);
+		}
 	}
 
 	@OnClick(R.id.back)

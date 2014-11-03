@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.Doctor;
+import com.dm.yx.view.order.RegisteredMain;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -36,6 +38,8 @@ public class DoctorDetailActivity extends BaseActivity
 	@ViewInject(R.id.doctor_photo)
 	private ImageView photo;
 	
+	private LinearLayout register;
+	
 	private BitmapUtils bitmapUtils;
 	private Doctor  doctor;
 	protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +57,17 @@ public class DoctorDetailActivity extends BaseActivity
 	public void toHome(View v)
 	{
 		Intent intent = new Intent(DoctorDetailActivity.this,MainPageActivity.class);
+		startActivity(intent);
+		exit();
+	}
+	
+
+	@OnClick(R.id.register)
+	public void register(View v)
+	{
+		Intent intent = new Intent(DoctorDetailActivity.this,RegisteredMain.class);
+		intent.putExtra("registerChannel", "doctor");
+		intent.putExtra("doctorName",this.doctor.getName());
 		startActivity(intent);
 		exit();
 	}

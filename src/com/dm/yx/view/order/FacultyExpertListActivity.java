@@ -144,6 +144,7 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 		// getListRst();
 		String orderTypeT=getIntent().getStringExtra("orderType");
 		String parentId=getIntent().getStringExtra("parentId");
+		String doctorName=getIntent().getStringExtra("doctorName");
 		this.hospitalId=HealthUtil.readHospitalId();
 		if(orderTypeT!=null && !"".equals(orderTypeT))
 		{
@@ -152,12 +153,21 @@ public class FacultyExpertListActivity extends BaseActivity implements OnItemCli
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
 		String expertFlag="0";
-		if("normal".equals(orderTypeT))
+		
+		if(doctorName!=null && !"".equals(doctorName))
 		{
-			expertFlag="1";
+			RequestParams param = webInterface.getTimeRegister(doctorName);
+			invokeWebServer(param, GET_ORDER_LIST);
+		}else
+		{
+			if("normal".equals(orderTypeT))
+			{
+				expertFlag="1";
+			}
+			RequestParams param = webInterface.queryTeamList(this.hospitalId,expertFlag,parentId);/*专家预约挂号*/
+			invokeWebServer(param, GET_LIST);
 		}
-		RequestParams param = webInterface.queryTeamList(this.hospitalId,expertFlag,parentId);/*专家预约挂号*/
-		invokeWebServer(param, GET_LIST);
+		
 	}
 
 	/**

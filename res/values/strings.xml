@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<string name="checkUpdate_title">更新提示</string>
+	<string name="checkUpdate_msg1">"正在检测新版本…"</string>
+	<string name="checkUpdate_msg2">"发现新版本，是否更新?"</string>
+	<string name="checkUpdate_msg3">"此次更新内容："</string>
+	<string name="checkUpdate_toast1">没有新版本</string>
+	<string name="checkUpdate_updateNow">立即更新</string>
+	<string name="checkUpdate_updatelater">以后提醒</string>
     <string name="new_version_uploadbtn">立即更新</string>
     <string name="new_version_cancelbtn">下次更新</string>
     <string name="new_version_title">更新提醒</string>

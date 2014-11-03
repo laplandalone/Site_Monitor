@@ -12,6 +12,7 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
@@ -28,7 +29,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class UserUpdateActivity extends BaseActivity
+public class UpdateContactActivity extends BaseActivity
 {
 	@ViewInject(R.id.title)
 	private TextView title;
@@ -39,6 +40,9 @@ public class UserUpdateActivity extends BaseActivity
 	@ViewInject(R.id.tel)
 	private EditText telephoneET;
 
+	@ViewInject(R.id.userCard)
+	private EditText userCard;
+	
 	@ViewInject(R.id.idcard)
 	private EditText idCardET;
 
@@ -51,11 +55,6 @@ public class UserUpdateActivity extends BaseActivity
 	@ViewInject(R.id.female)
 	private RadioButton femaleRadio;
 	
-	@ViewInject(R.id.psw)
-	private EditText psw;
-	
-	@ViewInject(R.id.confirmPsw)
-	private EditText confirmPsw;
 	
 	private User user;
 
@@ -63,12 +62,13 @@ public class UserUpdateActivity extends BaseActivity
 	
 	private String sex;
 
+	private UserContactT contactT;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.edit_people_info);
+		setContentView(R.layout.user_contact);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
@@ -78,33 +78,19 @@ public class UserUpdateActivity extends BaseActivity
 	@Override
 	protected void initView()
 	{
-		title.setText("资料更新");
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		title.setText("修改联系人");
 		this.user = HealthUtil.getUserInfo();
-		realNameET.setText(user.getUserName());
-		idCardET.setText(user.getUserNo());
-		telephoneET.setText(user.getTelephone());
-		psw.setText(user.getPassword());
-		confirmPsw.setText(user.getPassword());
-		if ("男".equals(user.getSex()))
-		{
-			maleRadio.setChecked(true);
-		} else if ("女".equals(user.getSex()))
-		{
-			femaleRadio.setChecked(true);
-		}
-		
-		realNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		idCardET.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		psw.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		confirmPsw.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		this.contactT= (UserContactT) getIntent().getSerializableExtra("contactT");
+		telephoneET.setText(contactT.getContactTelephone());
+		idCardET.setText(contactT.getContactNo());
+		realNameET.setText(contactT.getContactName());
+		userCard.setText(contactT.getCardId());
 	}
 
 	@OnClick(R.id.back)
 	public void toHome(View v)
 	{
-		Intent intent = new Intent(UserUpdateActivity.this, MainPageActivity.class);
+		Intent intent = new Intent(UpdateContactActivity.this, MainPageActivity.class);
 		startActivity(intent);
 		exit();
 	}
@@ -123,67 +109,46 @@ public class UserUpdateActivity extends BaseActivity
 		String idCheckRst = IDCard.IDCardValidate(idNum);
 		RadioButton radioButton = (RadioButton) findViewById(group.getCheckedRadioButtonId());
 		String userNameT=realNameET.getText() + "";
-		String pswStr = psw.getText().toString();
-		String confirmPswStr = confirmPsw.getText().toString();
 		
 		if("".equals(userNameT))
 		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "用户名为空.");
+			HealthUtil.infoAlert(UpdateContactActivity.this, "真实姓名为空.");
 			return;
 		}else if(userNameT.length()>6)
 		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "用户名长度无效.");
+			HealthUtil.infoAlert(UpdateContactActivity.this, "真实姓名长度无效.");
 			return;
 		}
 		if (!HealthUtil.isMobileNum(phoneNum))
 		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "手机号码为空或格式错误.");
+			HealthUtil.infoAlert(UpdateContactActivity.this, "手机号码为空或格式错误.");
 			return;
 		} else if (!"YES".equals(idCheckRst))
 		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, idCheckRst);
+			HealthUtil.infoAlert(UpdateContactActivity.this, idCheckRst);
 			return;
 		}
 
 		if (radioButton == null)
 		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "用户性别为空.");
+			HealthUtil.infoAlert(UpdateContactActivity.this, "用户性别为空.");
 			return;
 		} else
 		{
 			this.sex = radioButton.getText().toString();
 		}
 		
-		if("".equals(pswStr))
-		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "密码为空.");
-			return;
-		}
-		
-		if(pswStr.length()<6 || pswStr.length()>12)
-		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "密码长度有误.");
-			return;
-		}
-		
-		if(!pswStr.equals(confirmPswStr))
-		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "密码不一致.");
-			return;
-		}
-		
-		this.userT.setUserId(user.getUserId());
-		this.userT.setTelephone(telephoneET.getText() + "");
-		this.userT.setUserName(userNameT);
-		this.userT.setUserNo(idCardET.getText() + "");
-		this.userT.setPassword(user.getPassword());
-		this.userT.setSex(this.sex);
-		this.userT.setPassword(pswStr);
+		this.contactT.setUserId(user.getUserId());
+		this.contactT.setContactTelephone(telephoneET.getText() + "");
+		this.contactT.setContactName(userNameT);
+		this.contactT.setContactNo(idCardET.getText() + "");
+		this.contactT.setContactSex(this.sex);
+		this.contactT.setCardId(userCard.getText()+"");
 		Gson gson = new Gson();
-		String userStr = gson.toJson(userT);
-		dialog.setMessage("更新中,请稍后...");
+		String userStr = gson.toJson(contactT);
+		dialog.setMessage("处理中,请稍后...");
 		dialog.show();
-		RequestParams param = webInterface.updateUser(userStr);
+		RequestParams param = webInterface.updateUserContact(userStr);
 		invokeWebServer(param, UPDATE_USER);
 	}
 
@@ -191,7 +156,7 @@ public class UserUpdateActivity extends BaseActivity
 	 * 链接web服务
 	 * 
 	 * @param param
-	 *            2131493634
+	 *             
 	 */
 	private void invokeWebServer(RequestParams param, int responseCode)
 	{
@@ -227,7 +192,7 @@ public class UserUpdateActivity extends BaseActivity
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(UserUpdateActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(UpdateContactActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -258,18 +223,11 @@ public class UserUpdateActivity extends BaseActivity
 			String executeType = jsonObject.get("executeType").getAsString();
 			if ("success".equals(executeType))
 			{
-				
-				Gson gson = new Gson();
-				String userStr = gson.toJson(userT);
-				
-				HealthUtil.writeUserInfo(userStr);
-				HealthUtil.writeUserId(userT.getUserId());
-				HealthUtil.writeUserPassword(userT.getPassword());
-				HealthUtil.infoAlert(UserUpdateActivity.this, "用户资料更新成功.");
+				HealthUtil.infoAlert(UpdateContactActivity.this, "修改联系人成功.");
 				finish();
 			} else
 			{
-				HealthUtil.infoAlert(UserUpdateActivity.this, "用户资料更新失败请重试.");
+				HealthUtil.infoAlert(UpdateContactActivity.this, "修改联系人失败请重试.");
 			}
 
 		}

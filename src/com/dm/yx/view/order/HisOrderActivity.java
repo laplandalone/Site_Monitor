@@ -3,6 +3,7 @@ package com.dm.yx.view.order;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -12,9 +13,12 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
+import com.dm.yx.view.user.ChooseContactListActivity;
+import com.dm.yx.view.user.ContactListActivity;
 import com.dm.yx.view.user.LoginActivity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -44,6 +48,8 @@ public class HisOrderActivity extends BaseActivity
 	
 	@ViewInject(R.id.check_btn)
 	private RadioGroup group;
+	@ViewInject(R.id.settings)
+	private Button settings;
 	
 	private String doctorName="0";
 	private String registerTime;
@@ -59,6 +65,12 @@ public class HisOrderActivity extends BaseActivity
 	private String userTelephone;
 	private String sex;
 	private User user;
+	
+	@ViewInject(R.id.male)
+	private RadioButton maleRadio;
+
+	@ViewInject(R.id.female)
+	private RadioButton femaleRadio;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -80,6 +92,8 @@ public class HisOrderActivity extends BaseActivity
 		editName.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		editPhone.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		editIdCard.setOnFocusChangeListener(onFocusAutoClearHintListener);
+//		settings.setVisibility(View.VISIBLE);
+//		settings.setText("选择联系人");
 	}
 
 	@Override
@@ -108,6 +122,43 @@ public class HisOrderActivity extends BaseActivity
 		Intent intent = new Intent(HisOrderActivity.this,MainPageActivity.class);
 		startActivity(intent);
 		exit();
+	}
+	
+	@OnClick(R.id.settings)
+	public void setting(View v)
+	{
+		Intent intent = new Intent(HisOrderActivity.this,ChooseContactListActivity.class);
+		startActivityForResult(intent, 0);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+	{
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, intent);
+		switch (resultCode)
+		{
+		case RESULT_OK:
+			UserContactT contactT=(UserContactT) intent.getSerializableExtra("contactT"); 
+			if (contactT != null)
+			{
+				this.editName.setText(contactT.getContactName());
+				this.editPhone.setText(contactT.getContactTelephone());
+				this.editIdCard.setText(contactT.getContactNo());
+				this.sex = contactT.getContactSex();
+				if ("男".equals(contactT.getContactSex()))
+				{
+					maleRadio.setChecked(true);
+				} else if ("女".equals(contactT.getContactSex()))
+				{
+					femaleRadio.setChecked(true);
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 	@OnClick(R.id.submit)
@@ -151,8 +202,8 @@ public class HisOrderActivity extends BaseActivity
 		dialog.setMessage("正在预约,请稍后...");
 		dialog.show();
 		String hospitalId=HealthUtil.readHospitalId();
-		RequestParams param = webInterface.addUserRegisterOrder(hospitalId,userId, registerId, doctorId, doctorName, userOrderNum, fee, registerTime, userName, userNo, userTelephone,sex, teamId, teamName);
-		invokeWebServer(param,ADD_REGISTER_ORDER);
+//		RequestParams param = webInterface.addUserRegisterOrder(hospitalId,userId, registerId, doctorId, doctorName, userOrderNum, fee, registerTime, userName, userNo, userTelephone,sex, teamId, teamName);
+//		invokeWebServer(param,ADD_REGISTER_ORDER);
 	}
 	/**
 	 * 链接web服务

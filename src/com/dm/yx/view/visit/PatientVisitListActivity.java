@@ -19,7 +19,7 @@ public class PatientVisitListActivity extends BaseActivity
 	
 	@ViewInject(R.id.title)
 	private TextView title;
-	
+	private String userId="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -53,8 +53,8 @@ public class PatientVisitListActivity extends BaseActivity
 	public void asd(View v)
 	{
 		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-		intent.putExtra("url", "http://hiseemedical.com:10821/visit/asd.html");
-		intent.putExtra("title", "先心手术随访");
+		intent.putExtra("url", "http://hiseemedical.com:10821/visit/asd.jsp?userId="+userId);
+		intent.putExtra("title", "先心手术随访");  
 		startActivity(intent);
 		
 //		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/asd.html");    
@@ -68,7 +68,7 @@ public class PatientVisitListActivity extends BaseActivity
 	public void mvr(View v)
 	{
 		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-		intent.putExtra("url", "http://hiseemedical.com:10821/visit/mvr.html");
+		intent.putExtra("url", "http://hiseemedical.com:10821/visit/mrv.jsp?userId="+userId);
 		intent.putExtra("title", "房颤手术随访");
 		startActivity(intent);
 //		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
@@ -80,6 +80,7 @@ public class PatientVisitListActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
+		userId=HealthUtil.readUserId();
 	}
 	
 

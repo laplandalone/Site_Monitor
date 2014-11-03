@@ -28,6 +28,9 @@ public class NewsDetailActivity extends BaseActivity
     @ViewInject(R.id.newsDate)
 	private TextView createDate;
 	
+	@ViewInject(R.id.title)
+	private TextView title;
+	
     private HospitalNewsT hospitalNewsT;
     
 	@Override
@@ -54,7 +57,8 @@ public class NewsDetailActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-
+		String typeName=getIntent().getStringExtra("typeName");
+		title.setText(typeName);
 	}
 
 	@Override

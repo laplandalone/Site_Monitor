@@ -14,8 +14,8 @@
                         <LinearLayout android:layout_width="wrap_content" android:layout_height="fill_parent">
                             <TextView android:textSize="24.0dip" android:textColor="@color/TextColorBlue" android:gravity="bottom|center" android:id="@id/doctor_name" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/layout_temp60" />
                         </LinearLayout>
-                        <LinearLayout android:gravity="bottom|center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="10.0dip">
-                            <TextView android:textSize="16.0dip" android:textColor="#ff7e7e7e" android:gravity="bottom|center" android:id="@id/department_name" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginBottom="3.0dip" android:text=" " />
+                        <LinearLayout android:id="@+id/register" android:gravity="bottom|center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="10.0dip">
+                            <TextView android:textSize="16.0dip" android:textColor="#ff7e7e7e" android:gravity="bottom|center" android:id="@id/department_name" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginBottom="3.0dip" android:text="预约" />
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">

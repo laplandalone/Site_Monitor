@@ -125,11 +125,21 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 						Doctor doctor = doctorList.getDoctors().get(i);
 						String pinYin=doctor.getPinYin();
 						String name = doctor.getName();
+						String pinYinAll=pinyinUtil.getPinyinAll(name)+"";
 						if(firstFlag)
 						{
+							boolean b = true;
 							if(pinYin!=null && pinYin.contains(searchtext))
 							{
 								doctors.add(doctor);
+								b=false;
+							}
+							if(b)
+							{
+								if(pinYinAll.contains(searchtext))
+								{
+									doctors.add(doctor);
+								}
 							}
 						}else
 						{
@@ -138,6 +148,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 								doctors.add(doctor);
 							}
 						}
+					
 					}
 					adpterFlag="search";
 					adapter.setDoctors(doctors);

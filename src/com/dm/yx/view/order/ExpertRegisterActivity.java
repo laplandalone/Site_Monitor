@@ -20,9 +20,11 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
+import com.dm.yx.view.user.ChooseContactListActivity;
 import com.dm.yx.view.user.LoginActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -44,6 +46,9 @@ public class ExpertRegisterActivity extends BaseActivity
 
 	@ViewInject(R.id.submit)
 	private Button submitBtn;
+
+	@ViewInject(R.id.ready)
+	private Button ready;
 
 	@ViewInject(R.id.textView_name)
 	private TextView textViewName;
@@ -97,7 +102,8 @@ public class ExpertRegisterActivity extends BaseActivity
 	private static final int GET_ORDER_INFO = 2;   //加密
 	private static final int RECHARGE = 3;   //充值
 	private Map<String,String> map;  //解析支付宝返回结果后的map
-	
+	private String readyFlag="true";
+	private String contactId="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -109,23 +115,39 @@ public class ExpertRegisterActivity extends BaseActivity
 		initValue();
 	}
 
+	@OnClick(R.id.ready)
+	public void ready(View v)
+	{
+		if("true".equals(readyFlag))
+		{
+			readyFlag="false";
+		}else
+		{
+			readyFlag="true";
+		}
+	}
 	@OnClick(R.id.edit_user_info)
 	public void toHisOrder(View v)
 	{
-		Intent intent = new Intent(ExpertRegisterActivity.this, HisOrderActivity.class);
-		intent.putExtra("doctorName", doctorName);
-		intent.putExtra("registerTime", registerTime);
-		intent.putExtra("fee", fee);
-		intent.putExtra("registerId", registerId);
-		intent.putExtra("userOrderNum", userOrderNum);
-
-		intent.putExtra("doctorId", doctorId);
-		intent.putExtra("teamId", teamId);
-		intent.putExtra("teamName", teamName);
-		startActivity(intent);
-		finish();
+//		Intent intent = new Intent(ExpertRegisterActivity.this, HisOrderActivity.class);
+//		intent.putExtra("doctorName", doctorName);
+//		intent.putExtra("registerTime", registerTime);
+//		intent.putExtra("fee", fee);
+//		intent.putExtra("registerId", registerId);
+//		intent.putExtra("userOrderNum", userOrderNum);
+//
+//		intent.putExtra("doctorId", doctorId);
+//		intent.putExtra("teamId", teamId);
+//		intent.putExtra("teamName", teamName);
+//		startActivity(intent);
+//		finish();
+		Intent intent = new Intent(ExpertRegisterActivity.this,ChooseContactListActivity.class);
+		startActivityForResult(intent, 1);
+		
 	}
 
+
+	
 	@OnClick(R.id.back)
 	public void toHome(View v)
 	{
@@ -180,58 +202,16 @@ public class ExpertRegisterActivity extends BaseActivity
 		
 		String hospitalId=HealthUtil.readHospitalId();
 
-		String sss="partner=\"2088411973102512\"&out_trade_no=\"CZ201409221610330088\"&subject=\"添翼好吃佬-充值\"&body=\"充值\"&total_fee=\"1\"&notify_url=\"http%3A%2F%2Fnotify.java.jpxx.org%2Findex.jsp\"&service=\"mobile.securitypay.pay\"&_input_charset=\"UTF-8\"&show_url=\"http%3A%2F%2Fm.alipay.com\"&payment_type=\"1\"&seller_id=\"18907181680@189.cn\"&it_b_pay=\"30m\"&sign=\"XODoNu8B%2BkGSczkQLmE2xXLNP86tGlvyRFz%2FeLD%2F9LiXP9xc1maK5w8B6G8kZZ4uRNHSHDp0YfzNy9O2hLQp5x1GU9oo8TFtYp6k2QAXR9e8UoKjIzu9BAbRtV7xeXiE8xu9%2F9LM3g2M3zc50DXUMlw%2B2KvWlHvqhJ%2Bl4FceYF8%3D\"&sign_type=\"RSA\"";
-//		alipay(sss);
 		
 		dialog.setMessage("正在预约,请稍后...");
 		dialog.show();
 		
 		RequestParams param = webInterface.addUserRegisterOrder(hospitalId,userId, registerId, doctorId, doctorName, userOrderNum, fee, registerTime, userName,
-				userNo, userTelephone, sex,teamId, teamName);
+				userNo, userTelephone, sex,teamId, teamName,readyFlag,contactId);
 		invokeWebServer(param, ADD_REGISTER_ORDER);
 
 	}
 	
-
-	/**
-	 * 调用手机支付宝进行支付，支付成功后会返回结果信息
-	 * @param orderInfo
-	 */
-	public void alipay(final String orderInfo) {
-		new Thread() {
-			public void run() {
-				AliPay alipay = new AliPay(ExpertRegisterActivity.this, handler);
-				//设置为沙箱模式，不设置默认为线上环境
-//				alipay.setSandBox(true);
-				String result = alipay.pay(orderInfo);
-				Message msg = new Message();
-				msg.what = RQF_PAY;
-				msg.obj = result;
-				handler.sendMessage(msg);
-			}
-		}.start();
-	}
-	
-	private Handler handler = new Handler()
-	{
-		@Override
-		public void handleMessage(Message msg) {
-			map = HealthUtil.parserAliResult(msg.obj.toString());
-			String message = map.get("memo");
-			if(map.containsKey("resultStatus")){
-				if("9000".equals(map.get("resultStatus")))
-				{
-					//请求服务。调用（用户充值）接口
-//					recharge();
-				}else
-				{
-				
-				}
-			}
-			super.handleMessage(msg);
-		}
-	};
-
 	@Override
 	protected void initView()
 	{
@@ -297,9 +277,9 @@ public class ExpertRegisterActivity extends BaseActivity
 	{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, intent);
-		switch (resultCode)
+		switch (requestCode)
 		{
-		case RESULT_OK:
+		case 0:
 			this.user = HealthUtil.getUserInfo();
 			if (this.user != null)
 			{
@@ -316,7 +296,24 @@ public class ExpertRegisterActivity extends BaseActivity
 				}
 			}
 			break;
-
+		case 1:
+			UserContactT contactT=(UserContactT) intent.getSerializableExtra("contactT"); 
+			if (contactT != null)
+			{
+				this.editName.setText(contactT.getContactName());
+				this.editPhone.setText(contactT.getContactTelephone());
+				this.editIdCard.setText(contactT.getContactNo());
+				this.sex = contactT.getContactSex();
+				this.contactId=contactT.getContactId();
+				if ("男".equals(contactT.getContactSex()))
+				{
+					maleRadio.setChecked(true);
+				} else if ("女".equals(contactT.getContactSex()))
+				{
+					femaleRadio.setChecked(true);
+				}
+			}
+			break;
 		default:
 			break;
 		}

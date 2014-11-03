@@ -29,6 +29,7 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 		HealthUtil.writePushChannelId(arg3);
 		HealthUtil.writePushUserlId(arg4);
 		HealthUtil.LOG_D(getClass(), "channelID: " + arg3 + " userID: " + arg4);
+		System.out.println("channelID: " + arg3 + " userID: " + arg4);
 		if (arg1 == 0) {
 			HealthUtil.LOG_D(getClass(), "bind success");
 			HealthUtil.writeBindPush(true);
@@ -77,8 +78,10 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 	
 	//将消息显示在通知栏，目前设置的点击跳转到MainPageActivity
 	@SuppressWarnings({ "unused", "deprecation" })
-	private void showNotification(String title,String message) {
-		if (nm == null) {
+	private void showNotification(String title,String message) 
+	{
+		if (nm == null)
+		{
 			nm = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 		Notification notification = new Notification(R.drawable.ic_launcher,
@@ -86,7 +89,8 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 		notification.defaults |= Notification.DEFAULT_SOUND;
 		notification.flags = Notification.FLAG_AUTO_CANCEL;
 		Intent intent = null;
-		if (intent != null) {
+		if (intent != null)
+		{
 			intent.setClass(mContext, MainPageActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.putExtra("title", title);
@@ -94,7 +98,8 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 			PendingIntent contentIntent = PendingIntent.getActivity(mContext, 1014,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 			notification.setLatestEventInfo(mContext, title,
 					message, contentIntent);
-			if (nm != null) {
+			if (nm != null)
+			{
 				nm.notify(R.string.app_name, notification);
 			}
 		}	

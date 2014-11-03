@@ -10,11 +10,11 @@
             <EditText android:textSize="16.0sp" android:textColor="#ffafafaf" android:id="@id/password" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp613" android:singleLine="true" android:inputType="textPassword" />
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip">
-            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
+            <LinearLayout android:orientation="horizontal" android:gravity="right" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
                 <ImageButton android:layout_gravity="center" android:id="@id/rember_psw" android:background="@drawable/symptom_select_false" android:layout_width="28.0dip" android:layout_height="28.0dip" />
                 <TextView android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7.0dip" android:text="@string/layout_temp614" android:singleLine="true" />
             </LinearLayout>
-            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
+            <LinearLayout android:visibility="gone" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
                 <ImageButton android:layout_gravity="center" android:id="@id/login_auto" android:background="@drawable/symptom_select_false" android:layout_width="28.0dip" android:layout_height="28.0dip" android:layout_marginLeft="3.0dip" />
                 <TextView android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7.0dip" android:text="@string/layout_temp615" android:singleLine="true" />
             </LinearLayout>

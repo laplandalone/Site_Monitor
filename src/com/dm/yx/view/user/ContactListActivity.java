@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,7 +49,7 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.common_list);
+		setContentView(R.layout.contact_list);
 		this.list=(ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
@@ -74,6 +73,12 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 		exit();
 	}
 	
+	@OnClick(R.id.addContact)
+	public void addContact(View v)
+	{
+		Intent intent = new Intent(ContactListActivity.this, ContactActivity.class);
+		startActivity(intent);
+	}
 	
 	@Override
 	protected void onResume() {
@@ -177,18 +182,23 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
+		}else
+		{
+			ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
 		}
-		ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
 		
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		
-		
-//		startActivity(intent);
+		Intent intent = new Intent(ContactListActivity.this, UpdateContactActivity.class);
+		UserContactT contactT  = contactTs.get(position);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("contactT", contactT);
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 }
