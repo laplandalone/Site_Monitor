@@ -29,6 +29,17 @@ public class NewsListAdapter extends BaseAdapter
 		bitmapUtils = new BitmapUtils(mContext);
 		bitmapUtils.closeCache();
 	}
+	
+
+	public List<HospitalNewsT> getHospitalNewsTs() {
+		return hospitalNewsTs;
+	}
+
+
+	public void setHospitalNewsTs(List<HospitalNewsT> hospitalNewsTs) {
+		this.hospitalNewsTs = hospitalNewsTs;
+	}
+
 
 	@Override
 	public int getCount()

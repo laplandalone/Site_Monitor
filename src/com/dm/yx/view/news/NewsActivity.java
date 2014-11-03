@@ -1,12 +1,16 @@
 package com.dm.yx.view.news;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import com.dm.yx.adapter.NewsListAdapter;
 import com.dm.yx.model.HospitalNewsT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.tools.pinyinUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -46,6 +51,14 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 	private List<HospitalNewsT> hospitalNewsTs;
 	private String hospitalId;
 	private ListView list;
+	
+	@ViewInject(R.id.edit)
+	private EditText edit;
+	
+	NewsListAdapter adapter;
+	String adpterFlag="normal";
+	private List<HospitalNewsT> searchList = new ArrayList<HospitalNewsT>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -72,6 +85,70 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		String typeName=getIntent().getStringExtra("typeName");
 		title.setText(typeName);
+		edit.setHint("请输入关键字");
+		edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		edit.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+			
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) 
+			{
+				// TODO Auto-generated method stub
+				
+				String text = edit.getText().toString();
+				searchList.clear();
+				if (text != null && !text.trim().equalsIgnoreCase("")) 
+				{
+					String searchtext=pinyinUtil.getPinyin(text);
+					 
+					boolean firstFlag = pinyinUtil.checkFirstChar(text);
+				
+					if(firstFlag)
+					{
+						searchtext=searchtext.toLowerCase();
+					}
+					for(int i=0;i<hospitalNewsTs.size();i++)
+					{
+						HospitalNewsT hospitalNewsT = hospitalNewsTs.get(i);
+						String title=hospitalNewsT.getNewsTitle();
+						String pinYinAll=pinyinUtil.getPinyinAll(title)+"";
+						if(firstFlag)
+						{
+							if(pinYinAll!=null && pinYinAll.contains(searchtext))
+							{
+								searchList.add(hospitalNewsT);
+							}
+						}else
+						{
+							if(text!=null && title.contains(text))
+							{
+								searchList.add(hospitalNewsT);
+							}
+						}
+					
+					}
+					adpterFlag="search";
+					adapter.setHospitalNewsTs(searchList);;
+					adapter.notifyDataSetChanged();
+			}else
+			{
+				adpterFlag="normal";
+				adapter.setHospitalNewsTs(hospitalNewsTs);
+				adapter.notifyDataSetChanged();
+			}
+			}
+		});
 	}
 
 	@Override
@@ -168,7 +245,7 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 		this.hospitalNewsTs = gson.fromJson(jsonArray, new TypeToken<List<HospitalNewsT>>()
 		{
 		}.getType());
-		NewsListAdapter adapter = new NewsListAdapter(NewsActivity.this, hospitalNewsTs);
+		adapter = new NewsListAdapter(NewsActivity.this, hospitalNewsTs);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 		if(this.hospitalNewsTs.size()==0)
@@ -184,7 +261,14 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
 		String typeName=getIntent().getStringExtra("typeName");
-		HospitalNewsT hospitalNewsT = this.hospitalNewsTs.get(position);
+		HospitalNewsT hospitalNewsT = null;
+		if(adpterFlag.equals("normal"))
+		{
+			hospitalNewsT = this.hospitalNewsTs.get(position);
+		}else
+		{
+			hospitalNewsT = this.searchList.get(position);
+		}
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("hospitalNewsT", hospitalNewsT);
 		intent.putExtra("typeName", typeName);
