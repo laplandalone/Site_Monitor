@@ -85,6 +85,13 @@ public class UpdateContactActivity extends BaseActivity
 		idCardET.setText(contactT.getContactNo());
 		realNameET.setText(contactT.getContactName());
 		userCard.setText(contactT.getCardId());
+		if ("男".equals(contactT.getContactSex()))
+		{
+			maleRadio.setChecked(true);
+		} else if ("女".equals(contactT.getContactSex()))
+		{
+			femaleRadio.setChecked(true);
+		}
 	}
 
 	@OnClick(R.id.back)

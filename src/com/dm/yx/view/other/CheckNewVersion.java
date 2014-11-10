@@ -6,16 +6,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.dm.yx.WelcomeActivity;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.download.UpdateViewActivity;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -32,6 +32,9 @@ public class CheckNewVersion extends Service{
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();
 	private String flag;
 	File file = new File(HealthConstant.Download_path); 
+	
+	private String versionCode="";
+	short shortFlag = 0;
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -51,11 +54,13 @@ public class CheckNewVersion extends Service{
 	try {
 		JSONObject jsonObject = new JSONObject();
 		String versionName = HealthUtil.getVersionName();
+		this.versionCode=versionName;
 		jsonObject.put("applicationVersionCode", versionName);
 		jsonObject.put("applicationType", "CUST");
 		jsonObject.put("deviceType", "ANDROID");
 		jsonObject.put("hospitalId", HealthUtil.readHospitalId());
 		jsonObject.put("telephone", HealthUtil.readUserPhone());
+		jsonObject.put("", HealthUtil.readUserPhone());
 		RequestParams param = webInterface.checkNewVersion(jsonObject.toString());
 		connectWebServer(param,CHECK_NEWVERSION);
 	} catch (JSONException e) {
@@ -137,7 +142,9 @@ public class CheckNewVersion extends Service{
 		}
 		
 	}
-	
+	String appName="";
+	String downUrl="";
+	private Context mContext=this;
 	private void newVersionResult(String result) {
 		try {
 			JSONObject jsonObject = new JSONObject(result);
@@ -153,28 +160,52 @@ public class CheckNewVersion extends Service{
 			/** xjz 2014-05-21 当returnJson为空的时候会报异常 end*/
 			if(returnJson.length() > 0)
 			{
+				deleteFile(file);
 				String remark = returnJson.getString("remark");
 				String applicationUrl = returnJson.getString("applicationUrl");
+			
 				HealthUtil.writeAppUrl(applicationUrl);
 				String forceUpdateFlag = returnJson.getString("forceUpdateFlag");
 				String applicationVersionCode = returnJson.getString("applicationVersionCode");
+				String trialVersionCode= returnJson.getString("trailVersionCode");
+				String trailVersionFlag= returnJson.getString("trailVersionFlag");
+				String trailVersionPhone= returnJson.getString("trailVersionPhone");
 				String versionName = HealthUtil.getVersionName();
+			
 				if(!versionName.equals(applicationVersionCode))
-				{   
-					deleteFile(file);
-					Bundle bundle = new Bundle();
-					bundle.putString("remark", remark);
-					bundle.putString("applicationUrl", applicationUrl);
-					bundle.putString("forceUpdateFlag", forceUpdateFlag);
-					bundle.putString("applicationVersionCode", applicationVersionCode);
-					Intent intent = new Intent(this, NewVersionActivity.class);
+				{
+					if( !"".equals(HealthUtil.readUserPhone()) && trailVersionPhone.contains(HealthUtil.readUserPhone()) && versionName.equals(trialVersionCode))
+					{
+						if("hand".equals(this.flag))
+						{
+							Toast toast = Toast.makeText(this, "当前已是最新测试版本,版本号:"+versionName, Toast.LENGTH_SHORT);
+							toast.setGravity(Gravity.CENTER, 0, 0);
+							toast.show();
+						}
+					}else
+					{
+						appName="yxdm"+applicationVersionCode+".apk";
+						downUrl=HealthConstant.Download_Url+"&fileName="+appName;
+						Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
+						intent.putExtra("appName", appName);
+						intent.putExtra("url", downUrl);
+						intent.putExtra("remark",remark);
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+					}
+ 				}else if(!versionName.equals(trialVersionCode) && "Y".equals(trailVersionFlag) && trailVersionPhone.contains(HealthUtil.readUserPhone()))
+				{
+ 					
+					appName="yxdm"+trialVersionCode+".apk";
+					downUrl=HealthConstant.Download_Url+"&fileName="+appName;
+					Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
+					intent.putExtra("appName", appName);
+					intent.putExtra("url", downUrl);
+					intent.putExtra("remark",remark);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					intent.putExtras(bundle);
 					startActivity(intent);
-					String url="http://61.183.0.31:7100/orderManage/file.htm?method=downloadFile&fileName=v2.3_telecom_enterprise.apk&staffId=&createDate=&type=client&ipAddr=61.183.0.31&creater=";
-					short flag = 0;
-//					HealthUtil.startDownload(url, this, "v2.3_telecom_enterprise.apk","10MB",flag);
-				}else
+				}
+				else
 				{
 					if("hand".equals(this.flag))
 					{
@@ -192,5 +223,8 @@ public class CheckNewVersion extends Service{
 		stopSelf();
 	}
 	
-	
+	private void update()
+	{
+		HealthUtil.startDownload(downUrl, mContext,appName,"10MB",shortFlag);
+	}
 }

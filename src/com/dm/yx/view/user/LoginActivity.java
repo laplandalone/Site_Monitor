@@ -54,7 +54,8 @@ public class LoginActivity extends BaseActivity
 	private User user;
 	private boolean remberPswFlag = false;
 	private boolean loginAutoFlag = false;
-
+	private String telephone="";
+	private boolean forgetFlag=true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -85,19 +86,52 @@ public class LoginActivity extends BaseActivity
 
 	}
 	
+	private void pswFind()
+	{
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle("提示");  
+		 alertDialog.setMessage("是否需要重置密码？");  
+
+		alertDialog.setPositiveButton("取消",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	
+	                    }  
+	                });  
+
+		  
+		alertDialog.setNeutralButton("确定",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	            			RequestParams param = webInterface.getAuthCode(telephone,"set_psw");
+	            			invokeWebServer(param, SET_PSW);
+	                    }  
+	                });  
+ 
+		
+		alertDialog.show();  
+	}
+	
 	@OnClick(R.id.password_find)
 	public void pswFind(View v)
 	{
-		String telephone=userName.getText().toString().trim();
+		telephone=userName.getText().toString().trim();
 		if (!HealthUtil.isMobileNum(telephone))
 		{
 			HealthUtil.infoAlert(LoginActivity.this, "手机号码为空或格式错误!");
 			return;
 		}
-		dialog.setMessage("密码重置中,请稍候...");
-		dialog.show();
-		RequestParams param = webInterface.getAuthCode(telephone,"set_psw");
-		invokeWebServer(param, SET_PSW);
+		pswFind();
+//		if(forgetFlag)
+//		{
+//			dialog.setMessage("密码重置中,请稍候...");
+//			dialog.show();
+//			RequestParams param = webInterface.getAuthCode(telephone,"set_psw");
+//			invokeWebServer(param, SET_PSW);
+//		}
+
 	}
 
 	@OnClick(R.id.login_auto)

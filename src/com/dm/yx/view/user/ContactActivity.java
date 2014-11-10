@@ -220,7 +220,17 @@ public class ContactActivity extends BaseActivity
 			String executeType = jsonObject.get("executeType").getAsString();
 			if ("success".equals(executeType))
 			{
-				HealthUtil.infoAlert(ContactActivity.this, "添加联系人成功.");
+				String returnMsg = jsonObject.get("returnMsg").getAsString();
+				if("1".equals(returnMsg))
+				{
+					HealthUtil.infoAlert(ContactActivity.this, "该联系人已存在.");
+				}else if("0".equals(returnMsg))
+				{
+					HealthUtil.infoAlert(ContactActivity.this, "添加联系人成功.");
+				}else
+				{
+				    HealthUtil.infoAlert(ContactActivity.this, "添加联系人失败请重试.");
+				}
 				finish();
 			} else
 			{

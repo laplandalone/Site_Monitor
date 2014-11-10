@@ -23,6 +23,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.lurencun.android.resource.SDCard;
 
@@ -38,7 +39,7 @@ public class DownloadService extends Service{
 	private OnCompleteReceiver onComplete;
 	
 	private final Uri CONTENT_URI = Uri.parse("content://downloads/my_downloads");
-	private final String filePath = "hbgz/file";
+	private final String filePath = HealthConstant.Download_path;
 	private int startFlag = 0;
 	private StringBuffer reasonBuffer;
 

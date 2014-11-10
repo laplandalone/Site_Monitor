@@ -3,6 +3,7 @@ package com.dm.yx.view.order;
 import java.util.Map;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -99,14 +100,14 @@ public class ConfirmOrderActivity extends BaseActivity
 	private String orderId="";
 	private String orderState="";
 	private String payState="100";/*初始未支付*/
-	
+	private String handState="00A";
 	private String orderHospitalId="";
 	
 	private static final int RQF_PAY = 1;   //支付宝支付
 	private static final int GET_ORDER_INFO = 2;   //加密
 	private static final int RECHARGE = 3;   //充值
 	private Map<String,String> map;  //解析支付宝返回结果后的map
-	
+	String msg="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -131,17 +132,25 @@ public class ConfirmOrderActivity extends BaseActivity
 	{		
 		dialog.setMessage("正在取消,请稍后...");
 		dialog.show();
-		RequestParams param = webInterface.orderPay(orderId, "00X");
+		handState="00X";
+		RequestParams param = webInterface.orderPay(orderId, handState);
 		invokeWebServer(param, PAY_STATE);
 	}
 	
 	@OnClick(R.id.order_cancel_single)
 	public void cancelSingle(View v)
 	{		
-		dialog.setMessage("正在取消,请稍后...");
-		dialog.show();
-		RequestParams param = webInterface.orderPay(orderId, "00X");
-		invokeWebServer(param, PAY_STATE);
+//		dialog.setMessage("正在取消,请稍后...");
+//		dialog.show();
+//		handState="00X";
+//		RequestParams param = webInterface.orderPay(orderId, "00X");
+//		invokeWebServer(param, PAY_STATE);
+		
+		Uri uri = Uri.parse("smsto://");
+		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+		intent.putExtra("sms_body",msg);
+		startActivity(intent);
+		
 	}
 	
 	@OnClick(R.id.taobao)
@@ -183,6 +192,7 @@ public class ConfirmOrderActivity extends BaseActivity
 			{
 				if("9000".equals(map.get("resultStatus")))/*支付成功*/
 				{
+					handState="00A";
 					RequestParams param = webInterface.orderPay(orderId, "00A");
 					invokeWebServer(param, PAY_STATE);
 				}else
@@ -230,6 +240,7 @@ public class ConfirmOrderActivity extends BaseActivity
 		sexTV.setText(getIntent().getStringExtra("sex" )); 
 		confirmNumTV.setText(getIntent().getStringExtra("userTelephone" ));
 
+		msg=userNameT.getText().toString()+"您已成功预约"+dateT.getText()+falcultyNameT.getText().toString()+"就诊！";
 	}
 
 	@Override
@@ -337,7 +348,14 @@ public class ConfirmOrderActivity extends BaseActivity
 		      String payRst=jsonObject.get("returnMsg").getAsString();
 		      if("true".equals(payRst))
 		      {
-		    	  HealthUtil.infoAlert(ConfirmOrderActivity.this, "取消成功");
+		    	  if("00A".equals(handState))
+		    	  {
+		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "支付成功");
+		    	  }else
+		    	  {
+		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "取消成功");
+		    	  }
+		    	 
 		    	  orderCancel.setVisibility(View.GONE);
 		    	  taobao.setVisibility(View.GONE);
 		      }

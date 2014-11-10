@@ -1,6 +1,7 @@
 package com.dm.yx;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -17,10 +18,10 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.dm.yx.adapter.MyProgressDialog;
 import com.dm.yx.application.RegApplication;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.HttpHandler;
-import com.lurencun.android.utils.ParamUtil;
 import com.lurencun.android.webservice.IWebServiceInterface;
 import com.lurencun.android.webservice.WebServiceInterfaceImpl;
 
@@ -45,7 +46,6 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final int RSA_SIGN = 10004;
 	public static final int GET_ORDER_LIST = 10005;
 	protected ProgressDialog dialog;
-
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();
 
 	@Override
@@ -139,5 +139,25 @@ public abstract class BaseActivity extends FragmentActivity {
 			}
 		}
 	};
+	
+	protected ProgressDialog getProgressDialog(Context context) {
+		try {
+			if (dialog == null) {
+				if (ProgressDialog.class.getField("THEME_HOLO_LIGHT") != null) {
+
+					dialog = new MyProgressDialog(context,
+							AlertDialog.THEME_HOLO_LIGHT);
+					dialog.setCanceledOnTouchOutside(false);
+					return dialog;
+				}
+			}
+		} catch (NoSuchFieldException localNoSuchFieldException) {
+			dialog = new MyProgressDialog(context);
+			localNoSuchFieldException.printStackTrace();
+		}
+		dialog.setCanceledOnTouchOutside(false);
+		return dialog;
+
+	}
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <View 
     android:id="@+id/download_notificantion_view"
-    android:background="@drawable/download_notification_icon"
 	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content"
 	xmlns:android="http://schemas.android.com/apk/res/android">

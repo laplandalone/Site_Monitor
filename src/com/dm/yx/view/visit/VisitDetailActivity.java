@@ -1,9 +1,8 @@
 package com.dm.yx.view.visit;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -49,6 +48,7 @@ public class VisitDetailActivity extends BaseActivity
 	}
 	
  
+	@SuppressLint("JavascriptInterface")
 	@Override
 	protected void initView()
 	{
@@ -56,9 +56,11 @@ public class VisitDetailActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		title.setText(titleT);
 		String url = getIntent().getStringExtra("url");
-		web = (WebView) findViewById(R.id.webview);  
+	
 		 if(web != null) 
 	        { 
+			    web.addJavascriptInterface(this, "javatojs");
+
 	            web.setWebViewClient(new WebViewClient() 
 	            { 
 	            	@Override
@@ -67,9 +69,22 @@ public class VisitDetailActivity extends BaseActivity
 	                    return true; 
 	                } 
 	            	
+	            	@Override
+	            	public void onPageStarted(WebView view, String url,
+	            			Bitmap favicon) {
+	            		dialog.setMessage("正在加载,请稍后...");
+	      	    		dialog.show();
+	            		super.onPageStarted(view, url, favicon);
+	            	}
 	                @Override 
 	                public void onPageFinished(WebView view,String url) 
 	                { 
+	                	 try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}   
 	                    dialog.dismiss(); 
 	                }
 
@@ -93,8 +108,7 @@ public class VisitDetailActivity extends BaseActivity
 	        if(web != null) 
 	        { 
 	            web.loadUrl(url); 
-	            dialog = ProgressDialog.show(this,null,"加载中，请稍后..."); 
-	            web.reload(); 
+	          
 	        } 
 	    } 
 
@@ -103,4 +117,8 @@ public class VisitDetailActivity extends BaseActivity
 	{
 	}
 
+	public void test()
+	{
+		System.out.println("-------------------");
+	}
 }

@@ -104,6 +104,7 @@ public class ExpertRegisterActivity extends BaseActivity
 	private Map<String,String> map;  //解析支付宝返回结果后的map
 	private String readyFlag="true";
 	private String contactId="";
+	private String contactNo="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -202,6 +203,10 @@ public class ExpertRegisterActivity extends BaseActivity
 		
 		String hospitalId=HealthUtil.readHospitalId();
 
+		if(!userNo.equals(contactNo))
+		{
+			contactId="";
+		}
 		
 		dialog.setMessage("正在预约,请稍后...");
 		dialog.show();
@@ -294,6 +299,9 @@ public class ExpertRegisterActivity extends BaseActivity
 				{
 					femaleRadio.setChecked(true);
 				}
+			}else
+			{
+				finish();
 			}
 			break;
 		case 1:
@@ -305,6 +313,7 @@ public class ExpertRegisterActivity extends BaseActivity
 				this.editIdCard.setText(contactT.getContactNo());
 				this.sex = contactT.getContactSex();
 				this.contactId=contactT.getContactId();
+				this.contactNo=contactT.getContactNo();
 				if ("男".equals(contactT.getContactSex()))
 				{
 					maleRadio.setChecked(true);
