@@ -12,8 +12,19 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.User;
+import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.user.UserUpdateActivity;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -115,10 +126,95 @@ public class VisitDetailActivity extends BaseActivity
 	@Override
 	protected void initValue()
 	{
+		
 	}
 
-	public void test()
+	public void addVisit(String josn,String visitType)
 	{
-		System.out.println("-------------------");
+		dialog.setMessage("正在加载,请稍后...");
+  		dialog.show();
+		User user = HealthUtil.getUserInfo();
+		RequestParams param = webInterface.addVisit(josn, user.getUserId(), visitType);
+		invokeWebServer(param, ADD_VISIT);
+	}
+
+	/**
+	 * 链接web服务
+	 * 
+	 * @param param
+	 */
+	private void invokeWebServer(RequestParams param, int responseCode)
+	{
+		HealthUtil.LOG_D(getClass(), "connect to web server");
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
+		if (httpHandler != null)
+		{
+			httpHandler.stop();
+		}
+		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
+	}
+
+	/**
+	 * 获取后台返回的数据
+	 */
+	class MineRequestCallBack extends RequestCallBack<String>
+	{
+
+		private int responseCode;
+
+		public MineRequestCallBack(int responseCode)
+		{
+			super();
+			this.responseCode = responseCode;
+		}
+
+		@Override
+		public void onFailure(HttpException error, String msg)
+		{
+			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
+			if (dialog.isShowing())
+			{
+				dialog.cancel();
+			}
+
+			HealthUtil.infoAlert(VisitDetailActivity.this, "信息加载失败，请检查网络后重试");
+		}
+
+		@Override
+		public void onSuccess(ResponseInfo<String> arg0)
+		{
+			// TODO Auto-generated method stub
+			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
+			if (dialog.isShowing())
+			{
+				dialog.cancel();
+			}
+			switch (responseCode)
+			{
+			case ADD_VISIT:
+				returnMsg(arg0.result, ADD_VISIT);
+				break;
+			}
+		}
+
+		/*
+		 * 处理返回结果数据
+		 */
+		private void returnMsg(String json, int code)
+		{
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(json);
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			String executeType = jsonObject.get("executeType").getAsString();
+			if ("success".equals(executeType))
+			{
+				HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访成功.");
+				finish();
+			} else
+			{
+				HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访失败.");
+			}
+
+		}
 	}
 }

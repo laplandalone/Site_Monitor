@@ -76,6 +76,13 @@ public class UserMainActivity extends BaseActivity
 		startActivity(intent);
 	}
 	
+	@OnClick(R.id.item_layout4)
+	public void shake(View v)
+	{
+		Intent intent = new Intent(UserMainActivity.this, ShakeReward.class);
+		startActivity(intent);
+	}
+	
 	@OnClick(R.id.user_info_detail)
 	public void updateUser(View v)
 	{

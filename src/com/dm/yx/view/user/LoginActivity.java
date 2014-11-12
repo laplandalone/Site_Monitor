@@ -73,7 +73,9 @@ public class LoginActivity extends BaseActivity
 	{
 		if (remberPswFlag)
 		{
+			HealthUtil.writeUserPhone("");
 			HealthUtil.writeUserPassword("");
+			HealthUtil.writeUserInfo("");
 			remberPsw.setBackgroundResource(R.drawable.symptom_select_false);
 			remberPswFlag = false;
 		} else

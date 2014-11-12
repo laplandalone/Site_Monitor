@@ -212,27 +212,31 @@ public class AskQuestionMsgActivity extends BaseActivity
 			break;
 		case 1:
 			File imageFile = new File(HealthConstant.IMG_PATH, mPicName);
-			addImage(imageFile.getAbsolutePath());
-			imagesLayout.setVisibility(View.VISIBLE);
-			if (frm1.getVisibility() == 8)
+			File file = new File(imageFile.getAbsolutePath());
+			if(file.exists())
 			{
-				frm1.setVisibility(View.VISIBLE);
-				bitmapUtils.display(img1, imageFile.getAbsolutePath());
-				break;
-			} else if (frm2.getVisibility() == 8)
-			{
-				frm2.setVisibility(View.VISIBLE);
-				bitmapUtils.display(img2, imageFile.getAbsolutePath());
-				break;
-			} else if (frm3.getVisibility() == 8)
-			{
-				frm3.setVisibility(View.VISIBLE);
-				bitmapUtils.display(img3, imageFile.getAbsolutePath());
-				break;
-			} else
-			{
-				HealthUtil.infoAlert(AskQuestionMsgActivity.this, "最多可添加三张图片");
-				break;
+				addImage(imageFile.getAbsolutePath());
+				imagesLayout.setVisibility(View.VISIBLE);
+				if (frm1.getVisibility() == 8)
+				{
+					frm1.setVisibility(View.VISIBLE);
+					bitmapUtils.display(img1, imageFile.getAbsolutePath());
+					break;
+				} else if (frm2.getVisibility() == 8)
+				{
+					frm2.setVisibility(View.VISIBLE);
+					bitmapUtils.display(img2, imageFile.getAbsolutePath());
+					break;
+				} else if (frm3.getVisibility() == 8)
+				{
+					frm3.setVisibility(View.VISIBLE);
+					bitmapUtils.display(img3, imageFile.getAbsolutePath());
+					break;
+				} else
+				{
+					HealthUtil.infoAlert(AskQuestionMsgActivity.this, "最多可添加三张图片");
+					break;
+				}
 			}
 		case 2:
 			if (intent != null)
@@ -242,7 +246,7 @@ public class AskQuestionMsgActivity extends BaseActivity
 				// 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
 				if (mImageCaptureUri != null)
 				{
-					Bitmap image;
+//					Bitmap image = null;
 					try
 					{
 						String[] proj = { MediaStore.Images.Media.DATA };
@@ -254,25 +258,30 @@ public class AskQuestionMsgActivity extends BaseActivity
 						// 最后根据索引值获取图片路径
 						String path = cursor.getString(column_index);
 						// 这个方法是根据Uri获取Bitmap图片的静态方法
-						image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
+//						image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
+						File image = new File(path);
 						addImage(path);
+						
 						if (image != null)
 						{
 							imagesLayout.setVisibility(View.VISIBLE);
 							if (frm1.getVisibility() == 8)
 							{
 								frm1.setVisibility(View.VISIBLE);
-								img1.setImageBitmap(image);
+//								img1.setImageBitmap(image);
+								bitmapUtils.display(img1, image.getAbsolutePath());
 								break;
 							} else if (frm2.getVisibility() == 8)
 							{
 								frm2.setVisibility(View.VISIBLE);
-								img2.setImageBitmap(image);
+//								img2.setImageBitmap(image);
+								bitmapUtils.display(img2, image.getAbsolutePath());
 								break;
 							} else if (frm3.getVisibility() == 8)
 							{
 								frm3.setVisibility(View.VISIBLE);
-								img3.setImageBitmap(image);
+//								img3.setImageBitmap(image);
+								bitmapUtils.display(img3, image.getAbsolutePath());
 								break;
 							} else
 							{

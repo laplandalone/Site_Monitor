@@ -53,7 +53,7 @@ public class PatientVisitListActivity extends BaseActivity
 	public void asd(View v)
 	{
 		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-		intent.putExtra("url", "http://hiseemedical.com:10821/visit/asd.jsp?userId="+userId);
+		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/addasd.html");
 		intent.putExtra("title", "先心手术随访");  
 		startActivity(intent);
 		
@@ -68,7 +68,7 @@ public class PatientVisitListActivity extends BaseActivity
 	public void mvr(View v)
 	{
 		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
-		intent.putExtra("url", "http://192.168.137.1:7001/visit/mrv.jsp?userId="+userId);
+		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/addmvr.html");
 		intent.putExtra("title", "房颤手术随访");
 		startActivity(intent);
 //		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
