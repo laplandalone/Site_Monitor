@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class NewsActivity extends BaseActivity implements OnItemClickListener
 	private TextView title;
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
+	
 	private List<HospitalNewsT> hospitalNewsTs;
 	private String hospitalId;
 	private ListView list;

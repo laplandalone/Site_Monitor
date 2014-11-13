@@ -193,7 +193,7 @@ public class CheckNewVersion extends Service{
 						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(intent);
 					}
- 				}else if(!versionName.equals(trialVersionCode) && "Y".equals(trailVersionFlag) && trailVersionPhone.contains(HealthUtil.readUserPhone()))
+ 				}else if(!versionName.equals(trialVersionCode) && "Y".equals(trailVersionFlag) && !"".equals(HealthUtil.readUserPhone()) && trailVersionPhone.contains(HealthUtil.readUserPhone()))
 				{
  					
 					appName="yxdm"+trialVersionCode+".apk";

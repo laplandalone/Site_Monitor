@@ -9,7 +9,11 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.User;
+import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.order.ExpertRegisterActivity;
+import com.dm.yx.view.user.LoginActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -20,6 +24,7 @@ public class PatientVisitListActivity extends BaseActivity
 	@ViewInject(R.id.title)
 	private TextView title;
 	private String userId="";
+	private User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -77,10 +82,32 @@ public class PatientVisitListActivity extends BaseActivity
 	}
 	
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+	{
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, intent);
+		switch (requestCode)
+		{
+		case 0:
+			this.user = HealthUtil.getUserInfo();
+			if (this.user != null)
+			{
+				userId=user.getUserId();
+			}else
+			{
+				finish();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		userId=HealthUtil.readUserId();
+		
 	}
 	
 
@@ -89,6 +116,17 @@ public class PatientVisitListActivity extends BaseActivity
 	{
 		// TODO Auto-generated method stub
 		title.setText("患者随访");
+		
+		user=HealthUtil.getUserInfo();
+		if (this.user == null)
+		{
+			Intent intent = new Intent(PatientVisitListActivity.this, LoginActivity.class);
+			startActivityForResult(intent, 0);
+		}else
+		{
+			userId=user.getUserId();
+		}
+	
 	}
 
 }

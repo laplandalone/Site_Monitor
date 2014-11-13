@@ -10,13 +10,14 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.HospitalNewsT;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class NewsDetailActivity extends BaseActivity
 {
-    @ViewInject(R.id.newsImage)
+	@ViewInject(R.id.news_photo)
 	private ImageView imageView;
 	
     @ViewInject(R.id.newsTitle)
@@ -33,6 +34,8 @@ public class NewsDetailActivity extends BaseActivity
 	
     private HospitalNewsT hospitalNewsT;
     
+    private BitmapUtils bitmapUtils;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -41,6 +44,9 @@ public class NewsDetailActivity extends BaseActivity
 		setContentView(R.layout.article);
 		ViewUtils.inject(this);
 		addActivity(this);
+		
+		bitmapUtils = new BitmapUtils(this);
+		bitmapUtils.closeCache();
 		initView();
 		initValue();
 	}
@@ -69,6 +75,11 @@ public class NewsDetailActivity extends BaseActivity
 		newsTitle.setText(hospitalNewsT.getNewsTitle());
 		newsContent.setText(hospitalNewsT.getNewsContent());
 		createDate.setText(hospitalNewsT.getCreateDate());
+		String newsImgs=hospitalNewsT.getNewsImages();
+		 if(newsImgs.endsWith("jpg") || newsImgs.endsWith("png"))
+		 {
+			 bitmapUtils.display(imageView,newsImgs);
+		 }
 	}
 
 }
