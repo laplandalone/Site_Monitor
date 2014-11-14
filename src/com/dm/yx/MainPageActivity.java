@@ -353,6 +353,17 @@ public class MainPageActivity extends BaseActivity
 	}
 	
 	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		String user = HealthUtil.readUserInfo();
+		if (user != null && !"".equals(user))
+		{
+			userLoginBtn.setBackgroundResource(R.drawable.user_login_unselect);
+		}
+		super.onResume();
+	}
+	
+	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub 退出

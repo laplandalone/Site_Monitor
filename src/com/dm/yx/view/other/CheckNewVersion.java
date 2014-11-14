@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.download.UpdateViewActivity;
@@ -162,6 +163,7 @@ public class CheckNewVersion extends Service{
 			{
 				deleteFile(file);
 				String remark = returnJson.getString("remark");
+				String trailRemark = returnJson.getString("trailRemark");
 				String applicationUrl = returnJson.getString("applicationUrl");
 			
 				HealthUtil.writeAppUrl(applicationUrl);
@@ -171,7 +173,7 @@ public class CheckNewVersion extends Service{
 				String trailVersionFlag= returnJson.getString("trailVersionFlag");
 				String trailVersionPhone= returnJson.getString("trailVersionPhone");
 				String versionName = HealthUtil.getVersionName();
-			
+				 
 				if(!versionName.equals(applicationVersionCode))
 				{
 					if( !"".equals(HealthUtil.readUserPhone()) && trailVersionPhone.contains(HealthUtil.readUserPhone()) && versionName.equals(trialVersionCode))
@@ -184,6 +186,16 @@ public class CheckNewVersion extends Service{
 						}
 					}else
 					{
+						if(versionName.equals(trialVersionCode))
+						{
+							if( "hand".equals(this.flag))
+							{
+								Toast toast = Toast.makeText(this, "当前已是最新版本,版本号:"+versionName, Toast.LENGTH_SHORT);
+								toast.setGravity(Gravity.CENTER, 0, 0);
+								toast.show();
+							}
+							return;
+						}
 						appName="yxdm"+applicationVersionCode+".apk";
 						downUrl=HealthConstant.Download_Url+"&fileName="+appName;
 						Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
@@ -201,7 +213,7 @@ public class CheckNewVersion extends Service{
 					Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
 					intent.putExtra("appName", appName);
 					intent.putExtra("url", downUrl);
-					intent.putExtra("remark",remark);
+					intent.putExtra("remark",trailRemark);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);
 				}

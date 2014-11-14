@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -27,7 +28,7 @@ public class UserCheckActivity extends BaseActivity
 	
 	@ViewInject(R.id.userCard)
 	private TextView userCard;
-	
+	private User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -64,12 +65,42 @@ public class UserCheckActivity extends BaseActivity
 		
 	}
 	
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+	{
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, intent);
+		switch (requestCode)
+		{
+		case 0:
+			this.user = HealthUtil.getUserInfo();
+			if (this.user != null)
+			{
+//				userId=user.getUserId();
+			}else
+			{
+				finish();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
 	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
 		title.setText("就诊档案");
+		user=HealthUtil.getUserInfo();
+		if (this.user == null)
+		{
+			Intent intent = new Intent(UserCheckActivity.this, LoginActivity.class);
+			startActivityForResult(intent, 0);
+		}else
+		{
+//			userId=user.getUserId();
+		}
 	}
 
 }
