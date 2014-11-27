@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,80 @@ public class HealthUtil {
 			  userPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 			}
 		 }
+		
+		public static void writeChooseUsers(User user)
+		{
+			boolean flag =true;
+			String chooseUserTs= userPreferences.getString("chooseUsers","");
+			Gson gson = new Gson();  
+			List<User> users= gson.fromJson(chooseUserTs, new TypeToken<List<User>>(){}.getType());   
+			if(users!=null)
+			{
+				for(User u:users)
+				{
+					if(u.getTelephone().equals(user.getTelephone()))
+					{
+						flag=false;
+					}
+				}
+				if(flag)
+				{
+					users.add(user);
+					userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
+				}
+			}else
+			{
+				users=new ArrayList<User>();
+				users.add(user);
+				userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
+			}
+		}
+		
+		public static void deleteChooseUsers(User user)
+		{
+			List<User> users= readChooseUsers();
+			for(User u:users)
+			{
+				if(u.getTelephone().equals(user.getTelephone()))
+				{
+					users.remove(u);
+					break;
+				}
+			}
+			Gson gson = new Gson();
+			userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
+		}
+		
+		public static List<User> readChooseUsers()
+		{
+			String chooseUserTs= userPreferences.getString("chooseUsers","");
+			User currentUser=getUserInfo();
+			boolean b = true;
+			if(chooseUserTs!=null && !"".equals(chooseUserTs))
+			{
+				Gson gson = new Gson();  
+				List<User> users =  gson.fromJson(chooseUserTs, new TypeToken<List<User>>(){}.getType());   
+				if(users!=null)
+				{
+					for(User u:users)
+					{
+						if(u.getTelephone().equals(currentUser.getTelephone()))
+						{
+							b=false;
+						}
+					}
+					if(b)
+					{
+						users.add(getUserInfo());
+					}
+					return users;
+				}
+				
+			}
+			List<User> users=new ArrayList<User>();
+			users.add(getUserInfo());
+			return users;
+		}
 		
 		public static void writeHospitalTs(String hospitalTs)
 		{

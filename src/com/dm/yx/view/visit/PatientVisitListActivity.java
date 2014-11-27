@@ -1,7 +1,6 @@
 package com.dm.yx.view.visit;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,9 +9,7 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
-import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.view.order.ExpertRegisterActivity;
 import com.dm.yx.view.user.LoginActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -75,6 +72,18 @@ public class PatientVisitListActivity extends BaseActivity
 		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
 		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/addmvr.html");
 		intent.putExtra("title", "房颤手术随访");
+		startActivity(intent);
+//		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
+//		Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+//		startActivity(it);
+	}
+	
+	@OnClick(R.id.gxb)
+	public void gxb(View v)
+	{
+		Intent intent = new Intent(PatientVisitListActivity.this,VisitDetailActivity.class);
+		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/gxb.html");
+		intent.putExtra("title", "冠心病随访");
 		startActivity(intent);
 //		Uri uri = Uri.parse("http://hiseemedical.com:10821/visit/mvr.html");    
 //		Intent it = new Intent(Intent.ACTION_VIEW, uri);    

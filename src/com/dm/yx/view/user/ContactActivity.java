@@ -227,11 +227,12 @@ public class ContactActivity extends BaseActivity
 				}else if("0".equals(returnMsg))
 				{
 					HealthUtil.infoAlert(ContactActivity.this, "添加联系人成功.");
+					finish();
 				}else
 				{
 				    HealthUtil.infoAlert(ContactActivity.this, "添加联系人失败请重试.");
 				}
-				finish();
+				
 			} else
 			{
 				HealthUtil.infoAlert(ContactActivity.this, "添加联系人失败请重试.");

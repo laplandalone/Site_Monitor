@@ -46,6 +46,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final int RSA_SIGN = 10004;
 	public static final int GET_ORDER_LIST = 10005;
 	public static final int ADD_VISIT = 10006;
+	public static final int ADD = 10007;
+	public static final int DELETE = 10007;
+	public static final int CHOOSE_USER_LOGIN = 1008;
 	
 	protected ProgressDialog dialog;
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();

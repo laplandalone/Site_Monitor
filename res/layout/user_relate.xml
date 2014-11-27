@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/hospital_background_new" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/hospital_map_title" />
+      <ListView
+        android:id="@+id/userslist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="0.0dip"
+        android:paddingRight="0.0dip" />
+    
+     <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" /> 
+    <LinearLayout android:visibility="invisible" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="13.0dip">
+        <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="40.0dip">
+            <EditText android:textSize="16.0sp" android:textColor="#ffafafaf" android:id="@id/userName" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp612" android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
+            <EditText android:textSize="16.0sp" android:textColor="#ffafafaf" android:id="@id/password" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp613" android:singleLine="true" android:inputType="textPassword" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip">
+            <LinearLayout android:orientation="horizontal" android:gravity="right" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
+            </LinearLayout>
+            <LinearLayout android:visibility="gone" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="28.0dip" android:layout_weight="1.0">
+                <ImageButton android:layout_gravity="center" android:id="@id/login_auto" android:background="@drawable/symptom_select_false" android:layout_width="28.0dip" android:layout_height="28.0dip" android:layout_marginLeft="3.0dip" />
+                <TextView android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7.0dip" android:text="@string/layout_temp615" android:singleLine="true" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip">
+                <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@+id/addRelate" android:background="@drawable/submitx" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginTop="15.0dip"  />
+            <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" android:layout_weight="1.0">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

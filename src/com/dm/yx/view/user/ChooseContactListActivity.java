@@ -64,7 +64,13 @@ public class ChooseContactListActivity extends BaseActivity implements OnItemCli
 		title.setText("我的联系人");
 	}
 
-
+	@OnClick(R.id.addContact)
+	public void addContact(View v)
+	{
+		Intent intent = new Intent(ChooseContactListActivity.this, ContactActivity.class);
+		startActivity(intent);
+	}
+	
 	@OnClick(R.id.back)
 	public void toHome(View v)
 	{
@@ -73,6 +79,13 @@ public class ChooseContactListActivity extends BaseActivity implements OnItemCli
 		exit();
 	}
 	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initView();
+		initValue();
+	}
 	@Override
 	protected void initValue()
 	{

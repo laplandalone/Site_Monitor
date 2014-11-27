@@ -31,4 +31,6 @@ public class HealthConstant
 	public static final Enum WECHAT = SHARE_MEDIA.WEIXIN;  //微信分享名称
 	
 	public static  final String PUSH_KEY = "EHKN6qSTGpmEWN0uXk85LWGO"; //push key
+	
+	public static Boolean isNewMessage = false;
 }

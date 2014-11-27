@@ -20,7 +20,9 @@
           android:layout_width="150.0dip"  android:layout_height="100.0dip"   android:layout_marginTop="5.0dip" android:scaleType="centerCrop"
           />
                 <TextView
-                    android:layout_marginTop="8.0dip"
+                android:layout_marginLeft="10.0dip"  
+                android:layout_marginTop="8.0dip"
+                android:layout_marginRight="10.0dip"
                 android:id="@+id/newsContent"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

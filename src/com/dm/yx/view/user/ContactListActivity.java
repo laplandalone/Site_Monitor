@@ -184,6 +184,8 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 			list.setVisibility(View.GONE);
 		}else
 		{
+			layout.setVisibility(View.GONE);
+			list.setVisibility(View.VISIBLE);
 			ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
 			this.list.setAdapter(adapter);
 			this.list.setOnItemClickListener(this);

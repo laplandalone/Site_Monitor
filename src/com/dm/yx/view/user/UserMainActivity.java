@@ -83,6 +83,13 @@ public class UserMainActivity extends BaseActivity
 		startActivity(intent);
 	}
 	
+	@OnClick(R.id.item_layout5)
+	public void relate(View v)
+	{
+		Intent intent = new Intent(UserMainActivity.this, UserAccountActivity.class);
+		startActivity(intent);
+	}
+	
 	@OnClick(R.id.user_info_detail)
 	public void updateUser(View v)
 	{
@@ -102,6 +109,7 @@ public class UserMainActivity extends BaseActivity
 	public void loginOut(View v)
 	{
 		HealthUtil.writeUserInfo("");
+		HealthUtil.writeUserId("");
 		HealthUtil.writeLoginAuto("");
 		HealthUtil.writeHospitalTs("");
 		Intent intent = new Intent(UserMainActivity.this, MainPageActivity.class);
@@ -159,4 +167,10 @@ public class UserMainActivity extends BaseActivity
 
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initView();
+	}
 }

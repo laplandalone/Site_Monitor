@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.application.RegApplication;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
@@ -33,6 +34,10 @@ public class LoginActivity extends BaseActivity
 {
 	@ViewInject(R.id.title)
 	private TextView title;
+	
+	@ViewInject(R.id.psw_text)
+	private TextView psw_text;
+	
 	
 	@ViewInject(R.id.password_find)
 	private TextView pswFind;
@@ -64,8 +69,9 @@ public class LoginActivity extends BaseActivity
 		setContentView(R.layout.user_sign_in);
 		ViewUtils.inject(this);
 		addActivity(this);
-		initView();
+		
 		initValue();
+		initView();
 	}
 
 	@OnClick(R.id.rember_psw)
@@ -171,7 +177,19 @@ public class LoginActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		title.setText("用户登录");
+		String chooseUser=getIntent().getStringExtra("choose_user");
+		if("true".equals(chooseUser))
+		{
+			title.setText("添加帐号");
+			remberPsw.setVisibility(View.GONE);
+			psw_text.setVisibility(View.GONE);
+			this.userName.setText("");
+			this.password.setText("");
+		}else
+		{
+			title.setText("用户登录");
+		}
+		
 		userName.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		password.setOnFocusChangeListener(onFocusAutoClearHintListener);
 
@@ -311,7 +329,7 @@ public class LoginActivity extends BaseActivity
 			switch (responseCode)
 			{
 			    case USER_LOGIN:
-			    String executeType = jsonObject.get("executeType").getAsString();
+			    String executeType = jsonObject.get("executeType").toString();
 			    String returnMsg = jsonObject.get("returnMsg").toString();
 			    if("success".equals(executeType) && "null".equals(returnMsg))
 			    {
@@ -322,13 +340,23 @@ public class LoginActivity extends BaseActivity
 				this.user = HealthUtil.json2Object(returnMsg.toString(), User.class);
 				if (this.user != null)
 				{
-					HealthUtil.writeUserInfo(returnMsg.toString());
-					User user = HealthUtil.getUserInfo();
-					HealthUtil.writeUserId(user.getUserId());
-					HealthUtil.writeUserPhone(user.getTelephone());
-					ParamUtil.setUserId(user.getUserId());		
+					String chooseUser=getIntent().getStringExtra("choose_user");
+					if(!"true".equals(chooseUser))
+					{
+						HealthUtil.writeUserInfo(returnMsg.toString());
+						User user = HealthUtil.getUserInfo();
+						HealthUtil.writeUserId(user.getUserId());
+						HealthUtil.writeUserPhone(user.getTelephone());
+						ParamUtil.setUserId(user.getUserId());
+					}
+					HealthUtil.writeChooseUsers(user);
 					HealthUtil.infoAlert(LoginActivity.this, "登录成功");
 					this.setResult(RESULT_OK, getIntent());
+					if(RegApplication.getInstance().activityList.size()==1)
+					{
+						Intent intent = new Intent(LoginActivity.this,MainPageActivity.class);
+						startActivity(intent);
+					}	
 					finish();
 					break;
 				}

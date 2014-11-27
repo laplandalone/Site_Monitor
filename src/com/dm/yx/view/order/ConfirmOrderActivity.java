@@ -18,6 +18,7 @@ import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.user.ChooseContactListActivity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -345,7 +346,7 @@ public class ConfirmOrderActivity extends BaseActivity
 		    	alipay(sign);
 		    	break;
 		    case PAY_STATE:	
-		      String payRst=jsonObject.get("returnMsg").getAsString();
+		      String payRst=jsonObject.get("returnMsg").toString();
 		      if("true".equals(payRst))
 		      {
 		    	  if("00A".equals(handState))
@@ -358,6 +359,9 @@ public class ConfirmOrderActivity extends BaseActivity
 		    	 
 		    	  orderCancel.setVisibility(View.GONE);
 		    	  taobao.setVisibility(View.GONE);
+		      }else
+		      {
+		    	  HealthUtil.infoAlert(ConfirmOrderActivity.this, "处理失败，请重试...");
 		      }
 		      break;
 		      default:

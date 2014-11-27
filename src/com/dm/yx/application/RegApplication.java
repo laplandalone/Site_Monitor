@@ -43,5 +43,6 @@ public class RegApplication extends Application
 		{
 			activity.finish();
 		}
+		activityList.clear();
 	}
 }

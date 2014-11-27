@@ -281,6 +281,10 @@ public class ExpertRegisterActivity extends BaseActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		// TODO Auto-generated method stub
+		if(intent==null)
+		{
+			return;
+		}
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode)
 		{
@@ -428,12 +432,6 @@ public class ExpertRegisterActivity extends BaseActivity
 					intent.putExtra("userNo", userNo);
 					intent.putExtra("userTelephone", userTelephone);
 					intent.putExtra("sex", sex);
-					
-					user.setUserName(userName);
-					user.setUserNo(userNo);
-					Gson gson = new Gson();
-					String userStr = gson.toJson(user);
-					HealthUtil.writeUserInfo(userStr);
 					
 					startActivity(intent);
 					finish();

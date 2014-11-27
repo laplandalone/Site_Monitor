@@ -196,7 +196,7 @@ public class CheckNewVersion extends Service{
 							}
 							return;
 						}
-						appName="yxdm"+applicationVersionCode+".apk";
+						appName="yaxin"+applicationVersionCode+".apk";
 						downUrl=HealthConstant.Download_Url+"&fileName="+appName;
 						Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
 						intent.putExtra("appName", appName);
@@ -208,7 +208,7 @@ public class CheckNewVersion extends Service{
  				}else if(!versionName.equals(trialVersionCode) && "Y".equals(trailVersionFlag) && !"".equals(HealthUtil.readUserPhone()) && trailVersionPhone.contains(HealthUtil.readUserPhone()))
 				{
  					
-					appName="yxdm"+trialVersionCode+".apk";
+					appName="yaxin"+trialVersionCode+".apk";
 					downUrl=HealthConstant.Download_Url+"&fileName="+appName;
 					Intent intent = new Intent(CheckNewVersion.this,UpdateViewActivity.class);
 					intent.putExtra("appName", appName);

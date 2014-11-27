@@ -916,7 +916,7 @@
     <string name="layout_temp102">挂号信息</string>
     <string name="layout_temp103">身份证号:</string>
     <string name="layout_temp104">身份证号</string>
-    <string name="layout_temp105">就诊卡号:</string>
+    <string name="layout_temp105">病案号:</string>
     <string name="layout_temp106">就诊卡号</string>
     <string name="layout_temp107">挂号信息属个人隐私，请妥善保管，防止泄漏。</string>
     <string name="layout_temp108">更新提醒</string>

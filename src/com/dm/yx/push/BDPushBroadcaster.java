@@ -21,19 +21,23 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 	 * bind callback
 	 * arg3 channelID
 	 * arg4 userID
+	 * 	public void onBind(Context context, int errorCode, String appId, String userId,
+			String channelId, String requestId) 
 	 */
 	@Override
-	public void onBind(Context arg0, int arg1, String arg2, String arg3,
-			String arg4, String arg5) {
-		mContext = arg0;
-		HealthUtil.writePushChannelId(arg3);
-		HealthUtil.writePushUserlId(arg4);
-		HealthUtil.LOG_D(getClass(), "channelID: " + arg3 + " userID: " + arg4);
-		System.out.println("channelID: " + arg3 + " userID: " + arg4);
-		if (arg1 == 0) {
+	public void onBind(Context context, int errorCode, String appId, String userId,
+			String channelId, String requestId) {
+		mContext = context;
+		HealthUtil.writePushChannelId(channelId);
+		HealthUtil.writePushUserlId(userId);
+		HealthUtil.LOG_D(getClass(), "channelID: " + channelId + " userID: " + userId);
+		System.out.println("channelID: " + channelId + " userID: " + userId);
+		if (errorCode == 0)
+		{
 			HealthUtil.LOG_D(getClass(), "bind success");
 			HealthUtil.writeBindPush(true);
-		} else {
+		} else
+		{
 			HealthUtil.LOG_D(getClass(), "bind failed");
 		}
 	}
@@ -89,7 +93,7 @@ public class BDPushBroadcaster extends FrontiaPushMessageReceiver{
 		notification.defaults |= Notification.DEFAULT_SOUND;
 		notification.flags = Notification.FLAG_AUTO_CANCEL;
 		Intent intent = null;
-		if (intent != null)
+		if (intent == null)
 		{
 			intent.setClass(mContext, MainPageActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
