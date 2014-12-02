@@ -98,8 +98,7 @@ public class LoginActivity extends BaseActivity
 	{
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setTitle("提示");  
-		 alertDialog.setMessage("是否需要重置密码？");  
-
+		alertDialog.setMessage("是否需要重置密码？");  
 		alertDialog.setPositiveButton("取消",  
 	                new DialogInterface.OnClickListener() {  
 	                    public void onClick(DialogInterface dialog, int whichButton) 
@@ -117,8 +116,6 @@ public class LoginActivity extends BaseActivity
 	            			invokeWebServer(param, SET_PSW);
 	                    }  
 	                });  
- 
-		
 		alertDialog.show();  
 	}
 	

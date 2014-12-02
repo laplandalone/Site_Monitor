@@ -70,11 +70,21 @@ public class UserOrderListAdapter extends BaseAdapter
 			 textView3.setText(registerOrderT.getTeamName());
 			 textView4.setText(registerOrderT.getOrderNum());
 			 String stateT=registerOrderT.getPayState();
-			 if("101".equals(stateT))
+			 if("104".equals(stateT))
+			 {
+				 stateT="已退款";
+			 }
+			 else
+			 if("103".equals(stateT))
+			 {
+				 stateT="退款中";
+			 }
+			 else
+			 if("102".equals(stateT))
 			 {
 				 stateT="已支付";
 			 }else
-			 if("102".equals(stateT))
+			 if("101".equals(stateT))
 			 {
 				 stateT="已取消";
 			 }else

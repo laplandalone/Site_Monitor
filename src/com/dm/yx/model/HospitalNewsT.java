@@ -17,11 +17,19 @@ public class HospitalNewsT implements java.io.Serializable {
 	private String newsImages;
 	private String state;
 	private String createDate;
-
+	private String typeName;
 	// Constructors
 
 	/** default constructor */
 	public HospitalNewsT() {
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	/** minimal constructor */
@@ -35,7 +43,7 @@ public class HospitalNewsT implements java.io.Serializable {
 
 	/** full constructor */
 	public HospitalNewsT(String newsId, String hospitalId, String newsTitle,
-			String content, String newsImages, String state, String createDate) {
+			String content, String newsImages, String state, String createDate,String typeName) {
 		this.newsId = newsId;
 		this.hospitalId = hospitalId;
 		this.newsTitle = newsTitle;
@@ -43,6 +51,7 @@ public class HospitalNewsT implements java.io.Serializable {
 		this.newsImages = newsImages;
 		this.state = state;
 		this.createDate = createDate;
+		this.typeName=typeName;
 	}
 
 	// Property accessors

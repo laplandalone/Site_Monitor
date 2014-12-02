@@ -40,6 +40,12 @@ public class ConfirmOrderActivity extends BaseActivity
 
 	@ViewInject(R.id.title)
 	private TextView title;
+	
+	@ViewInject(R.id.regist_memo2)
+	private TextView regist_memo2;
+	
+	@ViewInject(R.id.regist_memo3)
+	private TextView regist_memo3;
 
 	@ViewInject(R.id.mark)  
 	private LinearLayout mark;
@@ -92,8 +98,8 @@ public class ConfirmOrderActivity extends BaseActivity
 	@ViewInject(R.id.taobao)
 	private Button taobao;
 	
-	@ViewInject(R.id.order_cancel_line)
-	private LinearLayout order_cancel_line;
+	@ViewInject(R.id.order_pay_line)
+	private LinearLayout order_pay_line;
 	
 	@ViewInject(R.id.cancel_single)
 	private LinearLayout cancel_single;
@@ -101,7 +107,7 @@ public class ConfirmOrderActivity extends BaseActivity
 	private String orderId="";
 	private String orderState="";
 	private String payState="100";/*初始未支付*/
-	private String handState="00A";
+	private String handState="000";
 	private String orderHospitalId="";
 	
 	private static final int RQF_PAY = 1;   //支付宝支付
@@ -128,30 +134,33 @@ public class ConfirmOrderActivity extends BaseActivity
 		exit();
 	}
 	
+	@OnClick(R.id.taobao_cancel)
+	public void taobaoCancel(View v)
+	{		
+		dialog.setMessage("正在取消,请稍后...");
+		dialog.show();
+		handState="103";
+		RequestParams param = webInterface.orderPay(orderId, "103");/*103:退款中*/
+		invokeWebServer(param, PAY_STATE);
+	}
+	
 	@OnClick(R.id.order_cancel)
 	public void cancel(View v)
 	{		
 		dialog.setMessage("正在取消,请稍后...");
 		dialog.show();
-		handState="00X";
-		RequestParams param = webInterface.orderPay(orderId, handState);
+		handState="103";
+		RequestParams param = webInterface.orderPay(orderId, "101");/*101：已取消*/
 		invokeWebServer(param, PAY_STATE);
 	}
 	
-	@OnClick(R.id.order_cancel_single)
+	@OnClick(R.id.msg_send)
 	public void cancelSingle(View v)
-	{		
-//		dialog.setMessage("正在取消,请稍后...");
-//		dialog.show();
-//		handState="00X";
-//		RequestParams param = webInterface.orderPay(orderId, "00X");
-//		invokeWebServer(param, PAY_STATE);
-		
+	{	
 		Uri uri = Uri.parse("smsto://");
 		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
 		intent.putExtra("sms_body",msg);
 		startActivity(intent);
-		
 	}
 	
 	@OnClick(R.id.taobao)
@@ -186,21 +195,26 @@ public class ConfirmOrderActivity extends BaseActivity
 	private Handler handler = new Handler()
 	{
 		@Override
-		public void handleMessage(Message msg) {
+		public void handleMessage(Message msg)
+		{
 			map = HealthUtil.parserAliResult(msg.obj.toString());
 			String message = map.get("memo");
+		 
 			if(map.containsKey("resultStatus"))
 			{
-				if("9000".equals(map.get("resultStatus")))/*支付成功*/
+				if("9000".equals(map.get("resultStatus")))
 				{
-					handState="00A";
-					RequestParams param = webInterface.orderPay(orderId, "00A");
+					handState="102";
+					RequestParams param = webInterface.orderPay(orderId, "102");
 					invokeWebServer(param, PAY_STATE);
 				}else
 				{
 //					 System.out.println("2");
 				}
-			}
+			} 
+//			handState="102";
+//			RequestParams param = webInterface.orderPay(orderId, "102");
+//			invokeWebServer(param, PAY_STATE);
 			super.handleMessage(msg);
 		}
 	};
@@ -248,21 +262,32 @@ public class ConfirmOrderActivity extends BaseActivity
 	protected void initValue()
 	{
 		
-		if(!"00X".equals(orderState))
+		if("102".equals(payState))
 		{
-			if("101".equals(payState))
-			{
-				cancel_single.setVisibility(View.VISIBLE);
-			}else
-			{
-				order_cancel_line.setVisibility(View.VISIBLE);
-			}
-			
-			if("101".equals(orderHospitalId))
-			{
-				mark.setVisibility(View.GONE);
-			}
+			cancel_single.setVisibility(View.VISIBLE);
+		}else if("100".equals(payState))
+		{
+			order_pay_line.setVisibility(View.VISIBLE);
 		}
+		
+		if("101".equals(payState) || "104".equals(payState) )
+		{
+			mark.setVisibility(View.GONE);
+		}else if("100".equals(payState))
+		{
+			regist_memo2.setText(R.string.yaxin1001);
+			regist_memo3.setText(R.string.yaxin1002);
+		}else if("102".equals(payState))
+		{
+			regist_memo2.setText(R.string.yaxin1021);
+			regist_memo3.setText(R.string.yaxin1022);
+		}else if("103".equals(payState))
+		{
+			regist_memo2.setText(R.string.yaxin103);
+			regist_memo3.setText("");
+		}
+		
+		
 	}
 	
 	/**
@@ -349,10 +374,10 @@ public class ConfirmOrderActivity extends BaseActivity
 		      String payRst=jsonObject.get("returnMsg").toString();
 		      if("true".equals(payRst))
 		      {
-		    	  if("00A".equals(handState))
+		    	  if("102".equals(handState))
 		    	  {
 		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "支付成功");
-		    	  }else
+		    	  }else if("103".equals(handState))
 		    	  {
 		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "取消成功");
 		    	  }

@@ -1,5 +1,7 @@
 package com.dm.yx.view.user;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +65,7 @@ public class UserUpdateActivity extends BaseActivity
 	
 	private String sex;
 
+	private String updateUserStr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -82,8 +85,19 @@ public class UserUpdateActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		this.user = HealthUtil.getUserInfo();
-		realNameET.setText(user.getUserName());
-		idCardET.setText(user.getUserNo());
+		String name=user.getUserName();
+		String no=user.getUserNo();
+		
+		if(name!=null && !"".equals(name))
+		{
+			realNameET.setText(name);
+			realNameET.setEnabled(false);
+		}
+		if(no!=null && !"".equals(no))
+		{
+			idCardET.setText(no);
+			idCardET.setEnabled(false);
+		}
 		telephoneET.setText(user.getTelephone());
 		psw.setText(user.getPassword());
 		confirmPsw.setText(user.getPassword());
@@ -180,21 +194,44 @@ public class UserUpdateActivity extends BaseActivity
 		this.userT.setSex(this.sex);
 		this.userT.setPassword(pswStr);
 		Gson gson = new Gson();
-		String userStr = gson.toJson(userT);
-		dialog.setMessage("更新中,请稍后...");
-		dialog.show();
-		RequestParams param = webInterface.updateUser(userStr);
-		invokeWebServer(param, UPDATE_USER);
+		updateUserStr = gson.toJson(userT);
+		updateUser();
 	}
 
+	private void updateUser()
+	{
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle("提示");  
+		alertDialog.setMessage("真实姓名和身份证号信息填写完成之后不能修改，是否需要修改？");  
+		alertDialog.setPositiveButton("取消",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	
+	                    }  
+	                });  
+
+		  
+		alertDialog.setNeutralButton("确定",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                		RequestParams param = webInterface.updateUser(updateUserStr);
+	                		invokeWebServer(param, UPDATE_USER);
+	                    }  
+	                });  
+		alertDialog.show();  
+	}
 	/**
 	 * 链接web服务
 	 * 
 	 * @param param
-	 *            2131493634
+	 *           
 	 */
 	private void invokeWebServer(RequestParams param, int responseCode)
 	{
+		dialog.setMessage("更新中,请稍后...");
+		dialog.show();
 		HealthUtil.LOG_D(getClass(), "connect to web server");
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)

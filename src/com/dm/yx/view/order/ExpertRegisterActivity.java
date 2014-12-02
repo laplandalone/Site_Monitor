@@ -4,18 +4,16 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.alipay.android.app.sdk.AliPay;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
@@ -26,7 +24,6 @@ import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
 import com.dm.yx.view.user.ChooseContactListActivity;
 import com.dm.yx.view.user.LoginActivity;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -48,7 +45,7 @@ public class ExpertRegisterActivity extends BaseActivity
 	private Button submitBtn;
 
 	@ViewInject(R.id.ready)
-	private Button ready;
+	private ImageButton ready;
 
 	@ViewInject(R.id.textView_name)
 	private TextView textViewName;
@@ -122,9 +119,11 @@ public class ExpertRegisterActivity extends BaseActivity
 		if("true".equals(readyFlag))
 		{
 			readyFlag="false";
+			ready.setBackgroundResource(R.drawable.symptom_select_false);
 		}else
 		{
 			readyFlag="true";
+			ready.setBackgroundResource(R.drawable.symptom_select_true);
 		}
 	}
 	@OnClick(R.id.edit_user_info)
@@ -423,6 +422,7 @@ public class ExpertRegisterActivity extends BaseActivity
 					Intent intent = new Intent(ExpertRegisterActivity.this, ConfirmOrderActivity.class);
 					intent.putExtra("hospitalId", HealthUtil.readHospitalId());
 					intent.putExtra("orderId", result);
+					intent.putExtra("payState", "100");
 					intent.putExtra("doctorName", doctorName);
 					intent.putExtra("registerTime", registerTime);
 					intent.putExtra("fee", fee);

@@ -12,13 +12,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.frontia.api.FrontiaPushMessageReceiver;
 import com.dm.yx.R;
+import com.dm.yx.model.HospitalNewsT;
+import com.dm.yx.model.UserQuestionT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.expert.MyTalkActivity;
+import com.dm.yx.view.news.NewsDetailActivity;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -122,26 +128,32 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 		 String title=jsonObject.get("title").getAsString();
 		 String desc=jsonObject.get("description").getAsString();
 		 String userIds=jsonObject.get("user_id").getAsString();
+		 String msgType=jsonObject.get("msg_type").getAsString();
+		 String customParam=jsonObject.get("custom_param").toString();
 		 String[] ids = userIds.split(",");
 		 String userId=HealthUtil.readUserId();
 		
-		 if(userIds!=null && !"".equals(userIds))
+		 if("ques".equals(msgType))
 		 {
-			 if(ids!=null && !"".equals(userId))
+			 if(userIds!=null && !"".equals(userIds))
 			 {
-				 for(int i=0;i<ids.length;i++)
+				 if(ids!=null && !"".equals(userId))
 				 {
-					 if(ids[i]!=null && ids[i].equals(userId))
+					 for(int i=0;i<ids.length;i++)
 					 {
-						 showNotification(title, desc);
-						 break;
+						 if(ids[i]!=null && ids[i].equals(userId))
+						 {
+							 showNotification(title, desc,msgType,customParam);
+							 break;
+						 }
 					 }
 				 }
+				
 			 }
-			
-		 }else
+		 }else if("news".equals(msgType))
 		 {
-			 showNotification(desc,title);
+			 
+			 showNotification(title,desc,msgType,customParam);
 		 }
 		
 		
@@ -180,16 +192,49 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 	public void onUnbind(Context arg0, int arg1, String arg2) {
 	}
 	
-
+	public Intent getIntentByType(String title,String message,String msgType,String msg)
+	{
+		if("ques".equals(msgType))
+		{
+			Intent intent = new Intent(mContext, MyTalkActivity.class);
+			Gson gson = new Gson();
+			UserQuestionT questionT = gson.fromJson(msg, UserQuestionT.class);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("questioin", questionT);
+			intent.putExtras(bundle);
+			intent.putExtra("questionType", "");
+			intent.putExtra("title", title);
+			intent.putExtra("message", message);
+			return intent;
+		}else if( "common".equals(msgType))
+		{
+			Intent intent = new Intent(mContext, NotificationMessageActivity.class);
+			intent.putExtra("title", title);
+			intent.putExtra("message", message);
+			return intent;
+		}else if("news".equals(msgType))
+		 {
+			
+			Intent intent = new Intent(mContext, NewsDetailActivity.class);
+			Gson gson = new Gson();
+			HospitalNewsT hospitalNewsT = gson.fromJson(msg, HospitalNewsT.class);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("hospitalNewsT", hospitalNewsT);
+			intent.putExtra("typeName",hospitalNewsT.getTypeName());
+			intent.putExtras(bundle);
+			return intent;  
+		 }
+		
+		return null;
+	}
 	/**
 	 * 显示通知
 	 * @param message 推送消息
 	 * @param userMessage 自定义消息
 	 */
 	@SuppressWarnings("deprecation")
-	private void showNotification(String message,String title) 
+	private void showNotification(String title,String message,String msgType,String customParam) 
 	{
-		 System.err.println("showNotification:"+message+" title:"+title);
 			if (nm == null)
 			{
 				nm = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -201,9 +246,8 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 			//设置有新的消息
 			HealthConstant.isNewMessage = true;
 			
-			Intent intent = new Intent(mContext, NotificationMessageActivity.class);
-			intent.putExtra("title", title);
-			intent.putExtra("message", message);
+			Intent intent =getIntentByType(title, message, msgType, customParam);
+			
 			PendingIntent contentIntent = PendingIntent.getActivity(mContext, 1014,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	
 			// must set this for content view, or will throw a exception

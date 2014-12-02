@@ -214,8 +214,8 @@ public class ImgViewPager extends ViewPager
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(mActivity,ShakeReward.class);
-					mActivity.startActivity(intent);
+//					Intent intent = new Intent(mActivity,ShakeReward.class);
+//					mActivity.startActivity(intent);
 				}
 			});
 			((ViewPager) v).addView(vv, 0);

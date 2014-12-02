@@ -90,6 +90,13 @@ public class UserMainActivity extends BaseActivity
 		startActivity(intent);
 	}
 	
+	@OnClick(R.id.item_layout7)
+	public void favorable(View v)
+	{
+		HealthUtil.infoAlert(UserMainActivity.this, "正在建设中，敬请期待");
+	}
+	
+	
 	@OnClick(R.id.user_info_detail)
 	public void updateUser(View v)
 	{

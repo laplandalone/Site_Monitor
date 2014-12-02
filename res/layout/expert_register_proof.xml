@@ -47,15 +47,16 @@
         </LinearLayout>
     </ScrollView>
     <LinearLayout android:layout_weight="0.1" android:id="@+id/mark" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginTop="5.0dip" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-         <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@id/regist_memo1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="提示：" />
+         <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@id/regist_memo1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="温馨提示：" />
          <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1、锁号成功!请在医院规定时间内(45分钟)在线支付预约费用，否则过期后将会自动替您取消预约." />
          <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2、支付成功后请在预约时间到医院就诊。如果无法赴约，按爽约处理 不予退款！" />
      </LinearLayout>
-    <LinearLayout  android:visibility="gone" android:id="@+id/order_cancel_line"  android:orientation="horizontal"  android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Button   android:textSize="19.0sp" android:textColor="@color/white" android:id="@+id/order_cancel" android:background="@drawable/order_cancel_nomal" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
-        <Button   android:textSize="19.0sp" android:textColor="@color/white" android:id="@+id/taobao" android:background="@drawable/taobao" android:layout_width="150.0dip" android:layout_height="35.0dip"  />
+    <LinearLayout  android:visibility="gone" android:id="@+id/order_pay_line"  android:orientation="horizontal"  android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button    android:id="@+id/order_cancel" android:background="@drawable/order_cancel_nomal" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
+        <Button    android:id="@+id/taobao" android:background="@drawable/taobao" android:layout_width="150.0dip" android:layout_height="35.0dip"  />
     </LinearLayout>
      <LinearLayout android:visibility="gone" android:id="@+id/cancel_single" android:orientation="horizontal"  android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Button   android:textSize="19.0sp" android:textColor="@color/white" android:id="@+id/order_cancel_single" android:background="@drawable/msg_send" android:layout_width="wrap_content" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
+         <Button   android:id="@+id/taobao_cancel" android:background="@drawable/order_cancel_nomal" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
+         <Button    android:id="@+id/msg_send" android:background="@drawable/msg_send" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
     </LinearLayout>
 </LinearLayout>
