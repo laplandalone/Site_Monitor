@@ -103,14 +103,11 @@ public class HealthUtil {
 				{
 					if(u.getTelephone().equals(user.getTelephone()))
 					{
-						flag=false;
+						users.remove(u);
 					}
 				}
-				if(flag)
-				{
-					users.add(user);
-					userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
-				}
+				users.add(user);
+				userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
 			}else
 			{
 				users=new ArrayList<User>();

@@ -144,32 +144,39 @@ public class UserUpdateActivity extends BaseActivity
 	@OnClick(R.id.edit_commit)
 	public void submit(View v)
 	{
-		String phoneNum = telephoneET.getText() + "";
-		String idNum = idCardET.getText() + "";
+		String phoneNum = telephoneET.getText().toString() + "";
+		String idNum = idCardET.getText().toString() + "";
 		String idCheckRst = IDCard.IDCardValidate(idNum);
 		RadioButton radioButton = (RadioButton) findViewById(group.getCheckedRadioButtonId());
 		String userNameT=realNameET.getText() + "";
 		String pswStr = psw.getText().toString();
 		String confirmPswStr = confirmPsw.getText().toString();
 		
-		if("".equals(userNameT))
-		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, "用户名为空.");
-			return;
-		}else if(userNameT.length()>6)
+		
+		if(userNameT.length()>6)
 		{
 			HealthUtil.infoAlert(UserUpdateActivity.this, "用户名长度无效.");
 			return;
 		}
+		
+		if(!"".equals(idNum))
+		{
+			idCheckRst = IDCard.IDCardValidate(idNum);
+			if(!"YES".equals(idCheckRst))
+			{
+				HealthUtil.infoAlert(UserUpdateActivity.this, idCheckRst);
+				return;
+			}
+		}else
+		{
+			noticeFlag=false;
+		}
+		
 		if (!HealthUtil.isMobileNum(phoneNum))
 		{
 			HealthUtil.infoAlert(UserUpdateActivity.this, "手机号码为空或格式错误.");
 			return;
-		} else if (!"YES".equals(idCheckRst))
-		{
-			HealthUtil.infoAlert(UserUpdateActivity.this, idCheckRst);
-			return;
-		}
+		} 
 
 		if (radioButton == null)
 		{
@@ -322,6 +329,7 @@ public class UserUpdateActivity extends BaseActivity
 				HealthUtil.writeUserInfo(userStr);
 				HealthUtil.writeUserId(userT.getUserId());
 				HealthUtil.writeUserPassword(userT.getPassword());
+				HealthUtil.writeChooseUsers(userT);
 				HealthUtil.infoAlert(UserUpdateActivity.this, "用户资料更新成功.");
 				finish();
 			} else
