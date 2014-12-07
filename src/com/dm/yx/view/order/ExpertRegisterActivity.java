@@ -230,9 +230,15 @@ public class ExpertRegisterActivity extends BaseActivity
 		this.teamId = getIntent().getStringExtra("teamId");
 		this.teamName = getIntent().getStringExtra("teamName");
 
+		int num =Integer.parseInt(userOrderNum);
+		if(num>1000)
+		{
+			num=num-1000;
+		}
+		
 		textViewName.setText(this.doctorName);
 		textViewTime.setText(this.registerTime);
-		textViewNumber.setText(this.userOrderNum);
+		textViewNumber.setText(num+"");
 		textViewFee.setText(this.fee+"元");
 
 		group.setOnCheckedChangeListener(new OnCheckedChangeListener()

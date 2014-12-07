@@ -1,5 +1,7 @@
 package com.dm.yx.view.user;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import com.dm.yx.R;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthUtil;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -76,7 +79,21 @@ public class UserCheckActivity extends BaseActivity
 			this.user = HealthUtil.getUserInfo();
 			if (this.user != null)
 			{
-//				userId=user.getUserId();
+				name.setText(user.getUserName());
+				idcard.setText(user.getUserNo());
+			}else
+			{
+				finish();
+			}
+			break;
+		case 1:
+			this.user = HealthUtil.getUserInfo();
+			String nameT=user.getUserName();
+			String no=user.getUserNo();
+			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
+			{
+				name.setText(nameT);
+				idcard.setText(no);
 			}else
 			{
 				finish();
@@ -95,12 +112,46 @@ public class UserCheckActivity extends BaseActivity
 		user=HealthUtil.getUserInfo();
 		if (this.user == null)
 		{
+			
 			Intent intent = new Intent(UserCheckActivity.this, LoginActivity.class);
 			startActivityForResult(intent, 0);
 		}else
 		{
-//			userId=user.getUserId();
+			String nameT=user.getUserName();
+			String no=user.getUserNo();
+			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
+			{
+				name.setText(nameT);
+				idcard.setText(no);
+			}else
+			{
+				checkUser();
+			}
 		}
 	}
 
+	private void checkUser()
+	{
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle("提示");  
+		alertDialog.setMessage("姓名和身份证没有完成填写，是否需要到个人中心填写？");  
+		alertDialog.setPositiveButton("取消",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	finish();
+	                    }  
+	                });  
+
+		  
+		alertDialog.setNeutralButton("确定",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	Intent intent = new Intent(UserCheckActivity.this, UserUpdateActivity.class);
+	            			startActivityForResult(intent,1); 
+	                    }  
+	                });  
+		alertDialog.show();  
+	}
 }

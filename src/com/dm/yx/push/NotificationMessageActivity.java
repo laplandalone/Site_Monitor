@@ -9,6 +9,7 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.view.user.UserMainActivity;
+import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class NotificationMessageActivity extends BaseActivity {
@@ -19,6 +20,8 @@ public class NotificationMessageActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.notification_message);
+		ViewUtils.inject(this);
+		addActivity(this);
 		titleTV = (TextView) findViewById(R.id.title);
 		messageTV = (TextView) findViewById(R.id.notification_message);
 		
@@ -36,6 +39,7 @@ public class NotificationMessageActivity extends BaseActivity {
 		startActivity(intent);
 		exit();
 	}
+	
 	
 	@Override
 	protected void initView() {

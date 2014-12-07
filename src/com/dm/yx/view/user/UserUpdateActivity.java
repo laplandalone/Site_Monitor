@@ -66,6 +66,8 @@ public class UserUpdateActivity extends BaseActivity
 	private String sex;
 
 	private String updateUserStr;
+	
+	private boolean noticeFlag=true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -91,12 +93,13 @@ public class UserUpdateActivity extends BaseActivity
 		if(name!=null && !"".equals(name))
 		{
 			realNameET.setText(name);
-			realNameET.setEnabled(false);
+//			realNameET.setEnabled(false);
 		}
 		if(no!=null && !"".equals(no))
 		{
 			idCardET.setText(no);
 			idCardET.setEnabled(false);
+			noticeFlag=false;
 		}
 		telephoneET.setText(user.getTelephone());
 		psw.setText(user.getPassword());
@@ -121,6 +124,15 @@ public class UserUpdateActivity extends BaseActivity
 		Intent intent = new Intent(UserUpdateActivity.this, MainPageActivity.class);
 		startActivity(intent);
 		exit();
+	}
+	
+	@OnClick(R.id.editPhone)
+	public void editPhone(View v)
+	{
+		Intent intent = new Intent(UserUpdateActivity.this, RegisterActivity.class);
+		intent.putExtra("flag", "editPhone");
+		startActivity(intent);
+		
 	}
 	
 	@Override
@@ -195,14 +207,22 @@ public class UserUpdateActivity extends BaseActivity
 		this.userT.setPassword(pswStr);
 		Gson gson = new Gson();
 		updateUserStr = gson.toJson(userT);
-		updateUser();
+		if(noticeFlag)
+		{
+			updateUser();
+		}else
+		{
+			RequestParams param = webInterface.updateUser(updateUserStr);
+    		invokeWebServer(param, UPDATE_USER);
+		}
+		
 	}
 
 	private void updateUser()
 	{
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setTitle("提示");  
-		alertDialog.setMessage("真实姓名和身份证号信息填写完成之后不能修改，是否需要修改？");  
+		alertDialog.setMessage("身份证号信息填写完成之后不能修改，是否需要修改？");  
 		alertDialog.setPositiveButton("取消",  
 	                new DialogInterface.OnClickListener() {  
 	                    public void onClick(DialogInterface dialog, int whichButton) 

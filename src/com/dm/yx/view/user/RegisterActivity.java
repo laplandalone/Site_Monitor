@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -56,7 +58,7 @@ public class RegisterActivity extends BaseActivity
     private Message msg=null;
     private int SETTING_100MILLISECOND_ID=0;
     private int settingTimerNuit=SETTING_100MILLISECOND_ID;
-	    
+	private String flag="";    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -66,7 +68,7 @@ public class RegisterActivity extends BaseActivity
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
-		
+		initValue();
 		handler=new Handler(){
 
 			@Override
@@ -144,8 +146,17 @@ public class RegisterActivity extends BaseActivity
 			return;
 		}else
 		{
-			RequestParams param = webInterface.getAuthCode(userNameET.getText()+"","NEW_USER");
-			invokeWebServer(param, AUTH_CODE);
+			dialog.setMessage("处理中,请稍后...");
+			dialog.show();
+			if("editPhone".equals(flag))
+			{
+				RequestParams param = webInterface.getAuthCode(userNameET.getText()+"","edit_phone");
+				invokeWebServer(param, AUTH_CODE);
+			}else
+			{
+				RequestParams param = webInterface.getAuthCode(userNameET.getText()+"","NEW_USER");
+				invokeWebServer(param, AUTH_CODE);
+			}
 //			pswBtn.setTextColor(color.white);
 //			pswBtn.setBackgroundResource(R.drawable.time_default);
 		     if(null==timer){
@@ -229,7 +240,10 @@ public class RegisterActivity extends BaseActivity
 				break;
 			case CHECK_AUTH_CODE:
 				returnMsg(arg0.result, CHECK_AUTH_CODE);
-				break;	
+				break;
+			case EDIT_PHONE:
+				returnMsg(arg0.result, EDIT_PHONE);
+				break;
 			}
 		}
 
@@ -275,16 +289,43 @@ public class RegisterActivity extends BaseActivity
 			    case CHECK_AUTH_CODE:
 			    String returnMsg = jsonObject.get("returnMsg").getAsString();
 			    if("true".equals(returnMsg))
-			    {
-		    	    String telephone = userNameET.getText() + "";	
-					Intent intent = new Intent(RegisterActivity.this, RegisterNextActivity.class);
-					intent.putExtra("telephone", telephone);
-					startActivity(intent);
-					finish();
+			    {   
+			    	if(!"editPhone".equals(flag))
+			    	{
+			    	    String telephone = userNameET.getText() + "";	
+						Intent intent = new Intent(RegisterActivity.this, RegisterNextActivity.class);
+						intent.putExtra("telephone", telephone);
+						startActivity(intent);
+						finish();
+			    	}else 
+			    	{
+			    		String telephone = userNameET.getText() + "";
+			    		User user = HealthUtil.getUserInfo();
+			    		RequestParams param = webInterface.updateUserPhone(user.getUserId(), telephone);
+			    		invokeWebServer(param, EDIT_PHONE);
+			    	}
 			    }else
 			    {
 			    	HealthUtil.infoAlert(RegisterActivity.this, "手机号或验证码输入有误，请重试...");
 			    }
+			    break;
+			    case EDIT_PHONE:
+			    	 String returnMsgT = jsonObject.get("returnMsg").getAsString();
+			    	if("true".equals(returnMsgT))
+				    {
+			    		String telephone = userNameET.getText().toString();
+			    		HealthUtil.writeUserPhone(telephone);
+			    		User user = HealthUtil.getUserInfo();
+			    		user.setTelephone(telephone);
+			    		Gson gson = new Gson();
+			    		String info=gson.toJson(user);
+			    		HealthUtil.writeUserInfo(info);
+			    		HealthUtil.infoAlert(RegisterActivity.this, "修改手机号码成功...");
+			    		finish();
+				    }else
+				    {
+				    	HealthUtil.infoAlert(RegisterActivity.this, "手机号或验证码输入有误，请重试...");
+				    }
 			    break;
 			}
 		} catch (Exception e)
@@ -322,6 +363,7 @@ public class RegisterActivity extends BaseActivity
 			HealthUtil.infoAlert(RegisterActivity.this, "验证码为空!");
 			return;
 		}
+		
 		RequestParams param = webInterface.checkAuthCode(telephone, authCode);
 		invokeWebServer(param, CHECK_AUTH_CODE);
 	}
@@ -355,7 +397,7 @@ public class RegisterActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		title.setText("用户注册");
+		
 		userNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		confirmNum.setOnFocusChangeListener(onFocusAutoClearHintListener);
 	}
@@ -364,7 +406,14 @@ public class RegisterActivity extends BaseActivity
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-
+		flag=getIntent().getStringExtra("flag");
+		if("editPhone".equals(flag))
+		{
+			title.setText("修改手机号码");
+		}else
+		{
+			title.setText("用户注册");
+		}
 	}
 
 	

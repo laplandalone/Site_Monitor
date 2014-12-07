@@ -245,10 +245,16 @@ public class ConfirmOrderActivity extends BaseActivity
 			linearLayout2.setVisibility(View.GONE);
 		}
 		
+		int num =Integer.parseInt(registerNum);
+		if(num>1000)
+		{
+			num=num-1000;
+		}
+		
 		doctorNameT.setText(doctorName); 
 		dateT.setText(getIntent().getStringExtra("registerTime"  )); 
 		confirmPriceT.setText(fee); 
-		registerNumT.setText(registerNum); 
+		registerNumT.setText(num+""); 
 		falcultyNameT.setText(	getIntent().getStringExtra("teamName"      )); 
 		userNameT.setText(getIntent().getStringExtra("userName"      )); 
 		dateTimeT.setText(getIntent().getStringExtra("userNo"        )); 
@@ -270,7 +276,7 @@ public class ConfirmOrderActivity extends BaseActivity
 			order_pay_line.setVisibility(View.VISIBLE);
 		}
 		
-		if("101".equals(payState) || "104".equals(payState) )
+		if("101".equals(payState) )
 		{
 			mark.setVisibility(View.GONE);
 		}else if("100".equals(payState))
@@ -284,6 +290,10 @@ public class ConfirmOrderActivity extends BaseActivity
 		}else if("103".equals(payState))
 		{
 			regist_memo2.setText(R.string.yaxin103);
+			regist_memo3.setText("");
+		}else if("104".equals(payState))
+		{
+			regist_memo2.setText(R.string.yaxin104);
 			regist_memo3.setText("");
 		}
 		

@@ -49,6 +49,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final int ADD = 10007;
 	public static final int DELETE = 10007;
 	public static final int CHOOSE_USER_LOGIN = 1008;
+	public static final int EDIT_PHONE = 1009;
+	
 	
 	protected ProgressDialog dialog;
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();

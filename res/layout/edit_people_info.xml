@@ -40,13 +40,16 @@
                     <TextView android:layout_marginLeft="10.0dip" android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="确认密码:" />
                     <EditText android:inputType="textPassword"  android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@+id/confirmPsw" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp620" android:singleLine="true" android:layout_weight="0.1"  />
                 </LinearLayout>
+                 <TextView android:id="@+id/editPhone" android:layout_marginLeft="10.0dip" android:layout_marginTop="8.0dip" android:textSize="16.0sp" android:textColor="@color/TextColorGreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="修改手机号码" />
             </LinearLayout>
             
             
             <Button android:textSize="19.0sp" android:textColor="@color/white" android:id="@id/edit_commit" android:background="@drawable/update_user" android:layout_width="fill_parent" android:layout_height="35.0dip" android:layout_marginTop="15.0dip"  />
-               <LinearLayout android:layout_weight="0.1" android:id="@+id/mark" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginTop="5.0dip" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+               <LinearLayout  android:id="@+id/mark" android:layout_marginLeft="15.0dip" android:layout_marginRight="10.0dip" android:layout_marginTop="20.0dip" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
          <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@id/regist_memo1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="温馨提示：" />
-         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="请慎重填写真实姓名和身份证号信息，填写完成之后不能修改。" />
+                 <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1、如需修改绑定手机号码，请点击修改手机号码。" />
+         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2、请慎重填写真实姓名和身份证号信息，填写完成之后不能修改。" />
+
      </LinearLayout>
         </LinearLayout>
     </ScrollView>

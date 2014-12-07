@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.lurencun.android.utils.ParamUtil;
 
 public class RegisterNextActivity extends BaseActivity
 {
@@ -191,8 +192,22 @@ class MineRequestCallBack extends RequestCallBack<String>
 					HealthUtil.infoAlert(RegisterNextActivity.this, "该手机号已注册");
 				}else
 				{
-					HealthUtil.infoAlert(RegisterNextActivity.this, "注册成功");
-					finish();
+					
+					Gson gson= new Gson();
+					user = HealthUtil.json2Object(returnMsg.toString(), User.class);
+					if ( user != null)
+					{
+						HealthUtil.writeUserInfo(returnMsg.toString());
+						User user = HealthUtil.getUserInfo();
+						HealthUtil.writeUserId(user.getUserId());
+						HealthUtil.writeUserPhone(user.getTelephone());
+						ParamUtil.setUserId(user.getUserId());
+						Intent intent = new Intent(RegisterNextActivity.this,MainPageActivity.class);
+						startActivity(intent);
+						HealthUtil.infoAlert(RegisterNextActivity.this, "注册成功");
+						exit();
+					}
+					
 				}
 			}
 		} catch (JSONException e)

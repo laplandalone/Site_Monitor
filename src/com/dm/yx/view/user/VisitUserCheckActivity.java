@@ -1,5 +1,7 @@
 package com.dm.yx.view.user;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -76,7 +78,21 @@ public class VisitUserCheckActivity extends BaseActivity
 			this.user = HealthUtil.getUserInfo();
 			if (this.user != null)
 			{
-//				userId=user.getUserId();
+				name.setText(user.getUserName());
+				idcard.setText(user.getUserNo());
+			}else
+			{
+				finish();
+			}
+			break;
+		case 1:
+			this.user = HealthUtil.getUserInfo();
+			String nameT=user.getUserName();
+			String no=user.getUserNo();
+			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
+			{
+				name.setText(nameT);
+				idcard.setText(no);
 			}else
 			{
 				finish();
@@ -99,8 +115,41 @@ public class VisitUserCheckActivity extends BaseActivity
 			startActivityForResult(intent, 0);
 		}else
 		{
-//			userId=user.getUserId();
+			String nameT=user.getUserName();
+			String no=user.getUserNo();
+			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
+			{
+				name.setText(nameT);
+				idcard.setText(no);
+			}else
+			{
+				checkUser();
+			}
 		}
 	}
 
+	private void checkUser()
+	{
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle("提示");  
+		alertDialog.setMessage("姓名和身份证没有完成填写，是否需要到个人中心填写？");  
+		alertDialog.setPositiveButton("取消",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	finish();
+	                    }  
+	                });  
+
+		  
+		alertDialog.setNeutralButton("确定",  
+	                new DialogInterface.OnClickListener() {  
+	                    public void onClick(DialogInterface dialog, int whichButton) 
+	                    {  
+	                    	Intent intent = new Intent(VisitUserCheckActivity.this, UserUpdateActivity.class);
+	            			startActivityForResult(intent,1); 
+	                    }  
+	                });  
+		alertDialog.show();  
+	}
 }

@@ -93,7 +93,8 @@ public class UserMainActivity extends BaseActivity
 	@OnClick(R.id.item_layout7)
 	public void favorable(View v)
 	{
-		HealthUtil.infoAlert(UserMainActivity.this, "正在建设中，敬请期待");
+		Intent intent = new Intent(UserMainActivity.this,  PrivilegeListActivity.class);
+		startActivity(intent);
 	}
 	
 	

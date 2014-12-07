@@ -72,9 +72,14 @@ public class ExpertDetailAdapter extends BaseAdapter
 				 localImageView.setVisibility(View.VISIBLE);
 				 localImageView.setBackgroundResource(R.drawable.reservation_icon);
 			 }
+			 int num =Integer.parseInt(expert.getUserOrderNum());
+			 if(num>1000)
+			 {
+				 num=num-1000;
+			 }
 			 textView.setText(expert.getWorkTime());
 			 textView2.setText("2");
-			 textView3.setText(expert.getUserOrderNum());
+			 textView3.setText(num+"");
 			 textView4.setText(expert.getFee()+"元");
 		
 		return convertView;

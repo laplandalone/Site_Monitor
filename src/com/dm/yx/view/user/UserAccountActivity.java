@@ -311,6 +311,11 @@ public class UserAccountActivity extends BaseActivity
 			case CHOOSE_USER_LOGIN:
 				JsonObject jsonObjectChoose = jsonElement.getAsJsonObject();
 			    String returnMsgChoose = jsonObjectChoose.get("returnMsg").toString();
+			    if(returnMsgChoose==null || "null".equals(returnMsgChoose))
+			    {
+			    	HealthUtil.infoAlert(UserAccountActivity.this, "登录失败,请重试...");
+			    	return;
+			    }
 				this.user = HealthUtil.json2Object(returnMsgChoose.toString(), User.class);
 				if (this.user != null)
 				{
@@ -326,11 +331,7 @@ public class UserAccountActivity extends BaseActivity
 					String userId=this.user.getUserId();
 					RequestParams param = webInterface.getUserRelate(userId);
 					invokeWebServer(param, GET_LIST);
-					
 					break;
-					
-					
-					
 				}
 			case GET_LIST:
 				JsonObject jsonObjectT = jsonElement.getAsJsonObject();

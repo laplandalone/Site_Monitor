@@ -62,13 +62,18 @@ public class UserOrderListAdapter extends BaseAdapter
 			 RegisterOrderT registerOrderT=registerOrderTs.get(position);
 			 
 			// localImageView.setVisibility(0);
+			 int num =Integer.parseInt(registerOrderT.getOrderNum());
+			 if(num>1000)
+			 {
+				 num=num-1000;
+			 }
 			 String registerTime= registerOrderT.getRegisterTime();
 			 String dateTime=registerTime.substring(0,12);
 			 String weekTime=registerTime.substring(12,registerTime.length());
 			 textView2.setText(weekTime);
 			 textView.setText(dateTime);
 			 textView3.setText(registerOrderT.getTeamName());
-			 textView4.setText(registerOrderT.getOrderNum());
+			 textView4.setText(num+"");
 			 String stateT=registerOrderT.getPayState();
 			 if("104".equals(stateT))
 			 {

@@ -1,4 +1,4 @@
-package com.dm.yx.view.user;
+ package com.dm.yx.view.user;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -326,11 +326,11 @@ public class LoginActivity extends BaseActivity
 			switch (responseCode)
 			{
 			    case USER_LOGIN:
-			    String executeType = jsonObject.get("executeType").toString();
+			    String executeType = jsonObject.get("executeType").getAsString();
 			    String returnMsg = jsonObject.get("returnMsg").toString();
 			    if("success".equals(executeType) && "null".equals(returnMsg))
 			    {
-			    	HealthUtil.infoAlert(LoginActivity.this, "用户名或密码错误,请重试");
+			    	HealthUtil.infoAlert(LoginActivity.this, "用户名或密码错误,请重试...");
 			    	return;
 			    }
 			   

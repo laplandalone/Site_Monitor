@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.5" package="com.dm.yx">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.dm.yx">
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17"/>
 
@@ -123,6 +123,7 @@
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.UserAccountActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.VisitUserCheckActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.push.NotificationMessageActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.PrivilegeListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <service android:name="com.dm.yx.view.other.CheckNewVersion">
          </service>
          <service android:name="com.dm.yx.view.download.DownloadService">

@@ -19,11 +19,13 @@ import android.util.Log;
 import com.baidu.frontia.api.FrontiaPushMessageReceiver;
 import com.dm.yx.R;
 import com.dm.yx.model.HospitalNewsT;
+import com.dm.yx.model.RegisterOrderT;
 import com.dm.yx.model.UserQuestionT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.expert.MyTalkActivity;
 import com.dm.yx.view.news.NewsDetailActivity;
+import com.dm.yx.view.order.ConfirmOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -133,7 +135,7 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 		 String[] ids = userIds.split(",");
 		 String userId=HealthUtil.readUserId();
 		
-		 if("ques".equals(msgType))
+		 if("ques".equals(msgType) || "order".equals(msgType))
 		 {
 			 if(userIds!=null && !"".equals(userIds))
 			 {
@@ -154,6 +156,10 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 		 {
 			 
 			 showNotification(title,desc,msgType,customParam);
+		 }else if("ALL".equals(msgType))
+		 {
+			 
+			 showNotification(title,desc,msgType,jsonObject.get("custom_param").getAsString());
 		 }
 		
 		
@@ -206,15 +212,14 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 			intent.putExtra("title", title);
 			intent.putExtra("message", message);
 			return intent;
-		}else if( "common".equals(msgType))
+		}else if( "ALL".equals(msgType))
 		{
 			Intent intent = new Intent(mContext, NotificationMessageActivity.class);
 			intent.putExtra("title", title);
-			intent.putExtra("message", message);
+			intent.putExtra("message", msg);
 			return intent;
 		}else if("news".equals(msgType))
 		 {
-			
 			Intent intent = new Intent(mContext, NewsDetailActivity.class);
 			Gson gson = new Gson();
 			HospitalNewsT hospitalNewsT = gson.fromJson(msg, HospitalNewsT.class);
@@ -222,6 +227,29 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 			bundle.putSerializable("hospitalNewsT", hospitalNewsT);
 			intent.putExtra("typeName",hospitalNewsT.getTypeName());
 			intent.putExtras(bundle);
+			return intent;  
+		 }else if("order".equals(msgType))
+		 {
+			Intent intent = new Intent(mContext, ConfirmOrderActivity.class);
+			Gson gson = new Gson();
+			RegisterOrderT registerOrderT = gson.fromJson(msg, RegisterOrderT.class);
+			intent.putExtra("orderType", "old");
+			intent.putExtra("hospitalId", registerOrderT.getHospitalId());
+			intent.putExtra("payState", registerOrderT.getPayState());
+			intent.putExtra("orderId", registerOrderT.getOrderId());
+			intent.putExtra("orderState", registerOrderT.getOrderState());
+			intent.putExtra("doctorName", registerOrderT.getDoctorName());
+			intent.putExtra("registerTime", registerOrderT.getRegisterTime());
+			intent.putExtra("fee", registerOrderT.getOrderFee());
+			intent.putExtra("registerId", registerOrderT.getRegisterId());
+			intent.putExtra("userOrderNum", registerOrderT.getOrderNum());
+			intent.putExtra("doctorId", registerOrderT.getDoctorId());
+			intent.putExtra("teamId", registerOrderT.getTeamId());
+			intent.putExtra("teamName", registerOrderT.getTeamName());
+			intent.putExtra("userName", registerOrderT.getUserName());
+			intent.putExtra("userNo", registerOrderT.getUserNo());
+			intent.putExtra("userTelephone", registerOrderT.getUserTelephone());
+			intent.putExtra("sex", registerOrderT.getSex());
 			return intent;  
 		 }
 		

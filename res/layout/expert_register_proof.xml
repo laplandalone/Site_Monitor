@@ -3,9 +3,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <include layout="@layout/hospital_map_title" />
     <include android:id="@id/step_layout3" android:visibility="gone" layout="@layout/common_step_bottom3" />
-    <ScrollView android:paddingBottom="0.0dip" android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip" android:layout_weight="0.5">
-        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-            <LinearLayout android:gravity="center_vertical" android:orientation="vertical"  android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="10.0dip">
+            <LinearLayout android:gravity="center_vertical" android:orientation="vertical"  android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
                 <LinearLayout  android:gravity="left|center_vertical" android:background="@drawable/table_head" android:orientation="horizontal" android:paddingLeft="5.0dip" android:paddingRight="5.0dip" android:layout_width="fill_parent" android:layout_height="30.0dip">
                     <TextView android:layout_weight="0.5"  android:gravity="right|center_vertical" android:textSize="17.0sp" android:textColor="@color/black" android:layout_width="50.0dip" android:layout_height="wrap_content" android:text="@string/layout_temp120" />
                     <TextView android:layout_weight="2.0" android:textSize="17.0sp" android:textColor="#ff6d6d6d" android:id="@+id/faculty_name" android:layout_width="100.0dip" android:layout_height="wrap_content" android:layout_marginLeft="30.0dip" android:text="123123" />
@@ -45,11 +44,10 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-    <LinearLayout android:layout_weight="0.1" android:id="@+id/mark" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginTop="5.0dip" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <LinearLayout   android:id="@+id/mark" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginTop="5.0dip" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
          <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@id/regist_memo1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="温馨提示：" />
-         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1、锁号成功!请在医院规定时间内(45分钟)在线支付预约费用，否则过期后将会自动替您取消预约." />
-         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2、支付成功后请在预约时间到医院就诊。如果无法赴约，按爽约处理 不予退款！" />
+         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1、锁号成功！请在医院规定时间内(45分钟)在线支付预约费用，否则过期后将会自动替您取消预约." />
+         <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:id="@+id/regist_memo3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2、支付成功后请在预约时间到医院就诊。如果无法赴约，按爽约处理 ,不予退款！" />
      </LinearLayout>
     <LinearLayout  android:visibility="gone" android:id="@+id/order_pay_line"  android:orientation="horizontal"  android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
         <Button    android:id="@+id/order_cancel" android:background="@drawable/order_cancel_nomal" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
