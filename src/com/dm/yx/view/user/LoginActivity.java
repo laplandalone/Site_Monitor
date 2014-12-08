@@ -377,6 +377,8 @@ public class LoginActivity extends BaseActivity
 			}
 		} catch (Exception e)
 		{
+			HealthUtil.writeUserInfo("");
+			HealthUtil.writeUserId("");
 			HealthUtil.infoAlert(LoginActivity.this, "处理失败，请重试...");
 		}
 

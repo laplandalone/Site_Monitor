@@ -103,10 +103,15 @@ public class HealthUtil {
 				{
 					if(u.getTelephone().equals(user.getTelephone()))
 					{
-						users.remove(u);
+						u.setPassword(user.getPassword());
+						u.setUserName(user.getUserName());
+						flag=false;
 					}
 				}
-				users.add(user);
+				if(flag)
+				{
+					users.add(user);
+				}
 				userPreferences.edit().putString("chooseUsers",gson.toJson(users)).commit();
 			}else
 			{

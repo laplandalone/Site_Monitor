@@ -222,8 +222,6 @@ public class UserAccountActivity extends BaseActivity
 		this.user=HealthUtil.getUserInfo();
 		String userId=user.getUserId();
 		
-		userAdapter = new UsersListAdapter(UserAccountActivity.this,user.getTelephone(),true);
-		this.userslist.setAdapter(userAdapter);
 		RequestParams param = webInterface.getUserRelate(userId);
 		invokeWebServer(param, GET_LIST);
 	}
@@ -338,8 +336,25 @@ public class UserAccountActivity extends BaseActivity
 				JsonArray jsonArray = jsonObjectT.getAsJsonArray("returnMsg");
 				Gson gson = new Gson();
 				this.userRelateTs =gson.fromJson(jsonArray, new TypeToken<List<UserRelateT>>(){}.getType());
+				
+				List<User> usersT=HealthUtil.readChooseUsers();
+				if(usersT!=null && userRelateTs!=null)
+				{
+					for(UserRelateT relateUser:userRelateTs)
+					{
+						for(User u:usersT)
+						{
+							if(u.getTelephone().equals(relateUser.getRelatePhone()))
+							{
+								u.setUserName(relateUser.getRelateName());
+							}
+						}
+					}
+				}
 				adapter = new RelateListAdapter(UserAccountActivity.this, userRelateTs);
 				this.list.setAdapter(adapter);
+				userAdapter = new UsersListAdapter(UserAccountActivity.this,user.getTelephone(),true);
+				this.userslist.setAdapter(userAdapter);
 				break;
 			case DELETE:
 			JSONObject jsonObj;
