@@ -2,11 +2,16 @@ package com.dm.yx.view.user;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import com.dm.yx.model.User;
 import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.order.UserOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -44,6 +50,8 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 	private User user;
 	private ListView list;
 	private List<UserContactT> contactTs;
+	private UserContactT  contactT;
+	private Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -53,6 +61,7 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 		this.list=(ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
+		context=this;
 		initView();
 		initValue();
 	}
@@ -62,6 +71,49 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 	{
 		// TODO Auto-generated method stub
 		title.setText("我的联系人");
+		list.setOnItemLongClickListener( new OnItemLongClickListener()
+		{
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				contactT =  contactTs.get(position);
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setTitle("删除提示");
+				
+					builder.setMessage("是否删除此就诊人？");
+					builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							RequestParams param = webInterface.deleteUserContactT(contactT.getContactId());
+							invokeWebServer(param, DELETE);
+						}
+					});
+					
+					builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							
+
+							}
+						});
+				
+				Dialog dialog = builder.create();
+				
+				dialog.setCanceledOnTouchOutside(false);
+				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						
+					}
+				});
+				dialog.show();
+				return true;
+			}
+		});
 	}
 
 
@@ -158,6 +210,9 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
 				break;
+			case DELETE:
+				returnMsg(arg0.result, DELETE);
+				break;
 			case GET_LIST_MORE:
 				returnMsg(arg0.result, GET_LIST_MORE);
 				break;
@@ -175,20 +230,35 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 		JsonElement jsonElement = jsonParser.parse(json);
 		
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
-		Gson gson = new Gson();
-		this.contactTs =gson.fromJson(jsonArray, new TypeToken<List<UserContactT>>(){}.getType());
-		if(this.contactTs.size()==0)
+		switch (code)
 		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
-		}else
-		{
-			layout.setVisibility(View.GONE);
-			list.setVisibility(View.VISIBLE);
-			ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
-			this.list.setAdapter(adapter);
-			this.list.setOnItemClickListener(this);
+			case GET_LIST:
+			JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
+			Gson gson = new Gson();
+			this.contactTs =gson.fromJson(jsonArray, new TypeToken<List<UserContactT>>(){}.getType());
+			if(this.contactTs.size()==0)
+			{
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}else
+			{
+				layout.setVisibility(View.GONE);
+				list.setVisibility(View.VISIBLE);
+				ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
+				this.list.setAdapter(adapter);
+				this.list.setOnItemClickListener(this);
+			}
+			break;
+			case DELETE:
+				String rsn= jsonObject.get("returnMsg").toString();
+				if("true".equals(rsn))
+				{
+					HealthUtil.infoAlert(ContactListActivity.this, "删除成功...");
+				}else
+				{
+					HealthUtil.infoAlert(ContactListActivity.this, "删除失败...");
+				}
+			break;
 		}
 		
 	}

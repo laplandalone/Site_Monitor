@@ -2,11 +2,16 @@ package com.dm.yx.view.expert;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -21,6 +26,7 @@ import com.dm.yx.model.User;
 import com.dm.yx.model.UserQuestionT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.user.ContactListActivity;
 import com.dm.yx.view.user.LoginActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -50,6 +56,8 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 	String userId;
 	String questionType = "";
 	List<UserQuestionT> questionTs;
+	private UserQuestionT questionT;
+	private Context context;
 	User user;
 
 	@Override
@@ -59,6 +67,7 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 		setContentView(R.layout.online_question_list);
 		this.list = (ListView) findViewById(R.id.list);
 		// TODO Auto-generated method stub 
+		context=this;
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
@@ -101,7 +110,7 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 			Doctor doctor = (Doctor) getIntent().getSerializableExtra("doctor");
 			this.doctorId = doctor.getDoctorId();
 			RequestParams param = webInterface.getUserQuestionsByDoctorId(doctorId);
-			invokeWebServer(param, ADD_QUESTION);
+			invokeWebServer(param, GET_LIST);
 		} else if ("user".equals(questionType))
 		{
 			this.user = HealthUtil.getUserInfo();
@@ -114,9 +123,52 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 				this.userId = user.getUserId();
 				submitBtn.setVisibility(View.GONE);
 				RequestParams param = webInterface.getUserQuestionsByUserId(userId,HealthUtil.readHospitalId());
-				invokeWebServer(param, ADD_QUESTION);
+				invokeWebServer(param, GET_LIST);
 			}
+			
+			list.setOnItemLongClickListener( new OnItemLongClickListener()
+			{
 
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					questionT =  questionTs.get(position);
+					
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setTitle("删除提示");
+					
+						builder.setMessage("是否删除此问题？");
+						builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{
+								RequestParams param = webInterface.deleteUserQues(questionT.getQuestionId());
+								invokeWebServer(param, DELETE);
+							}
+						});
+						
+						builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+								
+
+								}
+							});
+					
+					Dialog dialog = builder.create();
+					
+					dialog.setCanceledOnTouchOutside(false);
+					dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+						
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							
+						}
+					});
+					dialog.show();
+					return true;
+				}
+			});
 		}
 
 	}
@@ -135,7 +187,7 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 				this.userId = user.getUserId();
 				submitBtn.setVisibility(View.GONE);
 				RequestParams param = webInterface.getUserQuestionsByUserId(userId,HealthUtil.readHospitalId());
-				invokeWebServer(param, ADD_QUESTION);
+				invokeWebServer(param, GET_LIST);
 			}
 			break;
 		default:
@@ -196,8 +248,11 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 			}
 			switch (responseCode)
 			{
-			case ADD_QUESTION:
-				returnMsg(arg0.result, ADD_QUESTION);
+			case GET_LIST:
+				returnMsg(arg0.result, GET_LIST);
+				break;
+			case DELETE:
+				returnMsg(arg0.result, DELETE);
 				break;
 			}
 		}
@@ -213,24 +268,39 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 		JsonElement jsonElement = jsonParser.parse(json);
 
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		String executeType = jsonObject.get("executeType").getAsString();
-		if (!"success".equals(executeType))
+		switch (code)
 		{
-			HealthUtil.infoAlert(QuestionActivity.this, "加载失败请重试.");
-			return;
-		}
-		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
-		Gson gson = new Gson();
-		this.questionTs = gson.fromJson(jsonArray, new TypeToken<List<UserQuestionT>>()
-		{
-		}.getType());
-		MyQuestionListAdapter adapter = new MyQuestionListAdapter(QuestionActivity.this, questionTs);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.questionTs.size()==0)
-		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
+			case GET_LIST:
+			String executeType = jsonObject.get("executeType").getAsString();
+			if (!"success".equals(executeType))
+			{
+				HealthUtil.infoAlert(QuestionActivity.this, "加载失败请重试.");
+				return;
+			}
+			JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
+			Gson gson = new Gson();
+			this.questionTs = gson.fromJson(jsonArray, new TypeToken<List<UserQuestionT>>()
+			{
+			}.getType());
+			MyQuestionListAdapter adapter = new MyQuestionListAdapter(QuestionActivity.this, questionTs);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			if(this.questionTs.size()==0)
+			{
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}
+			break;
+			case DELETE:
+				String rsn= jsonObject.get("returnMsg").toString();
+				if("true".equals(rsn))
+				{
+					HealthUtil.infoAlert(QuestionActivity.this, "删除成功...");
+				}else
+				{
+					HealthUtil.infoAlert(QuestionActivity.this, "删除失败...");
+				}
+			break;
 		}
 	}
 

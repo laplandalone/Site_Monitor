@@ -83,22 +83,45 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 				builder.setTitle("删除提示");
-				builder.setMessage("是否删除此预约？");
-				builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						RequestParams param = webInterface.deleteRegisterOrder(orderT.getOrderId());
-						invokeWebServer(param, DELETE);
-					}
-				});
-				
-				builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+				if("101".equals(orderT.getPayState()) || "100".equals(orderT.getPayState()))
+				{
+					builder.setMessage("是否删除此预约？");
+					builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						
-
+						public void onClick(DialogInterface dialog, int which)
+						{
+							RequestParams param = webInterface.deleteRegisterOrder(orderT.getOrderId());
+							invokeWebServer(param, DELETE);
 						}
 					});
+					
+					builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							
+
+							}
+						});
+				}else
+				{
+					builder.setMessage("此预约不能删除");
+					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							
+						}
+					});
+					
+					builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							
+
+							}
+						});
+				}
+				
 				
 				Dialog dialog = builder.create();
 				
