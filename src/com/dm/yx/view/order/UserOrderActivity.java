@@ -2,11 +2,16 @@ package com.dm.yx.view.order;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -47,11 +52,14 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 	private User user;
 	private ListView list;
 	private List<RegisterOrderT> registerOrderTs;
+	private Context mContext;
+	RegisterOrderT orderT ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		mContext=this;
 		setContentView(R.layout.user_register_order);
 		this.list=(ListView) findViewById(R.id.list_view);
 		ViewUtils.inject(this);
@@ -65,6 +73,47 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 	{
 		// TODO Auto-generated method stub
 		title.setText("我的预约");
+		list.setOnItemLongClickListener( new OnItemLongClickListener()
+		{
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				 orderT =  registerOrderTs.get(position);
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+				builder.setTitle("删除提示");
+				builder.setMessage("是否删除此预约？");
+				builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						RequestParams param = webInterface.deleteRegisterOrder(orderT.getOrderId());
+						invokeWebServer(param, DELETE);
+					}
+				});
+				
+				builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						
+
+						}
+					});
+				
+				Dialog dialog = builder.create();
+				
+				dialog.setCanceledOnTouchOutside(false);
+				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						
+					}
+				});
+				dialog.show();
+				return true;
+			}
+		});
 	}
 
 
@@ -157,6 +206,8 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 				break;
 			case GET_LIST_MORE:
 				returnMsg(arg0.result, GET_LIST_MORE);
+			case DELETE:
+				returnMsg(arg0.result, DELETE);
 				break;
 			}
 		}
@@ -172,21 +223,35 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 		JsonElement jsonElement = jsonParser.parse(json);
 		
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
-		Gson gson = new Gson();
-		this.registerOrderTs =gson.fromJson(jsonArray, new TypeToken<List<RegisterOrderT>>(){}.getType());
-		if(this.registerOrderTs.size()==0)
+		switch (code)
 		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
-		}else
-		{
-			orderTitle.setVisibility(View.VISIBLE);
+			case GET_LIST:
+			JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
+			Gson gson = new Gson();
+			this.registerOrderTs =gson.fromJson(jsonArray, new TypeToken<List<RegisterOrderT>>(){}.getType());
+			if(this.registerOrderTs.size()==0)
+			{
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}else
+			{
+				orderTitle.setVisibility(View.VISIBLE);
+			}
+			UserOrderListAdapter adapter = new UserOrderListAdapter(UserOrderActivity.this, registerOrderTs);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			break;
+		case DELETE:
+			String rsn= jsonObject.get("returnMsg").toString();
+			if("true".equals(rsn))
+			{
+				HealthUtil.infoAlert(UserOrderActivity.this, "删除成功...");
+			}else
+			{
+				HealthUtil.infoAlert(UserOrderActivity.this, "删除失败...");
+			}
+		break;
 		}
-		UserOrderListAdapter adapter = new UserOrderListAdapter(UserOrderActivity.this, registerOrderTs);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)

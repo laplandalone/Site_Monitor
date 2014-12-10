@@ -77,7 +77,7 @@ public class DoctorDetailActivity extends BaseActivity
 	}
 	
 
-	@OnClick(R.id.register)
+	@OnClick(R.id.registerClick)
 	public void register(View v)
 	{
 		Intent intent = new Intent(DoctorDetailActivity.this,RegisteredMain.class);
