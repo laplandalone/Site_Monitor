@@ -53,7 +53,8 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 	private ListView list;
 	private List<RegisterOrderT> registerOrderTs;
 	private Context mContext;
-	RegisterOrderT orderT ;
+	private RegisterOrderT orderT ;
+	private UserOrderListAdapter adapter ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -260,7 +261,7 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 			{
 				orderTitle.setVisibility(View.VISIBLE);
 			}
-			UserOrderListAdapter adapter = new UserOrderListAdapter(UserOrderActivity.this, registerOrderTs);
+			adapter = new UserOrderListAdapter(UserOrderActivity.this, registerOrderTs);
 			this.list.setAdapter(adapter);
 			this.list.setOnItemClickListener(this);
 			break;
@@ -269,6 +270,8 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 			if("true".equals(rsn))
 			{
 				HealthUtil.infoAlert(UserOrderActivity.this, "删除成功...");
+				registerOrderTs.remove(orderT);
+				adapter.notifyDataSetChanged();
 			}else
 			{
 				HealthUtil.infoAlert(UserOrderActivity.this, "删除失败...");

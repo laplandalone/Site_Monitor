@@ -52,14 +52,14 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 	@ViewInject(R.id.submit)
 	private Button submitBtn;
 	private ListView list;
-	String doctorId;
-	String userId;
-	String questionType = "";
-	List<UserQuestionT> questionTs;
+	private String doctorId;
+	private String userId;
+	private String questionType = "";
+	private List<UserQuestionT> questionTs;
 	private UserQuestionT questionT;
 	private Context context;
-	User user;
-
+	private User user;
+	private MyQuestionListAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -282,7 +282,7 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 			this.questionTs = gson.fromJson(jsonArray, new TypeToken<List<UserQuestionT>>()
 			{
 			}.getType());
-			MyQuestionListAdapter adapter = new MyQuestionListAdapter(QuestionActivity.this, questionTs);
+			 adapter = new MyQuestionListAdapter(QuestionActivity.this, questionTs);
 			this.list.setAdapter(adapter);
 			this.list.setOnItemClickListener(this);
 			if(this.questionTs.size()==0)
@@ -296,6 +296,13 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 				if("true".equals(rsn))
 				{
 					HealthUtil.infoAlert(QuestionActivity.this, "删除成功...");
+					questionTs.remove(questionT);
+					adapter.notifyDataSetChanged();
+					if(this.questionTs==null || this.questionTs.size()==0)
+					{
+						layout.setVisibility(View.VISIBLE);
+						list.setVisibility(View.GONE);
+					}
 				}else
 				{
 					HealthUtil.infoAlert(QuestionActivity.this, "删除失败...");

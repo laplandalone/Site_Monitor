@@ -52,6 +52,7 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 	private List<UserContactT> contactTs;
 	private UserContactT  contactT;
 	private Context context;
+	private ContactListAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -244,7 +245,7 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 			{
 				layout.setVisibility(View.GONE);
 				list.setVisibility(View.VISIBLE);
-				ContactListAdapter adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
+				adapter = new ContactListAdapter(ContactListActivity.this, contactTs);
 				this.list.setAdapter(adapter);
 				this.list.setOnItemClickListener(this);
 			}
@@ -254,6 +255,13 @@ public class ContactListActivity extends BaseActivity implements OnItemClickList
 				if("true".equals(rsn))
 				{
 					HealthUtil.infoAlert(ContactListActivity.this, "删除成功...");
+					contactTs.remove(contactT);
+					adapter.notifyDataSetChanged();
+					if(this.contactTs==null || this.contactTs.size()==0)
+					{
+						layout.setVisibility(View.VISIBLE);
+						list.setVisibility(View.GONE);
+					}
 				}else
 				{
 					HealthUtil.infoAlert(ContactListActivity.this, "删除失败...");

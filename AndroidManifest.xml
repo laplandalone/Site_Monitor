@@ -123,7 +123,8 @@
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.UserAccountActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.VisitUserCheckActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.push.NotificationMessageActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
-          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.PrivilegeListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+         <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.PrivilegeListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.UserPasswordActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <service android:name="com.dm.yx.view.other.CheckNewVersion">
          </service>
          <service android:name="com.dm.yx.view.download.DownloadService">

@@ -61,6 +61,7 @@ public class ExpertDetailAdapter extends BaseAdapter
 			 TextView textView4 = (TextView)convertView.findViewById( R.id.text4);
 			 ImageView localImageView = (ImageView)convertView.findViewById(R.id.icon);
 			 OrderExpert expert=orders.get(position);
+			 int num =Integer.parseInt(expert.getUserOrderNum());
 			 /*已预约标示元*/
 			 if("Y".equals(expert.getUserFlag()))
 			 {
@@ -71,8 +72,8 @@ public class ExpertDetailAdapter extends BaseAdapter
 			 {
 				 localImageView.setVisibility(View.VISIBLE);
 				 localImageView.setBackgroundResource(R.drawable.reservation_icon);
+				 num=0;
 			 }
-			 int num =Integer.parseInt(expert.getUserOrderNum());
 			 if(num>1000)
 			 {
 				 num=num-1000;
