@@ -1,9 +1,13 @@
 package com.dm.yx.view.user;
 
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -13,10 +17,13 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.Doctor;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
+import com.dm.yx.tools.StringUtil;
+import com.dm.yx.tools.pinyinUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -35,6 +42,9 @@ public class UserUpdateActivity extends BaseActivity
 	@ViewInject(R.id.title)
 	private TextView title;
 
+	@ViewInject(R.id.telephone)
+	private TextView telephone;
+	
 	@ViewInject(R.id.real_name)
 	private EditText realNameET;
 
@@ -65,6 +75,7 @@ public class UserUpdateActivity extends BaseActivity
 	
 	private boolean noticeFlag=true;
 	
+	private String userNameChange="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -86,7 +97,7 @@ public class UserUpdateActivity extends BaseActivity
 		this.user = HealthUtil.getUserInfo();
 		String name=user.getUserName();
 		String no=user.getUserNo();
-		
+		telephone.setText(user.getTelephone());
 		if(name!=null && !"".equals(name))
 		{
 			realNameET.setText(name);
@@ -111,6 +122,36 @@ public class UserUpdateActivity extends BaseActivity
 		realNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		idCardET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		
+		/*
+		realNameET.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count)
+			{
+				// TODO Auto-generated method stub
+			
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after)
+			{
+				
+				userNameChange=realNameET.getText().toString();
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) 
+			{
+				// TODO Auto-generated method stub
+				String text = realNameET.getText().toString();
+				if(StringUtil.checkStringIsNum(s.charAt(s.length()-1)))
+				{
+					realNameET.setText(text.substring(0, text.length()-1));
+				}
+			}
+		});*/
 	}
 
 	@OnClick(R.id.my_password)
@@ -152,7 +193,11 @@ public class UserUpdateActivity extends BaseActivity
 		RadioButton radioButton = (RadioButton) findViewById(group.getCheckedRadioButtonId());
 		String userNameT=realNameET.getText() + "";
 		
-		
+		if(StringUtil.checkContainIsNum(userNameT))
+		{
+			HealthUtil.infoAlert(UserUpdateActivity.this, "用户名不允许包含数字.");
+			return;
+		}
 		
 		if(userNameT.length()>6)
 		{

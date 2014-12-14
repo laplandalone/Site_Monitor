@@ -55,5 +55,33 @@ public class StringUtil
             return false;
         }
     }
+    
+    /*
+	 * 判断字符串是否是数字
+	 */
+	public static boolean checkStringIsNum(Object cheStrT) 
+	{
+		String cheStr = cheStrT.toString();
+		for (int i = 0; i < cheStr.length(); i++) 
+		{
+			if (new String("9876543210").indexOf(cheStr.substring(i, i + 1)) == -1)
+				return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * 判断字符串是否是数字
+	 */
+	public static boolean checkContainIsNum(Object cheStrT) 
+	{
+		String cheStr = cheStrT.toString();
+		for (int i = 0; i < cheStr.length(); i++) 
+		{
+			if (new String("9876543210").indexOf(cheStr.substring(i, i + 1)) != -1)
+				return true;
+		}
+		return false;
+	}
 }
 

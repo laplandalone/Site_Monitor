@@ -6,7 +6,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 public class HealthConstant
 {
-	//hiseemedical.com 元
+	//hiseemedical.com 
 // 	public static final String URL ="http://192.168.137.1:7001/mobile.htm?method=axis";
 //	public static final String URL ="http://58.53.209.120:9100/mobile.htm?method=axis";
 //	public static final String URL ="http://58.53.209.107:10821/mobile.htm?method=axis";

@@ -84,7 +84,12 @@ public class UserOrderActivity extends BaseActivity implements OnItemClickListen
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 				builder.setTitle("删除提示");
+				boolean cancel = false;
 				if("101".equals(orderT.getPayState()) || "100".equals(orderT.getPayState()))
+				{
+					cancel=true;
+				}
+				if(cancel)
 				{
 					builder.setMessage("是否删除此预约？");
 					builder.setPositiveButton("是", new DialogInterface.OnClickListener() {

@@ -52,7 +52,7 @@ public class OtherActivity extends BaseActivity{
 	{
 	   title.setText("更多");
 	   String url=HealthUtil.readAppUrl();
-	   mController.setShareContent("我正在使用“掌上亚心”安卓版手机应用。关爱与沟通，为您的心脏护航！" +url);
+	   mController.setShareContent("我正在使用“掌上亚心”安卓版手机应用。关爱与沟通，为您的心脏护航！" +"http://a.app.qq.com/o/simple.jsp?pkgname=com.dm.yx");
 		// 设置分享图片, 参数2为图片的url地址
 //	   mController.setShareMedia(new UMImage(this,"http://www.umeng.com/images/pic/banner_module_social.png"));
 		// 设置分享图片，参数2为本地图片的资源引用
