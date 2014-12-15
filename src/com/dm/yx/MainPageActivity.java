@@ -274,7 +274,8 @@ public class MainPageActivity extends BaseActivity
 	@OnClick(R.id.main_img7)
 	public void toUserVisit(View v)
 	{
-		Intent intent = new Intent(MainPageActivity.this, VisitUserCheckActivity.class);
+//		Intent intent = new Intent(MainPageActivity.this, VisitUserCheckActivity.class);
+		Intent intent = new Intent(MainPageActivity.this, PatientVisitListActivity.class);
 		startActivity(intent);
 	}
 	
