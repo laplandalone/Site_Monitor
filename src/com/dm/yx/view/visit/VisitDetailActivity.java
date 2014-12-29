@@ -15,7 +15,6 @@ import com.dm.yx.R;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.view.user.UserUpdateActivity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -137,6 +136,7 @@ public class VisitDetailActivity extends BaseActivity
 		RequestParams param = webInterface.addVisit(josn, user.getUserId(), visitType);
 		invokeWebServer(param, ADD_VISIT);
 	}
+
 
 	/**
 	 * 链接web服务

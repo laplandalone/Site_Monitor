@@ -18,7 +18,26 @@ public class HospitalNewsT implements java.io.Serializable {
 	private String state;
 	private String createDate;
 	private String typeName;
+	private String url;
+	private String urlText;
+	
 	// Constructors
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrlText() {
+		return urlText;
+	}
+
+	public void setUrlText(String urlText) {
+		this.urlText = urlText;
+	}
 
 	/** default constructor */
 	public HospitalNewsT() {

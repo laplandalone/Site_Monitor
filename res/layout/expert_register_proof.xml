@@ -55,6 +55,6 @@
     </LinearLayout>
      <LinearLayout android:visibility="gone" android:id="@+id/cancel_single" android:orientation="horizontal"  android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
          <Button   android:id="@+id/taobao_cancel" android:background="@drawable/order_cancel_nomal" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
-         <Button    android:id="@+id/msg_send" android:background="@drawable/msg_send" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
+         <Button   android:id="@+id/msg_send" android:background="@drawable/msg_send" android:layout_width="150.0dip" android:layout_height="35.0dip" android:layout_margin="13.0dip" />
     </LinearLayout>
 </LinearLayout>

@@ -621,6 +621,21 @@ public class DateUtils
 		return date;
 
 	}
+	
+	public static Date afterNDate(Date dateT,int n)
+	{
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(dateT);
+
+		calendar.add(Calendar.DATE, n);
+
+		Date date = calendar.getTime();
+
+		return date;
+
+	}
 
 	public static ArrayList<String> getAfterDate()
 	{

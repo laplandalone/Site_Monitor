@@ -38,7 +38,7 @@ public class UserMainActivity extends BaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub 2131493633
+		// TODO Auto-generated method stub 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_login_main);
 		ViewUtils.inject(this);
@@ -97,6 +97,12 @@ public class UserMainActivity extends BaseActivity
 		startActivity(intent);
 	}
 	
+	@OnClick(R.id.item_layout8)
+	public void myNotice(View v)
+	{
+		Intent intent = new Intent(UserMainActivity.this,  MyNoticeActivity.class);
+		startActivity(intent);
+	}
 	
 	@OnClick(R.id.user_info_detail)
 	public void updateUser(View v)

@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dm.yx.BaseActivity;
@@ -67,6 +68,8 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 	
 	String adpterFlag="normal";
 	
+	@ViewInject(R.id.contentnull)
+	private RelativeLayout layout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -255,6 +258,11 @@ public class AskExpertListActivity extends BaseActivity  implements OnItemClickL
 		JsonObject returnObj = jsonObject.getAsJsonObject("returnMsg");
 		this.doctorList = HealthUtil.json2Object(returnObj.toString(), DoctorList.class);
 		adapter = new ExpertListAdapter(AskExpertListActivity.this, doctorList);
+		if(this.doctorList.getDoctors().size()==0)
+		{
+			layout.setVisibility(View.VISIBLE);
+			list.setVisibility(View.GONE);
+		}
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 	}

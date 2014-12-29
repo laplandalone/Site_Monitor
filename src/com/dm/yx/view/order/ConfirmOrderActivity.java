@@ -1,5 +1,6 @@
 package com.dm.yx.view.order;
 
+import java.util.Date;
 import java.util.Map;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.alipay.android.app.sdk.AliPay;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.tools.DateUtils;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.user.ChooseContactListActivity;
@@ -94,6 +96,9 @@ public class ConfirmOrderActivity extends BaseActivity
 	
 	@ViewInject(R.id.order_cancel)
 	private Button orderCancel;
+	
+	@ViewInject(R.id.taobao_cancel)
+	private Button taobao_cancel;
 	
 	@ViewInject(R.id.taobao)
 	private Button taobao;
@@ -271,6 +276,14 @@ public class ConfirmOrderActivity extends BaseActivity
 		if("102".equals(payState))
 		{
 			cancel_single.setVisibility(View.VISIBLE);
+			Date date =new Date();
+			String dateStr =getIntent().getStringExtra("registerTime");
+			dateStr=dateStr.substring(0,10);
+			Date registerDate = DateUtils.getDate(dateStr);
+			if(date.after(registerDate))
+			{
+				taobao_cancel.setVisibility(View.GONE);
+			}
 		}else if("100".equals(payState))
 		{
 			order_pay_line.setVisibility(View.VISIBLE);
@@ -377,7 +390,6 @@ public class ConfirmOrderActivity extends BaseActivity
 		    case RSA_SIGN:
 		    	JsonObject rtn = jsonObject.getAsJsonObject("returnMsg");	
 		    	String sign=rtn.get("sign").getAsString();
-		    	System.out.println(sign);
 		    	alipay(sign);
 		    	break;
 		    case PAY_STATE:	
