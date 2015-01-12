@@ -128,7 +128,7 @@ public class NewVersionActivity extends BaseActivity implements OnClickListener{
 		HealthUtil.LOG_D(getClass(), ">>>>>>>>>>>>>>>>>>>cancelBtn");
 		if (mHttpHandler != null) {
 			if(cancelBtn.getText().toString().equals("取消")){
-				mHttpHandler.stop();
+				httpHandler.cancel();
 				mHttpHandler = null;
 			}
 		}
@@ -151,7 +151,7 @@ public class NewVersionActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		HealthUtil.LOG_D(getClass(), "--------------------onDestroy");
 		if (mHttpHandler != null) {
-			mHttpHandler.stop();
+			httpHandler.cancel();
 			mHttpHandler = null;
 		}
 		HealthUtil.isNewVersionFlag = false; //当此界面销毁，设置为false

@@ -1,10 +1,10 @@
 package com.dm.yx.view.visit;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -33,7 +33,6 @@ public class VisitDetailActivity extends BaseActivity
 	@ViewInject(R.id.title)
 	private TextView title;
 	WebView web;
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -42,7 +41,6 @@ public class VisitDetailActivity extends BaseActivity
 		setContentView(R.layout.visit_detail_webview);
 		web = (WebView) findViewById(R.id.webview);  
 		web.getSettings().setJavaScriptEnabled(true);   
-		web.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
@@ -58,7 +56,7 @@ public class VisitDetailActivity extends BaseActivity
 	}
 	
  
-	@SuppressLint("JavascriptInterface")
+	@JavascriptInterface
 	@Override
 	protected void initView()
 	{
@@ -127,16 +125,22 @@ public class VisitDetailActivity extends BaseActivity
 	{
 		
 	}
-
+	
+	@JavascriptInterface
 	public void addVisit(String josn,String visitType)
 	{
-		dialog.setMessage("正在加载,请稍后...");
-  		dialog.show();
+//		dialog.setMessage("正在加载,请稍后...");
+//  		dialog.show();
 		User user = HealthUtil.getUserInfo();
 		RequestParams param = webInterface.addVisit(josn, user.getUserId(), visitType);
 		invokeWebServer(param, ADD_VISIT);
 	}
 
+	@JavascriptInterface
+	public void cancel()
+	{
+		finish();
+	}
 
 	/**
 	 * 链接web服务
@@ -149,7 +153,7 @@ public class VisitDetailActivity extends BaseActivity
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)
 		{
-			httpHandler.stop();
+			httpHandler.cancel();
 		}
 		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
 	}
@@ -196,25 +200,24 @@ public class VisitDetailActivity extends BaseActivity
 				break;
 			}
 		}
-
-		/*
-		 * 处理返回结果数据
-		 */
-		private void returnMsg(String json, int code)
+	}
+	/*
+	 * 处理返回结果数据
+	 */
+	private void returnMsg(String json, int code)
+	{
+		JsonParser jsonParser = new JsonParser();
+		JsonElement jsonElement = jsonParser.parse(json);
+		JsonObject jsonObject = jsonElement.getAsJsonObject();
+		String executeType = jsonObject.get("executeType").getAsString();
+		if ("success".equals(executeType))
 		{
-			JsonParser jsonParser = new JsonParser();
-			JsonElement jsonElement = jsonParser.parse(json);
-			JsonObject jsonObject = jsonElement.getAsJsonObject();
-			String executeType = jsonObject.get("executeType").getAsString();
-			if ("success".equals(executeType))
-			{
-				HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访成功.");
-				finish();
-			} else
-			{
-				HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访失败.");
-			}
-
+			HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访成功.");
+			finish();
+		} else
+		{
+			HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访失败.");
 		}
+
 	}
 }

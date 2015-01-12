@@ -1,5 +1,9 @@
 package com.dm.yx.view.user;
 
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,10 +14,24 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
+import com.dm.yx.model.HisUser;
+import com.dm.yx.model.HospitalNewsT;
 import com.dm.yx.model.User;
+import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
+import com.dm.yx.view.visit.VisitDetailActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -53,14 +71,112 @@ public class UserCheckActivity extends BaseActivity
 	}
 	
 	@OnClick(R.id.submit)
-	public void health1(View v)
+	public void health1(View v) throws Exception
 	{
-		HealthUtil.infoAlert(UserCheckActivity.this, "正在建设中...");
-//		Intent intent = new Intent(UserCheckActivity.this,MyHealthActivity.class);
-//		startActivity(intent);
-//		exit();
+//		String url=hospitalConfigT.getRemark();
+//		String name=hospitalConfigT.getConfigVal();
+		dialog.setMessage("正在加载,请稍后...");
+		dialog.show();
+		String patientId=userCard.getText().toString().trim();
+		String param="select  * from mzbrxx where patient_id='"+patientId+"'";
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(GET_LIST);
+		RequestParams requestParams = new RequestParams("UTF-8");
+		BasicNameValuePair nameValuePair = new BasicNameValuePair("param",param);
+		requestParams.addBodyParameter(nameValuePair);
+		mHttpUtils.send(HttpMethod.POST,  HealthConstant.HIS_URL, requestParams, requestCallBack);
+
 	}
 	
+	/**
+	 * 获取后台返回的数据
+	 */
+	class MineRequestCallBack extends RequestCallBack<String>
+	{
+
+		private int responseCode;
+
+		public MineRequestCallBack(int responseCode)
+		{
+			super();
+			this.responseCode = responseCode;
+		}
+
+		@Override
+		public void onFailure(HttpException error, String msg)
+		{
+			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
+			if (dialog.isShowing())
+			{
+				dialog.cancel();
+			}
+			
+			HealthUtil.infoAlert(UserCheckActivity.this, "信息加载失败，请检查网络后重试");
+		}
+
+		@Override
+		public void onSuccess(ResponseInfo<String> arg0)
+		{
+			// TODO Auto-generated method stub
+			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
+			if (dialog.isShowing())
+			{
+				dialog.cancel();
+			}
+			switch (responseCode)
+			{
+			case GET_LIST:
+				returnMsg(arg0.result, GET_LIST);
+				break;
+			case GET_LIST_MORE:
+				returnMsg(arg0.result, GET_LIST_MORE);
+				break;
+			}
+		}
+
+	}
+
+	/*
+	 * 处理返回结果数据
+	 */
+	private void returnMsg(String json, int code)
+	{
+		JsonParser jsonParser = new JsonParser();
+		JsonElement jsonElement = jsonParser.parse(json);
+		
+		JsonArray jsonArray = jsonElement.getAsJsonArray();
+		
+		String patientNameT=name.getText().toString().trim();
+		String idT=idcard.getText().toString().trim();
+		
+		
+		Gson gson = new Gson();
+		List<HisUser> hisUsers  = gson.fromJson(jsonArray, new TypeToken<List<HisUser>>()
+		{
+		}.getType());
+		if(hisUsers!=null && hisUsers.size()>0)
+		{
+			HisUser hisUser = hisUsers.get(0);
+			String name=hisUser.getPatient_name().trim();
+			String id=hisUser.getIdentity_id().trim();
+			String patientId=userCard.getText().toString().trim();
+//			if(idT.equals(id)&&name.equals(patientNameT))
+//			{
+				Intent intent = new Intent(UserCheckActivity.this,WebActivity.class);
+				intent.putExtra("url", "http://192.168.137.1:7001/visit/result.jsp?patientId="+patientId);
+//				intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/result.jsp?patientId="+patientId);
+				intent.putExtra("title", "检验报告单");
+				startActivity(intent);
+			/*}else
+			{
+				HealthUtil.infoAlert(UserCheckActivity.this, "身份校验失败，请重试...");
+				return;
+			}*/
+		}else
+		{
+			HealthUtil.infoAlert(UserCheckActivity.this, "身份校验失败，请重试...");
+			return;
+		}
+	}
 	@Override
 	protected void initView()
 	{
@@ -125,7 +241,7 @@ public class UserCheckActivity extends BaseActivity
 				idcard.setText(no);
 			}else
 			{
-				checkUser();
+//				checkUser();
 			}
 		}
 	}

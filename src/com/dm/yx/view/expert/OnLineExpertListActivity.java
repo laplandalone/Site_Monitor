@@ -51,6 +51,9 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 	@ViewInject(R.id.title)
 	private TextView title;
 	
+	@ViewInject(R.id.editUser)
+	private TextView editUser;
+	
 	@ViewInject(R.id.textTitle)
 	private TextView textTitle;
 	
@@ -66,7 +69,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 	
 	private TeamList searchList = new TeamList();
 	ExpertListAdapter adapter ;
-	
+	private boolean doctorAll=false;
 	String adpterFlag="normal";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -83,9 +86,12 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		initValue();
 	}
 	
+	
 	@Override
 	protected void initView()
 	{
+		editUser.setText("可预约");
+		editUser.setVisibility(View.VISIBLE);
 		textTitle.setVisibility(View.GONE);
 		// TODO Auto-generated method stubtotal_count
 		title.setText("医生列表");
@@ -181,6 +187,28 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		exit();
 	}
 	
+	@OnClick(R.id.editUser)
+	public void register(View v)
+	{
+		dialog.setMessage("正在加载,请稍后...");
+		dialog.show();
+		if(doctorAll)
+		{
+			RequestParams param = webInterface.queryDoctorList("1",null,teamId);
+			invokeWebServer(param, GET_LIST);
+			doctorAll=false;
+			editUser.setText("可预约");
+			
+		}else
+		{
+			RequestParams param = webInterface.getRegisterByTeamId(teamId);
+			invokeWebServer(param, GET_LIST);
+			doctorAll=true;
+			editUser.setText("全部");
+		}
+		// TODO Auto-generated method stub
+		
+	}
 	/**
 	 * 链接web服务
 	 * 
@@ -192,7 +220,7 @@ public class OnLineExpertListActivity extends BaseActivity  implements OnItemCli
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)
 		{
-			httpHandler.stop();
+			httpHandler.cancel();
 		}
 		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
 	}

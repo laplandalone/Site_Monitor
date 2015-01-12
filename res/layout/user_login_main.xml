@@ -61,13 +61,13 @@
                      <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content"  android:src="@drawable/arrow_list_item" />
                     </LinearLayout>
                      <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" /> 
-                    <LinearLayout android:background="@drawable/list_view_selector" android:gravity="left" android:id="@+id/item_layout8"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <LinearLayout android:background="@drawable/list_view_selector" android:gravity="left" android:id="@+id/item_layout2"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
                             <ImageView android:id="@id/icon2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/msg" android:layout_centerHorizontal="true" />
                             <TextView android:layout_weight="2.0"  android:textSize="16.0sp" android:layout_gravity="center_vertical" android:textColor="@color/TextColorGreen" android:id="@id/text2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp674" android:layout_below="@id/icon2" />
                            <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content"  android:src="@drawable/arrow_list_item" />
                             </LinearLayout>
                                                         <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
-                            <LinearLayout android:background="@drawable/list_view_selector" android:gravity="left" android:id="@id/item_layout2"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+                            <LinearLayout android:background="@drawable/list_view_selector" android:gravity="left" android:id="@+id/item_layout8"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
                             <ImageView android:id="@id/icon2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/msg" android:layout_centerHorizontal="true" />
                             <TextView android:layout_weight="2.0"  android:textSize="16.0sp" android:layout_gravity="center_vertical" android:textColor="@color/TextColorGreen" android:id="@id/text2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="我的消息" android:layout_below="@id/icon2" />
                            <ImageView android:layout_gravity="center_vertical" android:id="@id/arrow" android:layout_width="50.0dip" android:layout_height="wrap_content"  android:src="@drawable/arrow_list_item" />
@@ -99,14 +99,14 @@
                 </LinearLayout>
                <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
                 <LinearLayout android:orientation="horizontal" android:id="@id/item_layout3" android:padding="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
-                    <LinearLayout android:visibility="invisible" android:gravity="center" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:layout_weight="1.0">
+                    <LinearLayout android:visibility="gone" android:gravity="center" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:layout_weight="1.0">
                         <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
                             <ImageView android:id="@id/icon3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_item_icon3" android:layout_centerHorizontal="true" />
                             <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/text3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp673" android:layout_below="@id/icon3" />
                             <ImageView android:id="@id/msg_icon3" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_msg_bg" android:layout_alignRight="@id/text3" />
                         </RelativeLayout>
                     </LinearLayout>
-                    <LinearLayout android:visibility="invisible" android:gravity="center" android:id="@id/item_layout4" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
+                    <LinearLayout android:visibility="gone" android:gravity="center" android:id="@id/item_layout4" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
                         <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
                             <ImageView android:id="@id/icon4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_item_icon4" android:layout_centerHorizontal="true" />
                             <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/text4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp674" android:layout_below="@id/icon4" />
@@ -114,24 +114,8 @@
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout android:orientation="horizontal" android:id="@id/item_layout5" android:padding="0.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
-                    <LinearLayout android:gravity="center" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:layout_weight="1.0">
-                        <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
-                            <ImageView android:id="@id/icon5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_item_icon5" android:layout_centerHorizontal="true" />
-                            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/text5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp675" android:layout_below="@id/icon5" />
-                            <ImageView android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_msg_bg" android:layout_alignRight="@id/text5" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                    <LinearLayout android:gravity="center" android:id="@id/item_layout6" android:background="@drawable/btn_info_item_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_weight="1.0">
-                        <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
-                            <ImageView android:id="@id/icon6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_item_icon6" android:layout_centerHorizontal="true" />
-                            <TextView android:textSize="16.0sp" android:textColor="@color/black" android:id="@id/text6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/layout_temp676" android:layout_below="@id/icon6" />
-                            <ImageView android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/info_msg_bg" android:layout_alignRight="@id/text6" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
-            <Button android:id="@+id/outLogin" android:background="@drawable/user_login_control" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:layout_width="wrap_content" android:layout_height="35.0dip" android:layout_marginTop="15.0dip" android:layout_marginBottom="5.0dip" />
+            <Button android:id="@+id/outLogin" android:background="@drawable/user_login_control" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:layout_width="wrap_content" android:layout_height="35.0dip"   android:layout_marginBottom="5.0dip" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
