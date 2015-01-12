@@ -231,7 +231,7 @@ public class PatientVisitListActivity extends BaseActivity implements OnItemClic
 		User user=HealthUtil.getUserInfo();
 		String patientId="无";
 		String operType="无";
-		url="http://192.168.137.1:7001/visit/img.html";
+//		url="http://192.168.137.1:7001/visit/img.html";
 		intent.putExtra("url", url+"?name="+user.getUserName()+"&patientId="+patientId+"&operType="+operType);
 		intent.putExtra("title", name);
 		startActivity(intent);

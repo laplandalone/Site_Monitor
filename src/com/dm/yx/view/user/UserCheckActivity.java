@@ -161,10 +161,9 @@ public class UserCheckActivity extends BaseActivity
 			String patientId=userCard.getText().toString().trim();
 //			if(idT.equals(id)&&name.equals(patientNameT))
 //			{
-				Intent intent = new Intent(UserCheckActivity.this,WebActivity.class);
-				intent.putExtra("url", "http://192.168.137.1:7001/visit/result.jsp?patientId="+patientId);
-//				intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/result.jsp?patientId="+patientId);
-				intent.putExtra("title", "检验报告单");
+//				
+			    Intent intent = new Intent(UserCheckActivity.this,CheckRstListActivity.class);
+			    intent.putExtra("patientId", patientId);
 				startActivity(intent);
 			/*}else
 			{
