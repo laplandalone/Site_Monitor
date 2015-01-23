@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/hospital_background_new" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" >
+  <include android:id="@id/layout1" layout="@layout/common_title" />
+     <ScrollView android:id="@+id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1" android:layout_below="@+id/top_bar_include">
+       <LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:orientation="vertical" >
+            <TextView  android:gravity="center" android:layout_marginTop="8.0dip" android:textSize="22.0dip" android:textColor="@color/TextColorBlue" android:id="@+id/newsTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title"  />
+            
+              <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="35.0dip" >
+   				<TextView android:layout_marginLeft="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"    android:layout_width="wrap_content" android:layout_height="17.0dip" android:text="来自:亚洲心脏病医院"   />
+                <TextView android:layout_marginRight="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"  android:gravity="right"  android:id="@+id/newsDate"   android:layout_width="fill_parent" android:layout_height="17.0dip"  />
+    		</LinearLayout>
+        
+            <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+         
+             
+                <TextView
+                android:layout_marginLeft="15.0dip"  
+                android:layout_marginTop="8.0dip"
+                android:layout_marginRight="10.0dip"
+                android:id="@+id/newsContent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="title"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="#ff000000"
+                android:textSize="16.0dip" />
+                <TextView
+                android:layout_marginLeft="15.0dip"  
+                android:layout_marginRight="10.0dip"
+                android:id="@+id/urlText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="#ff000000"
+                android:textSize="16.0dip" />
+               <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+   <TextView android:layout_marginRight="7.0dip" android:gravity="right" android:layout_marginTop="8.0dip" android:textSize="16.0dip" android:textColor="@color/TextColorBlue" android:id="@+id/visit_detail" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="随访详情"  />
+   </LinearLayout>
+   
+   
+   </ScrollView>
+</LinearLayout>
