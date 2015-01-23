@@ -17,6 +17,17 @@ public class User
 	@Expose
 	private String password;
 	
+	@Expose
+	private String cardNo;
+	
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+
 	public String getPassword()
 	{
 		return password;

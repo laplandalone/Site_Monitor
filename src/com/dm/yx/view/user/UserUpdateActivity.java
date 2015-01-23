@@ -1,13 +1,9 @@
 package com.dm.yx.view.user;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -17,13 +13,11 @@ import android.widget.TextView;
 import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
-import com.dm.yx.model.Doctor;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.tools.IDCard;
 import com.dm.yx.tools.StringUtil;
-import com.dm.yx.tools.pinyinUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -53,6 +47,9 @@ public class UserUpdateActivity extends BaseActivity
 
 	@ViewInject(R.id.idcard)
 	private EditText idCardET;
+	
+	@ViewInject(R.id.patient_id)
+	private EditText patientId;
 
 	@ViewInject(R.id.check_btn)
 	private RadioGroup group;
@@ -118,10 +115,10 @@ public class UserUpdateActivity extends BaseActivity
 		{
 			femaleRadio.setChecked(true);
 		}
-		
+		patientId.setText(user.getCardNo());
 		realNameET.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		idCardET.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		
+	
 		/*
 		realNameET.addTextChangedListener(new TextWatcher() {
 			
@@ -218,6 +215,8 @@ public class UserUpdateActivity extends BaseActivity
 			noticeFlag=false;
 		}
 		
+		String patentIdT = patientId.getText().toString() + "";
+		
 		if (!HealthUtil.isMobileNum(phoneNum))
 		{
 			HealthUtil.infoAlert(UserUpdateActivity.this, "手机号码为空或格式错误.");
@@ -241,6 +240,7 @@ public class UserUpdateActivity extends BaseActivity
 		this.userT.setUserNo(idCardET.getText() + "");
 		this.userT.setPassword(user.getPassword());
 		this.userT.setSex(this.sex);
+		this.userT.setCardNo(patentIdT);
 //		this.userT.setPassword(pswStr);
 		Gson gson = new Gson();
 		updateUserStr = gson.toJson(userT);

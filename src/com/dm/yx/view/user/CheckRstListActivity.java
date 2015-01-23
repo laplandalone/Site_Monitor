@@ -149,7 +149,7 @@ public class CheckRstListActivity extends BaseActivity  implements OnItemClickLi
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String param="select  convert(varchar(10),check_time,110) check_time from  view_lis_lx_app where patient_id='"+patientId+"' group by convert(varchar(10),check_time,110)"; 
+		String param="select  convert(varchar(10),check_time,102) check_time from  view_lis_lx_app where patient_id='"+patientId+"' group by convert(varchar(10),check_time,102)  order by check_time desc"; 
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(GET_LIST);
 		RequestParams requestParams = new RequestParams("UTF-8");
 		BasicNameValuePair nameValuePair = new BasicNameValuePair("param",param);
@@ -169,12 +169,11 @@ public class CheckRstListActivity extends BaseActivity  implements OnItemClickLi
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(CheckRstListActivity.this,WebActivity.class);
+		Intent intent = new Intent(CheckRstListActivity.this,CheckRstTypeActivity.class);
 		CheckRstT rstT= rstTs.get(position);
 		String checkTime=rstT.getCheck_time();
-		intent.putExtra("url", "http://192.168.137.1:7001/visit/result.jsp?patientId="+patientId+"&checkTime="+checkTime);
-//		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/result.jsp?patientId="+patientId);
-		intent.putExtra("title", "检验报告单");
+		intent.putExtra("patientId", patientId);
+		intent.putExtra("checkTime",checkTime);
 		startActivity(intent);
 	}
 

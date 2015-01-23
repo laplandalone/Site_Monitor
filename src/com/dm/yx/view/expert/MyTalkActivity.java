@@ -390,7 +390,7 @@ public class MyTalkActivity extends BaseActivity
 			}
 //		 RequestParams param = webInterface.addUserQuestion(questionStr);
 //		 invokeWebServer(param, ADD_QUESTION);
-			UploadThread uploadThread = new UploadThread(formFiles, mHandler, questionStr,HealthUtil.readHospitalId(),"ASK_IMG_PATH");
+			UploadThread uploadThread = new UploadThread(formFiles, mHandler, questionStr,HealthUtil.readHospitalId(),"ASK_IMG_PATH","","");
 			new Thread(uploadThread).start();
 	}
 	

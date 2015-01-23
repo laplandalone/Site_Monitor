@@ -29,6 +29,7 @@ import com.dm.yx.view.user.LoginActivity;
 import com.dm.yx.view.user.UserCheckActivity;
 import com.dm.yx.view.user.UserMainActivity;
 import com.dm.yx.view.user.VisitUserCheckActivity;
+import com.dm.yx.view.visit.PatientMainActivity;
 import com.dm.yx.view.visit.PatientVisitListActivity;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -275,7 +276,7 @@ public class MainPageActivity extends BaseActivity
 	public void toUserVisit(View v)
 	{
 //		Intent intent = new Intent(MainPageActivity.this, VisitUserCheckActivity.class);
-		Intent intent = new Intent(MainPageActivity.this, PatientVisitListActivity.class);
+		Intent intent = new Intent(MainPageActivity.this, PatientMainActivity.class);
 		startActivity(intent);
 	}
 	

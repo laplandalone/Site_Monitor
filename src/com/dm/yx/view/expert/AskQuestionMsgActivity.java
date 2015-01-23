@@ -407,7 +407,7 @@ public class AskQuestionMsgActivity extends BaseActivity
 			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image", "application/octet-stream");
 			formFiles[i] = formFile;
 		}
-		UploadThread uploadThread = new UploadThread(formFiles, mHandler, questionStr,HealthUtil.readHospitalId(),"ASK_IMG_PATH");
+		UploadThread uploadThread = new UploadThread(formFiles, mHandler, questionStr,HealthUtil.readHospitalId(),"ASK_IMG_PATH","","");
 		new Thread(uploadThread).start();
 	}
 

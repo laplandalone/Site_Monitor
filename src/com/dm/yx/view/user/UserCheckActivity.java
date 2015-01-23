@@ -15,15 +15,12 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.HisUser;
-import com.dm.yx.model.HospitalNewsT;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.view.visit.VisitDetailActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.ViewUtils;
@@ -44,12 +41,10 @@ public class UserCheckActivity extends BaseActivity
 	@ViewInject(R.id.name)
 	private TextView name;
 	
-	@ViewInject(R.id.idcard)
-	private TextView idcard;
-	
 	@ViewInject(R.id.userCard)
 	private TextView userCard;
 	private User user;
+	private String patientId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -73,11 +68,25 @@ public class UserCheckActivity extends BaseActivity
 	@OnClick(R.id.submit)
 	public void health1(View v) throws Exception
 	{
-//		String url=hospitalConfigT.getRemark();
-//		String name=hospitalConfigT.getConfigVal();
+		 patientId=userCard.getText().toString().trim();
+		 String patientNameT=name.getText().toString().trim();
+		 if("".equals(patientNameT))
+			{
+				HealthUtil.infoAlert(UserCheckActivity.this, "姓名不能为空");
+				return;
+			}
+		 
+		 if("".equals(patientId))
+		{
+			HealthUtil.infoAlert(UserCheckActivity.this, "病案号不能为空");
+			return;
+		}
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String patientId=userCard.getText().toString().trim();
+		if(patientId.length()==6)
+		{
+			patientId="PID000"+patientId;
+		}
 		String param="select  * from mzbrxx where patient_id='"+patientId+"'";
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(GET_LIST);
 		RequestParams requestParams = new RequestParams("UTF-8");
@@ -146,8 +155,6 @@ public class UserCheckActivity extends BaseActivity
 		JsonArray jsonArray = jsonElement.getAsJsonArray();
 		
 		String patientNameT=name.getText().toString().trim();
-		String idT=idcard.getText().toString().trim();
-		
 		
 		Gson gson = new Gson();
 		List<HisUser> hisUsers  = gson.fromJson(jsonArray, new TypeToken<List<HisUser>>()
@@ -156,20 +163,17 @@ public class UserCheckActivity extends BaseActivity
 		if(hisUsers!=null && hisUsers.size()>0)
 		{
 			HisUser hisUser = hisUsers.get(0);
-			String name=hisUser.getPatient_name().trim();
-			String id=hisUser.getIdentity_id().trim();
-			String patientId=userCard.getText().toString().trim();
-//			if(idT.equals(id)&&name.equals(patientNameT))
-//			{
-//				
+			String name=hisUser.getPatient_name();
+			if(name!=null && patientNameT.equals(name.trim()))
+			{
 			    Intent intent = new Intent(UserCheckActivity.this,CheckRstListActivity.class);
 			    intent.putExtra("patientId", patientId);
 				startActivity(intent);
-			/*}else
+			}else
 			{
 				HealthUtil.infoAlert(UserCheckActivity.this, "身份校验失败，请重试...");
 				return;
-			}*/
+			}
 		}else
 		{
 			HealthUtil.infoAlert(UserCheckActivity.this, "身份校验失败，请重试...");
@@ -195,7 +199,6 @@ public class UserCheckActivity extends BaseActivity
 			if (this.user != null)
 			{
 				name.setText(user.getUserName());
-				idcard.setText(user.getUserNo());
 			}else
 			{
 				finish();
@@ -208,7 +211,6 @@ public class UserCheckActivity extends BaseActivity
 			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
 			{
 				name.setText(nameT);
-				idcard.setText(no);
 			}else
 			{
 				finish();
@@ -237,7 +239,6 @@ public class UserCheckActivity extends BaseActivity
 			if (this.user != null && nameT!=null && !"".equals(nameT) && no!=null && !"".equals(no))
 			{
 				name.setText(nameT);
-				idcard.setText(no);
 			}else
 			{
 //				checkUser();

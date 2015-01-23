@@ -1,4 +1,4 @@
-package com.dm.yx.view.user;
+ package com.dm.yx.view.visit;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class MyNoticeActivity extends BaseActivity implements OnItemClickListener
+public class VisitNoticeActivity extends BaseActivity implements OnItemClickListener
 {
 	
 	@ViewInject(R.id.title)
@@ -67,7 +67,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	protected void initView()
 	{
-		title.setText("我的消息");
+		title.setText("我的随访");
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 	@OnClick(R.id.back)
 	public void toHome(View v)
 	{
-		Intent intent = new Intent(MyNoticeActivity.this, MainPageActivity.class);
+		Intent intent = new Intent(VisitNoticeActivity.this, MainPageActivity.class);
 		startActivity(intent);
 		exit();
 	}
@@ -133,7 +133,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 			{
 				// list.stopLoadMore();
 			}
-			HealthUtil.infoAlert(MyNoticeActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(VisitNoticeActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -171,7 +171,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 		String executeType = jsonObject.get("executeType").getAsString();
 		if (!"success".equals(executeType))
 		{
-			HealthUtil.infoAlert(MyNoticeActivity.this, "加载失败请重试.");
+			HealthUtil.infoAlert(VisitNoticeActivity.this, "加载失败请重试.");
 			return;
 		}
 		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
@@ -179,7 +179,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 		this.wakeTs = gson.fromJson(jsonArray, new TypeToken<List<WakeT>>()
 		{
 		}.getType());
-		WakeListAdapter adapter = new WakeListAdapter(MyNoticeActivity.this, wakeTs);
+		WakeListAdapter adapter = new WakeListAdapter(VisitNoticeActivity.this, wakeTs);
 		if(this.wakeTs.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
@@ -194,7 +194,7 @@ public class MyNoticeActivity extends BaseActivity implements OnItemClickListene
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(MyNoticeActivity.this, NoticeDetailActivity.class);
+		Intent intent = new Intent(VisitNoticeActivity.this, VisitNoticeDetailActivity.class);
 		WakeT wakeT = wakeTs.get(position);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("wakeT", wakeT);

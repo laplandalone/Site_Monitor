@@ -61,7 +61,8 @@ public class CheckRstListAdapter extends BaseAdapter
 			 TextView textView =  (TextView)convertView.findViewById( R.id.text1);
 			 CheckRstT rstT=checkRstTs.get(position);
 			// localImageView.setVisibility(0);
-			 textView.setText(rstT.getCheck_time());
+			 String time=rstT.getCheck_time();
+			 textView.setText(time.replace(".", "-"));
 			 
 		
 		return convertView;

@@ -23,6 +23,11 @@
                     <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@id/idcard" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/layout_temp104" android:singleLine="true" android:digits="1234567890xX" android:layout_weight="0.1" />
                 </LinearLayout>
                 <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                <LinearLayout android:gravity="center_vertical" android:background="@drawable/info_all_bg" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginTop="5.0dip">
+                    <TextView android:layout_marginLeft="10.0dip" android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="病  案  号:" />
+                    <EditText android:textSize="16.0sp" android:textColor="#ff7d7d7d" android:layout_gravity="center_vertical" android:id="@+id/patient_id" android:background="@null" android:paddingLeft="7.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="病案号" android:singleLine="true"  android:layout_weight="0.1" />
+                </LinearLayout>
+                <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
                 <LinearLayout android:background="@drawable/info_all_bg" android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginTop="5.0dip">
                     <TextView android:layout_marginLeft="10.0dip" android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="性        别:" />
                     <RadioGroup android:orientation="horizontal" android:id="@id/check_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_weight="0.1">

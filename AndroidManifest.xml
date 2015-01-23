@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.1" package="com.dm.yx">
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17"/>
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -125,10 +125,12 @@
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.push.NotificationMessageActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.PrivilegeListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.UserPasswordActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
-         <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.NoticeDetailActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
-         <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.MyNoticeActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+         <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.visit.VisitNoticeDetailActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+         <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.visit.VisitNoticeActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
           <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.WebActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
            <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.CheckRstListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+           <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.CheckRstTypeActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+            <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.visit.PatientMainActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          <service android:name="com.dm.yx.view.other.CheckNewVersion">
          </service>
          <service android:name="com.dm.yx.view.download.DownloadService">

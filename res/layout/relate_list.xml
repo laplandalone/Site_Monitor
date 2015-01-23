@@ -24,7 +24,7 @@
        android:layout_height="50.0dip"
        android:orientation="horizontal"
        android:gravity="left" >
-       <ImageView android:layout_marginLeft="13.0dip" android:layout_gravity="center_vertical" android:background="@drawable/add_user"  android:layout_width="35.0dip" android:layout_height="35.0dip" /> 
+       <ImageView android:layout_marginLeft="13.0dip" android:layout_gravity="center_vertical"    android:layout_width="35.0dip" android:layout_height="35.0dip" /> 
            <TextView android:layout_marginLeft="13.0dip" android:layout_weight="2.0" android:textColor="@color/TextColorGray" android:textSize="18.0sp" android:layout_gravity="center_vertical"   android:id="@id/text1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="添加帐号" />
      </LinearLayout>
      
@@ -55,7 +55,7 @@
        android:layout_height="50.0dip"
        android:orientation="horizontal"
        android:gravity="left" >
-       <ImageView android:layout_marginLeft="13.0dip" android:layout_gravity="center_vertical" android:background="@drawable/add_user"  android:layout_width="35.0dip" android:layout_height="35.0dip" /> 
+       <ImageView android:layout_marginLeft="13.0dip" android:layout_gravity="center_vertical"    android:layout_width="35.0dip" android:layout_height="35.0dip" /> 
            <TextView android:layout_marginLeft="13.0dip" android:layout_weight="2.0" android:textColor="@color/TextColorGray" android:textSize="18.0sp" android:layout_gravity="center_vertical"   android:id="@id/text1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="添加关联" />
      </LinearLayout>
 <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" /> 
