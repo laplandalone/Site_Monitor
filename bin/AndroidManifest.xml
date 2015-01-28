@@ -131,7 +131,9 @@
            <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.CheckRstListActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
            <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.CheckRstTypeActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
             <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.visit.PatientMainActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
-         <service android:name="com.dm.yx.view.other.CheckNewVersion">
+             <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.NoticeActivity" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+        <activity android:configChanges="orientation|keyboardHidden"  android:name="com.dm.yx.view.user.NoticeDetailActivity" android:windowSoftInputMode="adjustPan|stateHidden"/> 
+             <service android:name="com.dm.yx.view.other.CheckNewVersion">
          </service>
          <service android:name="com.dm.yx.view.download.DownloadService">
          </service>

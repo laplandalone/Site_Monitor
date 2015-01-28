@@ -21,11 +21,13 @@ import com.dm.yx.R;
 import com.dm.yx.model.HospitalNewsT;
 import com.dm.yx.model.RegisterOrderT;
 import com.dm.yx.model.UserQuestionT;
+import com.dm.yx.model.WakeT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.expert.MyTalkActivity;
 import com.dm.yx.view.news.NewsDetailActivity;
 import com.dm.yx.view.order.ConfirmOrderActivity;
+import com.dm.yx.view.user.NoticeDetailActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -124,6 +126,7 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 
      private void controlDisplay(String msg)
      {
+    	 HealthUtil.LOG_D(getClass(), "push_msg=" + msg);
     	 JsonParser jsonParser = new JsonParser();
 		 JsonElement jsonElement = jsonParser.parse(msg);
 		 JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -135,7 +138,7 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 		 String[] ids = userIds.split(",");
 		 String userId=HealthUtil.readUserId();
 		
-		 if("ques".equals(msgType) || "order".equals(msgType))
+		 if("ques".equals(msgType) || "order".equals(msgType) || "visit_plan".equals(msgType))
 		 {
 			 if(userIds!=null && !"".equals(userIds))
 			 {
@@ -251,6 +254,15 @@ public class MyMessageReceiver extends FrontiaPushMessageReceiver{
 			intent.putExtra("userTelephone", registerOrderT.getUserTelephone());
 			intent.putExtra("sex", registerOrderT.getSex());
 			return intent;  
+		 }else if("visit_plan".equals(msgType))
+		 {
+		    Intent intent = new Intent(mContext, NoticeDetailActivity.class);
+		    Gson gson = new Gson();
+		    WakeT wakeT = gson.fromJson(msg, WakeT.class);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("wakeT", wakeT);
+			intent.putExtras(bundle);
+			return intent;
 		 }
 		
 		return null;

@@ -1,4 +1,4 @@
- package com.dm.yx.view.visit;
+ package com.dm.yx.view.user;
 
 import java.util.List;
 
@@ -23,8 +23,6 @@ import com.dm.yx.model.WakeT;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.news.NewsActivity;
-import com.dm.yx.view.user.LoginActivity;
-import com.dm.yx.view.user.UserUpdateActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -40,7 +38,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class VisitNoticeActivity extends BaseActivity implements OnItemClickListener
+public class NoticeActivity extends BaseActivity implements OnItemClickListener
 {
 	
 	@ViewInject(R.id.title)
@@ -50,7 +48,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 	private RelativeLayout layout;
 	private ListView list;
 	private String type;
-	private User user;
+	
 	private List<WakeT> wakeTs;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -69,7 +67,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 	@Override
 	protected void initView()
 	{
-		title.setText("我的随访");
+		title.setText("我的消息");
 	}
 
 	@Override
@@ -81,45 +79,14 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 		dialog.show();
 		String hospitalId=HealthUtil.readHospitalId();
 		User user = HealthUtil.getUserInfo();
-		if(user==null)
-		{
-			Intent intent = new Intent(VisitNoticeActivity.this, LoginActivity.class);
-			startActivityForResult(intent, 0);
-		}else
-		{
-		RequestParams param = webInterface.getUserWake(user.getUserId(),"visit_result");
+		RequestParams param = webInterface.getUserWake(user.getUserId(),"visit_plan");
 		invokeWebServer(param, GET_LIST);
-		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
-	{
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, intent);
-		switch (requestCode)
-		{
-		case 0:
-			this.user = HealthUtil.getUserInfo();
-			if (this.user != null)
-			{
-				RequestParams param = webInterface.getUserWake(user.getUserId(),"visit_result");
-				invokeWebServer(param, GET_LIST);
-			}
-			else
-			{
-				finish();
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	
 	@OnClick(R.id.back)
 	public void toHome(View v)
 	{
-		Intent intent = new Intent(VisitNoticeActivity.this, MainPageActivity.class);
+		Intent intent = new Intent(NoticeActivity.this, MainPageActivity.class);
 		startActivity(intent);
 		exit();
 	}
@@ -166,7 +133,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 			{
 				// list.stopLoadMore();
 			}
-			HealthUtil.infoAlert(VisitNoticeActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(NoticeActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -204,7 +171,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 		String executeType = jsonObject.get("executeType").getAsString();
 		if (!"success".equals(executeType))
 		{
-			HealthUtil.infoAlert(VisitNoticeActivity.this, "加载失败请重试.");
+			HealthUtil.infoAlert(NoticeActivity.this, "加载失败请重试.");
 			return;
 		}
 		JsonArray jsonArray = jsonObject.getAsJsonArray("returnMsg");
@@ -212,7 +179,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 		this.wakeTs = gson.fromJson(jsonArray, new TypeToken<List<WakeT>>()
 		{
 		}.getType());
-		WakeListAdapter adapter = new WakeListAdapter(VisitNoticeActivity.this, wakeTs);
+		WakeListAdapter adapter = new WakeListAdapter(NoticeActivity.this, wakeTs);
 		if(this.wakeTs.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
@@ -227,7 +194,7 @@ public class VisitNoticeActivity extends BaseActivity implements OnItemClickList
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(VisitNoticeActivity.this, VisitNoticeDetailActivity.class);
+		Intent intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
 		WakeT wakeT = wakeTs.get(position);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("wakeT", wakeT);

@@ -16,8 +16,8 @@
         </FrameLayout>
     </LinearLayout>
     <LinearLayout android:background="@drawable/visit_bg" android:gravity="center" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="50.0dip">
-        <Button  android:id="@+id/vist_back"  android:background="@drawable/visit_back" android:layout_width="120.0dip" android:layout_height="35.0dip" android:layout_marginRight="10.0dip"/>
-        <Button  android:id="@+id/vist_submit" android:layout_marginLeft="7.0dip" android:background="@drawable/visit_submit" android:layout_width="120.0dip" android:layout_height="35.0dip" android:layout_marginRight="10.0dip"/>
+        <Button  android:id="@+id/vist_back"  android:background="@drawable/visit_back" android:layout_width="150.0dip" android:layout_height="40.0dip" android:layout_marginRight="10.0dip"/>
+        <Button  android:id="@+id/vist_submit" android:layout_marginLeft="7.0dip" android:background="@drawable/visit_submit" android:layout_width="150.0dip" android:layout_height="40.0dip" android:layout_marginRight="10.0dip"/>
     </LinearLayout>
    
 </LinearLayout>

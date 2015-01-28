@@ -11,11 +11,9 @@ import com.dm.yx.BaseActivity;
 import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
-import com.dm.yx.model.UserContactT;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.expert.QuestionActivity;
 import com.dm.yx.view.order.UserOrderActivity;
-import com.dm.yx.view.visit.VisitNoticeActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -101,7 +99,7 @@ public class UserMainActivity extends BaseActivity
 	@OnClick(R.id.item_layout8)
 	public void myNotice(View v)
 	{
-		Intent intent = new Intent(UserMainActivity.this,  VisitNoticeActivity.class);
+		Intent intent = new Intent(UserMainActivity.this,  NoticeActivity.class);
 		startActivity(intent);
 	}
 	

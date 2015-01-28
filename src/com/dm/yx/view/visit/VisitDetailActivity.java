@@ -103,7 +103,7 @@ public class VisitDetailActivity extends BaseActivity
 	private BitmapUtils bitmapUtils;
 	private boolean restartBool = true;
 	private Context context;
-	
+	private String display="Y";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -152,6 +152,7 @@ public class VisitDetailActivity extends BaseActivity
 	@Override
 	protected void initView()
 	{
+		 display=getIntent().getStringExtra("display");
 		String titleT = getIntent().getStringExtra("title");
 		// TODO Auto-generated method stub
 		title.setText(titleT);
@@ -190,6 +191,10 @@ public class VisitDetailActivity extends BaseActivity
 							e.printStackTrace();
 						}   
 	                    dialog.dismiss(); 
+	                    if("Y".equals(display))
+	                    {
+	                    	layout.setVisibility(View.VISIBLE);
+	                    }
 	                }
 
 					@Override
@@ -375,11 +380,19 @@ public class VisitDetailActivity extends BaseActivity
 		public void onFailure(HttpException error, String msg)
 		{
 			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
-			if (dialog.isShowing())
-			{
-				dialog.cancel();
-			}
-
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() 
+				{
+					// TODO Auto-generated method stub
+					if (dialog != null)
+					{
+						dialog.cancel();
+					}	
+				}
+			});
+			
 			HealthUtil.infoAlert(VisitDetailActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
@@ -388,10 +401,18 @@ public class VisitDetailActivity extends BaseActivity
 		{
 			// TODO Auto-generated method stub
 			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
-			if (dialog.isShowing())
+			handler.post(new Runnable() {
+			@Override
+			public void run() 
 			{
-				dialog.cancel();
+				// TODO Auto-generated method stub
+				if (dialog.isShowing())
+				{
+					dialog.cancel();
+				}
 			}
+			});
+			
 			switch (responseCode)
 			{
 			case ADD_VISIT:

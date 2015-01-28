@@ -10,7 +10,8 @@ public class HealthConstant
 // 	public static final String URL ="http://192.168.137.1:7001/mobile.htm?method=axis";
 	public static final String URL ="http://123.57.78.38:10841/mobile.htm?method=axis";
 //	public static final String URL ="http://www.hiseemedical.com:10821/mobile.htm?method=axis";
-	public static final String HIS_URL="http://27.17.0.42:10821/his/mobile.htm?method=axis";
+//	public static final String HIS_URL="http://27.17.0.42:10821/his/mobile.htm?method=axis";
+	public static final String HIS_URL="http://mobilemedical.net.cn:10821/his/mobile.htm?method=axis";
 //	public static final String UPLOAD_URL = "http://192.168.137.1:7001/fileUpload";
 	public static final String UPLOAD_URL = "http://123.57.78.38:10841/fileUpload";
 //	public static final String UPLOAD_URL = "http://58.53.209.120:9100/fileUpload";

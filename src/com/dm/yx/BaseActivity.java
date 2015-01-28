@@ -50,6 +50,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final int DELETE = 10007;
 	public static final int CHOOSE_USER_LOGIN = 1008;
 	public static final int EDIT_PHONE = 1009;
+	public static final int HIS = 1010;
 	
 	
 	protected ProgressDialog dialog;

@@ -5,8 +5,7 @@
     <ScrollView android:id="@id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
         <WebView  android:id="@+id/webview" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-         <include  android:id="@+id/copy_button" layout="@layout/visit_button" />
+         <include android:visibility="gone"  android:id="@+id/copy_button" layout="@layout/visit_button" />
     </LinearLayout>
- 
   </ScrollView>
 </LinearLayout>

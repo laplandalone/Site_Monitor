@@ -40,11 +40,11 @@
                     <TextView android:layout_marginLeft="10.0dip" android:id="@+id/telephone" android:textSize="16.0sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
                 </LinearLayout>
                  <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-                <LinearLayout android:id="@+id/my_password" android:background="@drawable/info_all_bg" android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginTop="5.0dip">
+                <LinearLayout android:id="@+id/my_password"  android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="46.0dip" android:layout_marginTop="5.0dip">
                     <TextView android:layout_marginLeft="10.0dip" android:textSize="16.0sp" android:textColor="@color/TextColorGreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="修改密码" />
                 </LinearLayout>
                  <ImageView android:background="@drawable/user_info_driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-                 <TextView android:visibility="gone" android:id="@+id/editPhone" android:layout_marginLeft="10.0dip" android:layout_marginTop="8.0dip" android:textSize="16.0sp" android:textColor="@color/TextColorGreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="修改手机号码" />
+                 <TextView   android:id="@+id/editPhone" android:layout_marginLeft="10.0dip" android:layout_marginTop="8.0dip" android:textSize="16.0sp" android:textColor="@color/TextColorGreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="修改手机号码" />
             </LinearLayout>
             
             
