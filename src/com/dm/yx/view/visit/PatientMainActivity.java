@@ -14,6 +14,7 @@ import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.view.expert.QuestionActivity;
 import com.dm.yx.view.order.UserOrderActivity;
+import com.dm.yx.view.user.LoginActivity;
 import com.dm.yx.view.user.UserMainActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -92,6 +93,15 @@ public class PatientMainActivity extends BaseActivity
 		title.setText("患者随访");
 		// TODO Auto-generated method stub
 		User user = HealthUtil.getUserInfo();
+		if (user == null)
+		{
+			Intent intent = new Intent(PatientMainActivity.this, LoginActivity.class);
+			startActivityForResult(intent, 0);
+		}else if( user.getCardNo()==null || "".equals(user.getCardNo()))
+		{
+			HealthUtil.infoAlert(PatientMainActivity.this, "姓名或病案号校验失败，请到个人中心完善...");
+			finish();
+		}
 	}
 
 	@Override

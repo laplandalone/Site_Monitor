@@ -45,13 +45,19 @@ public class SocketHttpRequester {
              fileExplain.append("Content-Type: "+ uploadFile.getContentType()+"\r\n\r\n");
              fileExplain.append("\r\n");
              fileDataLength += fileExplain.length();
-            if(uploadFile.getInStream()!=null){
-            	if (uploadFile.getFile() != null) {
-            		fileDataLength += uploadFile.getFile().length();
-            	} else {
-            		fileDataLength += uploadFile.getFileSize();
+            if(uploadFile.getInStream()!=null)
+            {
+            	long len= uploadFile.getFile().length();
+            	HealthUtil.LOG_D(SocketHttpRequester.class, "File size:"+len);
+            	if (uploadFile.getFile() != null)
+            	{
+            		fileDataLength +=len;
+            	} else
+            	{
+            		fileDataLength += len;
             	}
-             }else{
+             }else
+             {
                  fileDataLength += uploadFile.getData().length;
              }
         }

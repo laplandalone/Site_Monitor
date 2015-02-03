@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.SyncStateContract.Helpers;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -313,6 +314,8 @@ public class RegisterActivity extends BaseActivity
 			    	 String returnMsgT = jsonObject.get("returnMsg").getAsString();
 			    	if("true".equals(returnMsgT))
 				    {
+			    		User u = HealthUtil.getUserInfo();
+			    		HealthUtil.deleteChooseUsers(u);
 			    		String telephone = userNameET.getText().toString();
 			    		HealthUtil.writeUserPhone(telephone);
 			    		User user = HealthUtil.getUserInfo();
@@ -320,6 +323,7 @@ public class RegisterActivity extends BaseActivity
 			    		Gson gson = new Gson();
 			    		String info=gson.toJson(user);
 			    		HealthUtil.writeUserInfo(info);
+			    		HealthUtil.writeChooseUsers(user);
 			    		HealthUtil.infoAlert(RegisterActivity.this, "修改手机号码成功...");
 			    		finish();
 				    }else

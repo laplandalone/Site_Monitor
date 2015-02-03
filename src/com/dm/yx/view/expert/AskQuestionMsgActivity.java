@@ -97,7 +97,7 @@ public class AskQuestionMsgActivity extends BaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ask_question_msg);
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 我的提问
 		ViewUtils.inject(this);
 		addActivity(this);
 		if (savedInstanceState != null)

@@ -1,16 +1,17 @@
 package com.dm.yx.view.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dm.yx.BaseActivity;
+import com.dm.yx.MainPageActivity;
 import com.dm.yx.R;
 import com.dm.yx.model.User;
 import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
-import com.dm.yx.view.user.UserUpdateActivity.MineRequestCallBack;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -69,6 +70,14 @@ public class UserPasswordActivity extends BaseActivity {
 
 	}
 	
+	@OnClick(R.id.back)
+	public void toHome(View v)
+	{
+		Intent intent = new Intent(UserPasswordActivity.this, MainPageActivity.class);
+		startActivity(intent);
+		exit();
+	}
+
 	@OnClick(R.id.edit_commit)
 	public void submit(View v)
 	{
@@ -85,12 +94,6 @@ public class UserPasswordActivity extends BaseActivity {
 		if(!oldPswStr.equals(user.getPassword()))
 		{
 			HealthUtil.infoAlert(UserPasswordActivity.this, "原密码错误.");
-			return;
-		}
-		
-		if("".equals(pswStr))
-		{
-			HealthUtil.infoAlert(UserPasswordActivity.this, "原密码为空.");
 			return;
 		}
 		

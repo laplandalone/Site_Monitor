@@ -1,4 +1,4 @@
-package com.dm.yx.view.visit;
+ package com.dm.yx.view.visit;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
@@ -51,6 +53,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -68,6 +73,9 @@ public class VisitDetailActivity extends BaseActivity
 	
 	@ViewInject(R.id.input_img)
 	private  Button inputImg;
+	
+	@ViewInject(R.id.vist_submit)
+	private Button vist_submit;
 	
 	@ViewInject(R.id.ask_again_text)
 	private EditText askAgain;
@@ -88,13 +96,15 @@ public class VisitDetailActivity extends BaseActivity
 	
 	 
 	@ViewInject(R.id.frm1)
-	private FrameLayout frm1;
+	private LinearLayout frm1;
 
 	@ViewInject(R.id.frm2)
-	private FrameLayout frm2;
+	private LinearLayout frm2;
 
 	@ViewInject(R.id.frm3)
-	private FrameLayout frm3;
+	private LinearLayout frm3;
+	
+	boolean submitFlag=false;
 	 
 	ArrayList<String> data = new ArrayList<String>();
 	
@@ -124,7 +134,6 @@ public class VisitDetailActivity extends BaseActivity
 		}
 		bitmapUtils = new BitmapUtils(this);
 		bitmapUtils.configDefaultBitmapMaxSize(50, 50);
-		bitmapUtils.clearCache();
 		context=this;
 	}
 
@@ -147,6 +156,15 @@ public class VisitDetailActivity extends BaseActivity
 		exit();
 	}
 	
+	@JavascriptInterface
+	public void showImg(String imgUrl)
+	{
+		Uri mUri = Uri.parse("http://www.hiseemedical.com:10821/"+imgUrl);
+		Intent it = new Intent(Intent.ACTION_VIEW);
+		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        it.setDataAndType(mUri, "image/*");
+        context.startActivity(it);
+	}
  
 	@JavascriptInterface
 	@Override
@@ -184,17 +202,19 @@ public class VisitDetailActivity extends BaseActivity
 	                @Override 
 	                public void onPageFinished(WebView view,String url) 
 	                { 
-	                	 try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}   
-	                    dialog.dismiss(); 
-	                    if("Y".equals(display))
-	                    {
-	                    	layout.setVisibility(View.VISIBLE);
-	                    }
+		                  try
+		                	{
+								Thread.sleep(2000);
+							} catch (InterruptedException e) 
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}   
+		                    dialog.dismiss(); 
+		                    if("Y".equals(display))
+		                    {
+		                    	layout.setVisibility(View.VISIBLE);
+		                    }
 	                }
 
 					@Override
@@ -224,19 +244,19 @@ public class VisitDetailActivity extends BaseActivity
 	@Override
 	protected void initValue()
 	{
-		
+		 
 	}
 	
 	@JavascriptInterface
 	public void addVisit(String josn,String visitType)
 	{
-		dialog.setMessage("正在加载,请稍后...");
-  		dialog.show();
+//		dialog.setMessage("正在加载,请稍后...");
+//  		dialog.show();
 		User user = HealthUtil.getUserInfo();
 //		RequestParams param = webInterface.addVisit(josn, user.getUserId(), visitType);
 //		invokeWebServer(param, ADD_VISIT);
-		
-		
+		submitFlag=true;
+		HealthUtil.infoAlert(this, "正在提交,请稍后...");
 		int imageSize = imagesUrl.size();
 		FormFile[] formFiles = new FormFile[imageSize];
 		for (int i = 0; i < imageSize; i++)
@@ -248,50 +268,44 @@ public class VisitDetailActivity extends BaseActivity
 		UploadThread uploadThread = new UploadThread(formFiles, mHandler, josn,HealthUtil.readHospitalId(),"VISIT_IMG_PATH",user.getUserId(),visitType);
 		new Thread(uploadThread).start();
 		
+		
 	}
 
-	 Handler handler = new Handler();
+	  final Handler handler = new Handler();
 	
+	  final Runnable mUpdateResults = new Runnable()
+	  {
+	        public void run() 
+	        {
+	        	if (dialog.isShowing())
+				{
+					dialog.cancel();
+				}	
+	        }
+	    };
+
+	    
 	private Handler mHandler = new Handler()
 	{
-
+		
 		@Override
 		public void handleMessage(Message msg)
 		{
 			super.handleMessage(msg);
-			try
+			 	
+			if (msg.obj == null)
 			{
-				   
-				handler.post(new Runnable() {
-					
-					@Override
-					public void run() 
-					{
-						// TODO Auto-generated method stub
-						if (dialog != null)
-						{
-							dialog.cancel();
-						}	
-					}
-				});
-				
-				if (msg.obj == null)
-				{
-					HealthUtil.infoAlert(VisitDetailActivity.this,"提交失败，请核对信息之后重新提交");
-					return;
-				}
-				switch (msg.arg1)
-				{
-				case 1001:
-					submitResult(msg.obj.toString());
-					break;
-				case 1002:
-					// parseData(msg.obj.toString());
-					break;
-				}
-			} catch (Exception e)
+				HealthUtil.infoAlert(VisitDetailActivity.this,"提交失败，请核对信息之后重新提交");
+				return;
+			}
+			switch (msg.arg1)
 			{
-				e.printStackTrace();
+			case 1001:
+				submitResult(msg.obj.toString());
+				break;
+			case 1002:
+				// parseData(msg.obj.toString());
+				break;
 			}
 		}
 	};
@@ -309,22 +323,30 @@ public class VisitDetailActivity extends BaseActivity
 			} else
 			{
 				HealthUtil.infoAlert(this,"提交失败，请核对信息之后重新提交");
+				submitFlag=false;
 				return;
 			}
 		} catch (JSONException e)
 		{
 			HealthUtil.infoAlert(this, "返回结果解析失败");
 			e.printStackTrace();
+			submitFlag=false;
 		} catch (Exception e)
 		{
 			HealthUtil.infoAlert(this, "提交失败");
 			e.printStackTrace();
+			submitFlag=false;
 		}
 	}
 	
 	@OnClick(R.id.vist_submit)
 	public void submit(View v)
 	{
+		if(submitFlag)
+		{
+			HealthUtil.infoAlert(this, "正在提交,请稍后...");
+			return;
+		}
 		web.loadUrl("javascript:addAsd()");
 	}
 	
@@ -386,7 +408,7 @@ public class VisitDetailActivity extends BaseActivity
 				public void run() 
 				{
 					// TODO Auto-generated method stub
-					if (dialog != null)
+					if (dialog.isShowing())
 					{
 						dialog.cancel();
 					}	
@@ -541,7 +563,7 @@ public class VisitDetailActivity extends BaseActivity
 			if (imagesUrl == null)
 			{
 				return;
-			} else if (imagesUrl.size() < 4)
+			} else if (imagesUrl.size() < 3)
 			{
 				imagesUrl.add(imagePath);
 			} else
@@ -553,34 +575,43 @@ public class VisitDetailActivity extends BaseActivity
 			e.printStackTrace();
 		}
 	}
-	
+	int imageWidth=60;
+	int imageHeight=60;
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
+		bitmapUtils.clearCache();
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, intent);
 		int imgSize = imagesUrl.size();
+		Bitmap image = null;
 		switch (requestCode)
 		{
+		
 		case 0:
 			break;
 		case 1:
 			File imageFile = new File(HealthConstant.IMG_PATH, mPicName);
+			if (!imageFile.exists()) 
+			{
+				return;
+			}
 			addImage(imageFile.getAbsolutePath());
-			imagesLayout.setVisibility(View.VISIBLE);
-			 
+			image=HealthUtil.compressBitmap(imageFile.getAbsolutePath(),mPicName);
 			if (imgSize == 0)
 			{
-				bitmapUtils.display(img1, imageFile.getAbsolutePath());
+				img1.setImageBitmap(image);
+//				bitmapUtils.display(img1, imageFile.getAbsolutePath());
 				break;
 			} else if (imgSize == 1)
 			{
-				bitmapUtils.display(img2, imageFile.getAbsolutePath());
+				img2.setImageBitmap(image);
+//				bitmapUtils.display(img2, imageFile.getAbsolutePath());
 				break;
 			} else if (imgSize == 2)
 			{
-				frm3.setVisibility(View.VISIBLE);
-				bitmapUtils.display(img3, imageFile.getAbsolutePath());
+				img3.setImageBitmap(image);
+//				bitmapUtils.display(img3, imageFile.getAbsolutePath());
 				break;
 			} else
 			{
@@ -595,7 +626,6 @@ public class VisitDetailActivity extends BaseActivity
 				// 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
 				if (mImageCaptureUri != null)
 				{
-					Bitmap image;
 					try
 					{
 						String[] proj = { MediaStore.Images.Media.DATA };
@@ -607,14 +637,15 @@ public class VisitDetailActivity extends BaseActivity
 						// 最后根据索引值获取图片路径
 						String path = cursor.getString(column_index);
 						// 这个方法是根据Uri获取Bitmap图片的静态方法
-						image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
+//						image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
 						if(path==null || "".equals(path))
 						{
 							path=getPath(context, mImageCaptureUri);
 						}
-						addImage(path);
+						image=HealthUtil.compressBitmap(path,mPicName);
 						if (image != null)
 						{
+							addImage(HealthConstant.IMG_PATH + mPicName);
 							if (imgSize == 0)
 							{
 								img1.setImageBitmap(image);
@@ -633,6 +664,10 @@ public class VisitDetailActivity extends BaseActivity
 								HealthUtil.infoAlert(VisitDetailActivity.this, "最多可添加三张图片");
 								break;
 							} 
+						}else
+						{
+							HealthUtil.infoAlert(VisitDetailActivity.this, "添加图片失败,请重试");
+							break;
 						}
 					} catch (Exception e)
 					{
@@ -785,3 +820,25 @@ public class VisitDetailActivity extends BaseActivity
      }
 
 }
+/*	bitmapUtils.display(img1, imageFile.getAbsolutePath(),new BitmapLoadCallBack<View>()
+{
+
+	@Override
+	public void onLoadCompleted(View arg0, String arg1, Bitmap arg2, BitmapDisplayConfig arg3, BitmapLoadFrom arg4)
+	{
+		float width = arg2.getWidth();
+		float size = imageWidth / width;
+		float height = arg2.getHeight();
+		imageHeight = (int)((float)height * size);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imageWidth, imageHeight);
+		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+		img1.setLayoutParams(layoutParams);
+		img1.setImageBitmap(arg2);
+	}
+
+	@Override
+	public void onLoadFailed(View arg0, String arg1, Drawable arg2)
+	{
+		
+	}
+});*/

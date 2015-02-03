@@ -288,7 +288,7 @@ public class ExpertRegisterActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		if(intent==null)
 		{
-			return;
+			finish();
 		}
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode)

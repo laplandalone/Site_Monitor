@@ -18,12 +18,10 @@
                <TextView android:textSize="16.0sp"  android:gravity="center" android:textColor="@color/black"  android:layout_width="0.0dip" android:layout_height="wrap_content"  android:text="预约科室" android:layout_weight="1.0" />
                <TextView android:textSize="16.0sp"  android:gravity="center" android:textColor="@color/black"  android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="预约状态" android:layout_weight="1.0" />
             </LinearLayout>
-        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
            
-            <ListView android:orientation="vertical" android:id="@+id/list_view" android:paddingLeft="0.0dip" android:paddingRight="0.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-          <RelativeLayout android:visibility="gone" android:id="@+id/contentnull"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <ListView  android:orientation="vertical" android:id="@+id/list_view" android:paddingLeft="0.0dip" android:paddingRight="0.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+          <RelativeLayout   android:id="@+id/contentnull"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
 		    <TextView  android:layout_centerHorizontal="true"  android:layout_centerVertical="true"  android:textSize="18.0sp" android:textColor="@color/TextColorGreen" android:id="@+id/hospitalName" android:layout_width="wrap_content" android:layout_height="wrap_content"   android:text="暂无信息"/>
 		  </RelativeLayout>
-		  
-        </LinearLayout>
+
 </LinearLayout>

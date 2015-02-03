@@ -91,7 +91,7 @@ public class NoticeDetailActivity extends BaseActivity
 			String userName=user.getUserName();
 			String visitId=wakeT.getWakeValue();
 	//	 	String url="http://192.168.137.1:7001/visit/visit.jsp?visitId="+visitId+"&copyFlag=&name="+userName+"&patientId="+patientId+"&operType="+operType;
-		 	String url="http://123.57.78.38:10841/visit/visit.jsp?visitId="+visitId+"&copyFlag=&name="+userName+"&patientId="+patientId+"&operType="+operType;
+		 	String url="http://www.hiseemedical.com:10821/visit/visit.jsp?visitId="+visitId+"&copyFlag=&name="+userName+"&patientId="+patientId+"&operType="+operType;
 			intent.putExtra("url", url);
 			intent.putExtra("visitId",visitId);
 			intent.putExtra("display","N");

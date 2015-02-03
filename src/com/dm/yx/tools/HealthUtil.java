@@ -1,6 +1,11 @@
 package com.dm.yx.tools;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,11 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -27,6 +31,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.preference.PreferenceManager;
@@ -38,7 +43,6 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
-
 import com.dm.yx.R;
 import com.dm.yx.application.RegApplication;
 import com.dm.yx.model.HospitalT;
@@ -199,6 +203,26 @@ public class HealthUtil {
 				}
 			}
 			return null;
+		}
+		
+		public static void writePatientId(String patientId)
+		{
+			userPreferences.edit().putString("patientId", patientId).commit();
+		}
+		
+		public static String readPatientId() 
+		{
+			return userPreferences.getString("patientId", "");
+		}
+		
+		public static void writePatientName(String patientName)
+		{
+			userPreferences.edit().putString("patientName", patientName).commit();
+		}
+		
+		public static String readpatientName() 
+		{
+			return userPreferences.getString("patientName", "");
 		}
 		
 		public static void writePushChannelId(String flag)
@@ -716,4 +740,98 @@ public class HealthUtil {
 	        } 
 	        return ishasSpace; 
 	   } 
+	  
+	 
+		public static Bitmap compressBitmap(String path,String name) {
+			if (path != null) {
+				File file = new File(path);
+				if (file.exists()) 
+				{
+					BitmapFactory.Options opts = new BitmapFactory.Options();
+//					opts.inJustDecodeBounds = true;
+					opts.inSampleSize=1;
+					long size=file.length()/1024;
+					 if(size>3000)
+					{
+						opts.inSampleSize = 10;
+					}else if(size>1000 && size<3000)
+					{
+						opts.inSampleSize = 6;
+					}else if(size>500 && size<1000)
+					{
+						opts.inSampleSize = 5;
+					} 
+					Bitmap bitmap = BitmapFactory.decodeFile(file.getPath(),opts);
+					
+					if (bitmap == null)  // 若获取图片失败就取消压缩
+					{
+						return null;
+					}
+					/*
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+					HealthUtil.LOG_D(HealthUtil.class, "baos size before: "+ baos.toByteArray().length/1024);
+					
+					int options = 100;
+					while (baos.toByteArray().length / 1024 > 200)
+					{
+						baos.reset();
+						options -= 10;
+						bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+					}
+					
+					HealthUtil.LOG_D(HealthUtil.class, "baos size after: "+ baos.toByteArray().length/1024);
+					ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+							baos.toByteArray());
+				
+					Bitmap bitmap2 = BitmapFactory.decodeStream(byteArrayInputStream);
+					*/
+					saveFileBitmap(name, bitmap, 100);
+					return bitmap;
+				}
+			}
+			return null;
+		}
+
+	
+		public static void saveFileBitmap(String fileName, Bitmap bitmap,
+				int compressFactor) {
+			if (bitmap == null) {
+				return;
+			}
+			
+			 File destDir = new File(HealthConstant.IMG_PATH);
+			  if (!destDir.exists())
+			  {
+				  destDir.mkdirs();
+			  }
+
+			FileOutputStream outputStream;
+			try {
+				outputStream = new FileOutputStream(new File(HealthConstant.IMG_PATH + fileName));
+				bitmap.compress(Bitmap.CompressFormat.PNG, compressFactor,outputStream);
+				outputStream.flush();
+				outputStream.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		 public static Bitmap compressBmpFromBmp(Bitmap image,String fileName)
+		 {  
+		        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		        if(baos.toByteArray().length / 1024 > 3000) 
+		        {   
+		           baos.reset();  
+		           image.compress(Bitmap.CompressFormat.JPEG, 10, baos);  
+		        }
+		        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());  
+		        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);  
+		        saveFileBitmap(fileName, bitmap, 100);
+		        return bitmap;  
+		 }  
+
 }

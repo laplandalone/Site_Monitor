@@ -177,6 +177,10 @@ public class QuestionActivity extends BaseActivity implements OnItemClickListene
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		// TODO Auto-generated method stub
+		if(intent==null)
+		{
+			finish();
+		}
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode)
 		{

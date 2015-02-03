@@ -399,8 +399,12 @@ public class ConfirmOrderActivity extends BaseActivity
 		    	  if("102".equals(handState))
 		    	  {
 		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "支付成功");
+		    		  payState="102";
+		    		  initValue();
 		    	  }else if("103".equals(handState))
 		    	  {
+		    		  payState="103";
+		    		  initValue();
 		    		  HealthUtil.infoAlert(ConfirmOrderActivity.this, "取消成功");
 		    	  }
 		    	 

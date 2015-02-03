@@ -151,7 +151,10 @@ public class PatientVisitListActivity extends BaseActivity implements OnItemClic
 			HealthUtil.infoAlert(PatientVisitListActivity.this, "姓名或病案号校验失败，请到个人中心完善...");
 			finish();
 		}
-		else{
+		else
+		{
+			dialog.setMessage("正在加载,请稍后...");
+			dialog.show();
 			userId=user.getUserId();
 			patientId=user.getCardNo();
 			if(patientId.length()==6)
@@ -318,6 +321,6 @@ public class PatientVisitListActivity extends BaseActivity implements OnItemClic
 		intent.putExtra("title", name);
 		intent.putExtra("display","Y");
 		startActivity(intent);
-		 
+		finish();
 	}
 }

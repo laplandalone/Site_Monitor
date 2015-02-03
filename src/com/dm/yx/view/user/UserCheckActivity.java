@@ -166,6 +166,8 @@ public class UserCheckActivity extends BaseActivity
 			String name=hisUser.getPatient_name();
 			if(name!=null && patientNameT.equals(name.trim()))
 			{
+				HealthUtil.writePatientId(patientId);
+				HealthUtil.writePatientName(name);
 			    Intent intent = new Intent(UserCheckActivity.this,CheckRstListActivity.class);
 			    intent.putExtra("patientId", patientId);
 				startActivity(intent);
@@ -184,7 +186,13 @@ public class UserCheckActivity extends BaseActivity
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		
+		  String id=HealthUtil.readPatientId();
+		  if(!"".equals(id) && id.length()>6)
+		  {
+			  id=id.substring(id.length()-6,id.length()); 
+		  }
+		  userCard.setText(id);
+		  name.setText(HealthUtil.readpatientName());
 	}
 	
 	@Override

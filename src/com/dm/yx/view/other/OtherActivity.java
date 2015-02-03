@@ -64,7 +64,7 @@ public class OtherActivity extends BaseActivity{
 	   UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
 				"100424468", "c7394704798a158208a74ab60104f0ba");
 		
-	    qqSsoHandler.setTargetUrl(url);
+	    qqSsoHandler.setTargetUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.dm.yx");
 		qqSsoHandler.addToSocialSDK();
 		
 		//添加短信平台

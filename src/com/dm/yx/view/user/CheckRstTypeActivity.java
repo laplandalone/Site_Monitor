@@ -175,7 +175,7 @@ public class CheckRstTypeActivity extends BaseActivity  implements OnItemClickLi
 		CheckRstT rstT= rstTs.get(position);
 		String checkTypeId=rstT.getCheck_type_id();
 		String checkType=rstT.getCheck_type();
-		intent.putExtra("url", "http://123.57.78.38:10841/visit/result.jsp?patientId="+patientId+"&checkTime="+checkTime+"&checkTypeId="+checkTypeId+"&checkType="+checkType);
+		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/result.jsp?patientId="+patientId+"&checkTime="+checkTime+"&checkTypeId="+checkTypeId+"&checkType="+checkType);
 //		intent.putExtra("url", "http://192.168.137.1:7001/visit/result.jsp?patientId="+patientId+"&checkTime="+checkTime+"&checkTypeId="+checkTypeId+"&checkType="+checkType);
 //		intent.putExtra("url", "http://www.hiseemedical.com:10821/visit/result.jsp?patientId="+patientId+"&checkTime="+checkTime+"&checkTypeId="+checkTypeId+"&checkType="+checkType);
 		intent.putExtra("title", "检验报告单");
