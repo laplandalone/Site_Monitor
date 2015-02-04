@@ -228,6 +228,11 @@ public class ExpertDetailActivity extends BaseActivity implements OnItemClickLis
 		String orderTeamCount=orderExpert.getOrderTeamCount();
 		String numMax=orderExpert.getNumMax();
 		
+		if("1000".equals(userOrderNum))
+		{
+			HealthUtil.infoAlert(ExpertDetailActivity.this, "该时间预约号已满,请选择其他时间");
+			return;
+		}
 		if(ObjectCensor.isStrRegular(orderTeamCount))
 		{
 			int num= Integer.parseInt(orderTeamCount);

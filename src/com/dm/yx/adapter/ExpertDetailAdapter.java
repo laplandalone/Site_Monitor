@@ -74,7 +74,7 @@ public class ExpertDetailAdapter extends BaseAdapter
 				 localImageView.setBackgroundResource(R.drawable.reservation_icon);
 				 num=0;
 			 }
-			 if(num>1000)
+			 if(num>=1000)
 			 {
 				 num=num-1000;
 			 }

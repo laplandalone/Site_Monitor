@@ -316,7 +316,8 @@ public class PatientVisitListActivity extends BaseActivity implements OnItemClic
 		User user=HealthUtil.getUserInfo();
 		String patientId=user.getCardNo();
 		String operType="无";
-//		url="http://192.168.137.1:7001/visit/asdChild.jsp";
+//		url="http://192.168.137.1:7001/visit/asdAdult.jsp";
+//		intent.putExtra("url", url);
 		intent.putExtra("url", url+"?name="+user.getUserName()+"&patientId="+patientId+"&operType="+operType);
 		intent.putExtra("title", name);
 		intent.putExtra("display","Y");

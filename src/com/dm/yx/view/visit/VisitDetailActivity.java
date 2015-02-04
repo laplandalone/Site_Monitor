@@ -16,7 +16,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,16 +25,15 @@ import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,19 +46,8 @@ import com.dm.yx.tools.HealthConstant;
 import com.dm.yx.tools.HealthUtil;
 import com.dm.yx.upload.FormFile;
 import com.dm.yx.upload.UploadThread;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
-import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -183,7 +170,7 @@ public class VisitDetailActivity extends BaseActivity
 		 if(web != null) 
 	        { 
 			    web.addJavascriptInterface(this, "javatojs");
-
+			    web.setWebChromeClient(new WebChromeClient(){});
 	            web.setWebViewClient(new WebViewClient() 
 	            { 
 	            	@Override
@@ -250,13 +237,13 @@ public class VisitDetailActivity extends BaseActivity
 	@JavascriptInterface
 	public void addVisit(String josn,String visitType)
 	{
-//		dialog.setMessage("正在加载,请稍后...");
-//  		dialog.show();
 		User user = HealthUtil.getUserInfo();
 //		RequestParams param = webInterface.addVisit(josn, user.getUserId(), visitType);
 //		invokeWebServer(param, ADD_VISIT);
-		submitFlag=true;
-		HealthUtil.infoAlert(this, "正在提交,请稍后...");
+	
+//		submitFlag=true;
+//		HealthUtil.infoAlert(this, "正在提交,请稍后...");
+		
 		int imageSize = imagesUrl.size();
 		FormFile[] formFiles = new FormFile[imageSize];
 		for (int i = 0; i < imageSize; i++)
@@ -265,10 +252,18 @@ public class VisitDetailActivity extends BaseActivity
 			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image", "application/octet-stream");
 			formFiles[i] = formFile;
 		}
-		UploadThread uploadThread = new UploadThread(formFiles, mHandler, josn,HealthUtil.readHospitalId(),"VISIT_IMG_PATH",user.getUserId(),visitType);
-		new Thread(uploadThread).start();
-		
-		
+		final UploadThread uploadThread = new UploadThread(formFiles, mHandler, josn,HealthUtil.readHospitalId(),"VISIT_IMG_PATH",user.getUserId(),visitType);
+		web.post(new Runnable()
+		{
+			@Override
+			public void run() 
+			{
+				dialog.setMessage("正在加载,请稍后...");
+		  		dialog.show();
+				// TODO Auto-generated method stub
+				new Thread(uploadThread).start();
+			}
+		});
 	}
 
 	  final Handler handler = new Handler();
@@ -291,6 +286,12 @@ public class VisitDetailActivity extends BaseActivity
 		@Override
 		public void handleMessage(Message msg)
 		{
+		 
+//			mHandler.post(mUpdateResults);
+			if (dialog.isShowing())
+			{
+				dialog.cancel();
+			}	
 			super.handleMessage(msg);
 			 	
 			if (msg.obj == null)
@@ -342,11 +343,12 @@ public class VisitDetailActivity extends BaseActivity
 	@OnClick(R.id.vist_submit)
 	public void submit(View v)
 	{
+		/*
 		if(submitFlag)
 		{
 			HealthUtil.infoAlert(this, "正在提交,请稍后...");
 			return;
-		}
+		} */
 		web.loadUrl("javascript:addAsd()");
 	}
 	
@@ -368,101 +370,6 @@ public class VisitDetailActivity extends BaseActivity
 		finish();
 	}
 
-	/**
-	 * 链接web服务
-	 * 
-	 * @param param
-	 */
-	private void invokeWebServer(RequestParams param, int responseCode)
-	{
-		HealthUtil.LOG_D(getClass(), "connect to web server");
-		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
-		if (httpHandler != null)
-		{
-			httpHandler.cancel();
-		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
-	}
-
-	/**
-	 * 获取后台返回的数据
-	 */
-	class MineRequestCallBack extends RequestCallBack<String>
-	{
-
-		private int responseCode;
-
-		public MineRequestCallBack(int responseCode)
-		{
-			super();
-			this.responseCode = responseCode;
-		}
-
-		@Override
-		public void onFailure(HttpException error, String msg)
-		{
-			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
-			handler.post(new Runnable() {
-				
-				@Override
-				public void run() 
-				{
-					// TODO Auto-generated method stub
-					if (dialog.isShowing())
-					{
-						dialog.cancel();
-					}	
-				}
-			});
-			
-			HealthUtil.infoAlert(VisitDetailActivity.this, "信息加载失败，请检查网络后重试");
-		}
-
-		@Override
-		public void onSuccess(ResponseInfo<String> arg0)
-		{
-			// TODO Auto-generated method stub
-			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
-			handler.post(new Runnable() {
-			@Override
-			public void run() 
-			{
-				// TODO Auto-generated method stub
-				if (dialog.isShowing())
-				{
-					dialog.cancel();
-				}
-			}
-			});
-			
-			switch (responseCode)
-			{
-			case ADD_VISIT:
-				returnMsg(arg0.result, ADD_VISIT);
-				break;
-			}
-		}
-	}
-	/*
-	 * 处理返回结果数据
-	 */
-	private void returnMsg(String json, int code)
-	{
-		JsonParser jsonParser = new JsonParser();
-		JsonElement jsonElement = jsonParser.parse(json);
-		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		String executeType = jsonObject.get("executeType").getAsString();
-		if ("success".equals(executeType))
-		{
-			HealthUtil.infoAlert(VisitDetailActivity.this, "您随访提交成功，请耐心等待医生回复.");
-			finish();
-		} else
-		{
-			HealthUtil.infoAlert(VisitDetailActivity.this, "添加随访失败.");
-		}
-
-	}
-	
 	OnClickListener clickListener = new OnClickListener() {
 		
 		@Override
@@ -511,51 +418,6 @@ public class VisitDetailActivity extends BaseActivity
 		}
 	};
 	
-	@OnClick(R.id.frm1)
-	public void addImage(View v)
-	{
-		new AlertDialog.Builder(VisitDetailActivity.this).setTitle("提示").setIcon(android.R.drawable.ic_dialog_map)
-				.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data), new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which)
-					{
-						getPicName();
-						switch (which)
-						{
-						case 0:
-							try
-							{
-								Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-								intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(HealthConstant.IMG_PATH, mPicName)));
-								startActivityForResult(intent, 1);
-							} catch (Exception e)
-							{
-								e.printStackTrace();
-							}
-							break;
-						case 1:
-							try
-							{
-								Intent intent = new Intent();
-								intent.setType("image/*");
-								intent.setAction(Intent.ACTION_GET_CONTENT);
-								startActivityForResult(intent, 2);
-							} catch (ActivityNotFoundException e)
-							{
-
-							}
-							break;
-						case R.id.btn_cancel:
-							finish();
-							break;
-						default:
-							break;
-						}
-					}
-				}).create().show();
-	}
-
 	private void addImage(String imagePath)
 	{
 		try
@@ -575,8 +437,7 @@ public class VisitDetailActivity extends BaseActivity
 			e.printStackTrace();
 		}
 	}
-	int imageWidth=60;
-	int imageHeight=60;
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -587,7 +448,6 @@ public class VisitDetailActivity extends BaseActivity
 		Bitmap image = null;
 		switch (requestCode)
 		{
-		
 		case 0:
 			break;
 		case 1:
@@ -674,9 +534,7 @@ public class VisitDetailActivity extends BaseActivity
 						e.printStackTrace();
 					}
 				}
-
 			}
-
 			break;
 		default:
 			break;
