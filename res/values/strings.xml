@@ -90,7 +90,7 @@
     <string name="btn_user_hit">帐号必须以字母开头</string>
     <string name="hello">请输入专家名字</string>
     <string name="hint_question">请输入您的性别、年龄，并详细描述您的病情以便与我们进一步确诊！</string>
-    <string name="app_name">掌上亚心</string>
+    <string name="app_name">路测工具</string>
     <string name="dlg_info">提示</string>
     <string name="dlg_error">提示</string>
     <string name="dlg_settings">设置</string>

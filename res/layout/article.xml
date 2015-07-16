@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="@drawable/hospital_background_new" android:layout_width="fill_parent" android:layout_height="fill_parent"
+<LinearLayout android:orientation="vertical"   android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android" >
   <include android:id="@id/layout1" layout="@layout/common_title" />
      <ScrollView android:id="@+id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1" android:layout_below="@+id/top_bar_include">
@@ -12,13 +12,6 @@
     		</LinearLayout>
         
             <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
-         
-             <ImageView
-                  android:layout_gravity="center"
-          android:id="@+id/news_photo"
-          android:layout_width="150.0dip"  android:layout_height="100.0dip"   android:layout_marginTop="5.0dip" android:scaleType="centerCrop"
-          />
                 <TextView
                 android:layout_marginLeft="15.0dip"  
                 android:layout_marginTop="8.0dip"
