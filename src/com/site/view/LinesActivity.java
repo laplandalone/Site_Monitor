@@ -1,5 +1,6 @@
-package com.site.view.news;
+package com.site.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -7,11 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.location.LocationClient;
 import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -28,8 +29,8 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
-import com.site.adapter.NearBysListAdapter;
-import com.site.model.City;
+import com.site.adapter.LineAdapter;
+import com.site.model.Line;
 import com.site.model.NearBy;
 import com.site.tools.HealthConstant;
 import com.site.tools.HealthUtil;
@@ -38,9 +39,8 @@ import com.site.tools.HealthUtil;
  * 医院资讯
  * 
  */
-public class NearByActivity extends BaseActivity implements OnItemClickListener
+public class LinesActivity extends BaseActivity implements OnItemClickListener
 {
-	
 	@ViewInject(R.id.title)
 	private TextView title;
 	
@@ -54,13 +54,16 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
 	
-	private List<NearBy> nearBys;
+	private List<Line> lines;
 	private ListView list;
 	
-	LocationClient mLocClient;
+	List<Line> choose= new ArrayList<Line>();
 	
-	NearBysListAdapter adapter;
-	String cityId="";
+	private StringBuffer linesb = new StringBuffer();
+	
+	LineAdapter
+	adapter;
+	String adpterFlag="normal";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -74,60 +77,50 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		initView();
 	}
 
-	
-	@OnClick(R.id.site)
-	public void toCity(View v)
-	{
-		Intent intent = new Intent(NearByActivity.this, CityActivity.class);
-		startActivity(intent);
-		exit();
-	}
+	 
 
 	@OnClick(R.id.editUser)
-	public void toSearch(View v)
+	public void toSubmit(View v)
 	{
-		Intent intent = new Intent(NearByActivity.this, SearchActivity.class);
+		Intent intent = new Intent(LinesActivity.this, LineDetailActivity.class);
 		Bundle bundle = new Bundle();
-		intent.putExtra("cityId", cityId);
+		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
+		for(Line l:choose)
+		{
+			for(int i=0;i<5;i++)
+			{
+			linesb.append(l.getLineName()+",");
+			}
+		}
+		bundle.putString("lines", linesb.toString());
+		bundle.putString("nearby",nearyBy.getStopName());
+		intent.putExtras(bundle);
 		startActivity(intent);
-	}
 	
+	}
+
 	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		City city=(City) getIntent().getSerializableExtra("city");
-		title.setText("周边站点");
-		editUser.setText("站名");
-		if(HealthUtil.getCity()!=null && !"".equals(HealthUtil.getCity()) && !"null".equals(HealthUtil.getCity()) )
-		{
-			site.setText(HealthUtil.getCity());
-		}
-		
-		if(city!=null)
-		{
-			site.setText(city.getCityName());
-			cityId=city.getCityId();
-		}
+		String cityId=getIntent().getStringExtra("typeName");
+		title.setText("选择线路");
+		editUser.setText("确定");
+		site.setText("周边站点");
+		 
 	}
 
 	@Override
 	protected void initValue()
 	{
-		City city=(City) getIntent().getSerializableExtra("city");
-		 
-		String lat=HealthUtil.getLatitude();
-		String lit=HealthUtil.getLongitude();
-		if(city!=null)
-		{
-			// TODO Auto-generated method stub
-			dialog.setMessage("正在加载,请稍后...");
-			dialog.show();
-		
-			RequestParams param = webInterface.getNearBy(city.getCityId(),HealthUtil.getLongitude(),HealthUtil.getLatitude());
-			invokeWebServer(param, GET_LIST);
-		}
-		 
+		// TODO Auto-generated method stub
+		dialog.setMessage("正在加载,请稍后...");
+		dialog.show();
+		String cityId=getIntent().getStringExtra("cityId");
+		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
+		RequestParams param = webInterface.getLines(cityId, nearyBy.getStopId(), "0");
+		invokeWebServer(param, GET_LIST);
+
 	}
 
 	/**
@@ -143,7 +136,7 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_lines, param, requestCallBack);
 	}
 
 	/**
@@ -169,7 +162,7 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(NearByActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(LinesActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -201,15 +194,15 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
 		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("nearby");
+		JsonArray nearby  =  data.getAsJsonArray("lines");
 		Gson gson = new Gson();
-		this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
+		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
 		{
 		}.getType());
-		adapter = new NearBysListAdapter(NearByActivity.this, nearBys);
+		adapter = new LineAdapter(LinesActivity.this, lines);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
-		if(this.nearBys.size()==0)
+		if(this.lines.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
@@ -220,12 +213,22 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(NearByActivity.this, LinesActivity.class);
-		NearBy nearBy = nearBys.get(position);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("nearBy", nearBy);
-		intent.putExtra("cityId", cityId);
-		intent.putExtras(bundle);
-		startActivity(intent);
+//		Intent intent = new Intent(LinesActivity.this, NewsActivity.class);
+//		City city =cities.get(position); 
+//		Bundle bundle = new Bundle();
+//		bundle.putSerializable("city", city);
+//		intent.putExtras(bundle);
+//		startActivity(intent);
+		ImageView imageView =(ImageView) view.findViewById(R.id.choose);
+		
+		if(imageView.getVisibility()==View.VISIBLE)
+		{
+			choose.remove(lines.get(position));
+			imageView.setVisibility(View.GONE);
+		}else
+		{
+			imageView.setVisibility(View.VISIBLE);
+			choose.add(lines.get(position));
+		}
 	}
 }

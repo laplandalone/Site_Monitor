@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="button_bar">#fff3f3f3</color>
+    <color name="btn_line">#16fb0c</color>
     <color name="button_text">#ff666666</color>
     <color name="selector_pressed">#1a000000</color>
     <color name="selector_focused">#77000000</color>

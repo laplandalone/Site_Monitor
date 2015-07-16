@@ -1,13 +1,15 @@
-package com.site.view.news;
+package com.site.view;
 
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,8 +30,9 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
-import com.site.adapter.LineAdapter;
-import com.site.model.Line;
+import com.site.adapter.NearBysListAdapter;
+import com.site.model.City;
+import com.site.model.NearBy;
 import com.site.tools.HealthConstant;
 import com.site.tools.HealthUtil;
 
@@ -37,7 +40,7 @@ import com.site.tools.HealthUtil;
  * 医院资讯
  * 
  */
-public class LineDetailActivity extends BaseActivity implements OnItemClickListener
+public class SearchActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
 	private TextView title;
@@ -48,59 +51,101 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	@ViewInject(R.id.site)
 	private TextView site;
 	
-	@ViewInject(R.id.lineName)
-	private TextView lineName;
+	@ViewInject(R.id.edit)
+	private EditText edit;
 	
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
 	
-	private List<Line> lines;
+	private List<NearBy> nearBys;
 	private ListView list;
 	
  
 	
-	LineAdapter
-	adapter;
-	String adpterFlag="normal";
+	NearBysListAdapter adapter;
+	String cityId="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.line);
+		setContentView(R.layout.common_list);
+		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
 		initView();
 	}
 
- 
+	
+	@OnClick(R.id.site)
+	public void toCity(View v)
+	{
+		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
+		startActivity(intent);
+		exit();
+	}
 
+	@OnClick(R.id.editUser)
+	public void toSearch(View v)
+	{
+		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
+		startActivity(intent);
+		exit();
+	}
+	
 	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		String name=getIntent().getStringExtra("name");
-		String lines = getIntent().getStringExtra("lines");
-		String nearby=getIntent().getStringExtra("nearby");
-		lineName.setText(nearby);
-		title.setText("选择线路");
-		editUser.setText("确定");
-		site.setText("周边站点");
+		 cityId=getIntent().getStringExtra("cityId");
 		 
+			title.setText("周边站点");
+			editUser.setText("站名");
+			 
+		 
+	 
+		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		 edit.addTextChangedListener(new TextWatcher() {
+				
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					// TODO Auto-generated method stub
+				
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					// TODO Auto-generated method stub
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) 
+				{
+					// TODO Auto-generated method stub
+					String text = edit.getText().toString();
+					if (text != null && !text.trim().equalsIgnoreCase("")) 
+					{
+						RequestParams param = webInterface.getLineName(cityId,"\\U706b\\U8f66\\U7ad9","0");
+						invokeWebServer(param, GET_LIST);
+					}else
+					{
+//						list.setAdapter(adapter);
+//						adapter.setTeams(teamList.getTeams());
+//						adapter.notifyDataSetChanged();
+//						adpterFlag="faculty";
+					}
+				}
+			});
 	}
 
 	@Override
 	protected void initValue()
 	{
-		// TODO Auto-generated method stub
-//		dialog.setMessage("正在加载,请稍后...");
-//		dialog.show();
-//		String cityId=getIntent().getStringExtra("cityId");
-//		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
-//		RequestParams param = webInterface.getLines(cityId, nearyBy.getStopId(), "0");
-//		invokeWebServer(param, GET_LIST);
-
+		City city=(City) getIntent().getSerializableExtra("city");
+		
+		
 	}
 
 	/**
@@ -116,7 +161,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_lines, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_lineName, param, requestCallBack);
 	}
 
 	/**
@@ -142,7 +187,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(LineDetailActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(SearchActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -174,15 +219,15 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
 		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("lines");
+		JsonArray nearby  =  data.getAsJsonArray("nearby");
 		Gson gson = new Gson();
-		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
+		this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
 		{
 		}.getType());
-		adapter = new LineAdapter(LineDetailActivity.this, lines);
+		adapter = new NearBysListAdapter(SearchActivity.this, nearBys);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
-		if(this.lines.size()==0)
+		if(this.nearBys.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
@@ -193,13 +238,13 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-//		Intent intent = new Intent(LinesActivity.this, NewsActivity.class);
-//		City city =cities.get(position); 
-//		Bundle bundle = new Bundle();
-//		bundle.putSerializable("city", city);
-//		intent.putExtras(bundle);
-//		startActivity(intent);
-		ImageView imageView =(ImageView) view.findViewById(R.id.choose);
-		imageView.setVisibility(View.VISIBLE);
+		Intent intent = new Intent(SearchActivity.this, LinesActivity.class);
+		NearBy nearBy = nearBys.get(position);
+		 
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("nearBy", nearBy);
+		intent.putExtra("cityId", cityId);
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 }

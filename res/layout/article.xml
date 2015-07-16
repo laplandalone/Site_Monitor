@@ -7,7 +7,7 @@
             <TextView  android:gravity="center" android:layout_marginTop="8.0dip" android:textSize="22.0dip" android:textColor="@color/TextColorBlue" android:id="@+id/newsTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title"  />
             
               <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="35.0dip" >
-   				<TextView android:layout_marginLeft="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"    android:layout_width="wrap_content" android:layout_height="17.0dip" android:text="来自:亚洲心脏病医院"   />
+   				<TextView android:layout_marginLeft="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"    android:layout_width="wrap_content" android:layout_height="17.0dip" android:text=""   />
                 <TextView android:layout_marginRight="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"  android:gravity="right"  android:id="@+id/newsDate"   android:layout_width="fill_parent" android:layout_height="17.0dip"  />
     		</LinearLayout>
         

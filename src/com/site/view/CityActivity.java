@@ -1,4 +1,4 @@
-package com.site.view.news;
+package com.site.view;
 
 import java.util.List;
 

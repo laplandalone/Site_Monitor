@@ -2,7 +2,7 @@
 <resources>
     <style name="DoneCancelBar">
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@color/button_bar</item>
+        <item name="android:background">@color/btn_line</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/bar_height</item>
     </style>

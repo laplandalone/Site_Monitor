@@ -70,18 +70,19 @@
         <meta-data android:name="UMENG_CHANNEL" android:value="zhangshangyaxin"/>
 		<activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
-        <!-- 微信分享回调 -->
         
-        <activity android:label="@string/app_name" android:name="com.site.view.news.NearByActivity" android:screenOrientation="portrait">
+        
+        <activity android:label="@string/app_name" android:name="com.site.view.NearByActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-            <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.news.CityActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-             <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.news.SearchActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-              <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.news.LineDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-              <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.news.LinesActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CityActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.scom.site.view.SearchActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LineDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LinesActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+            <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
        
         
  

@@ -1,19 +1,17 @@
-package com.site.view.news;
+package com.site.view;
 
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.location.LocationClient;
 import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -40,8 +38,9 @@ import com.site.tools.HealthUtil;
  * 医院资讯
  * 
  */
-public class SearchActivity extends BaseActivity implements OnItemClickListener
+public class NearByActivity extends BaseActivity implements OnItemClickListener
 {
+	
 	@ViewInject(R.id.title)
 	private TextView title;
 	
@@ -51,8 +50,6 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	@ViewInject(R.id.site)
 	private TextView site;
 	
-	@ViewInject(R.id.edit)
-	private EditText edit;
 	
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
@@ -60,7 +57,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	private List<NearBy> nearBys;
 	private ListView list;
 	
- 
+	LocationClient mLocClient;
 	
 	NearBysListAdapter adapter;
 	String cityId="";
@@ -69,7 +66,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.common_list);
+		setContentView(R.layout.common_article_list);
 		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
@@ -81,7 +78,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	@OnClick(R.id.site)
 	public void toCity(View v)
 	{
-		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
+		Intent intent = new Intent(NearByActivity.this, CityActivity.class);
 		startActivity(intent);
 		exit();
 	}
@@ -89,63 +86,48 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	@OnClick(R.id.editUser)
 	public void toSearch(View v)
 	{
-		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
+		Intent intent = new Intent(NearByActivity.this, SearchActivity.class);
+		Bundle bundle = new Bundle();
+		intent.putExtra("cityId", cityId);
 		startActivity(intent);
-		exit();
 	}
 	
 	@Override
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		 cityId=getIntent().getStringExtra("cityId");
-		 
-			title.setText("周边站点");
-			editUser.setText("站名");
-			 
-		 
-	 
-		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		 edit.addTextChangedListener(new TextWatcher() {
-				
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					// TODO Auto-generated method stub
-				
-				}
-				
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
-					// TODO Auto-generated method stub
-				}
-				
-				@Override
-				public void afterTextChanged(Editable s) 
-				{
-					// TODO Auto-generated method stub
-					String text = edit.getText().toString();
-					if (text != null && !text.trim().equalsIgnoreCase("")) 
-					{
-						RequestParams param = webInterface.getLineName(cityId,"\\U706b\\U8f66\\U7ad9","0");
-						invokeWebServer(param, GET_LIST);
-					}else
-					{
-//						list.setAdapter(adapter);
-//						adapter.setTeams(teamList.getTeams());
-//						adapter.notifyDataSetChanged();
-//						adpterFlag="faculty";
-					}
-				}
-			});
+		City city=(City) getIntent().getSerializableExtra("city");
+		title.setText("周边站点");
+		editUser.setText("站名");
+		if(HealthUtil.getCity()!=null && !"".equals(HealthUtil.getCity()) && !"null".equals(HealthUtil.getCity()) )
+		{
+			site.setText(HealthUtil.getCity());
+		}
+		
+		if(city!=null)
+		{
+			site.setText(city.getCityName());
+			cityId=city.getCityId();
+		}
 	}
 
 	@Override
 	protected void initValue()
 	{
 		City city=(City) getIntent().getSerializableExtra("city");
+		 
+		String lat=HealthUtil.getLatitude();
+		String lit=HealthUtil.getLongitude();
+		if(city!=null)
+		{
+			// TODO Auto-generated method stub
+			dialog.setMessage("正在加载,请稍后...");
+			dialog.show();
 		
-		
+			RequestParams param = webInterface.getNearBy(city.getCityId(),HealthUtil.getLongitude(),HealthUtil.getLatitude());
+			invokeWebServer(param, GET_LIST);
+		}
+		 
 	}
 
 	/**
@@ -161,7 +143,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_lineName, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
 	}
 
 	/**
@@ -187,7 +169,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(SearchActivity.this, "信息加载失败，请检查网络后重试");
+			HealthUtil.infoAlert(NearByActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -224,7 +206,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
 		{
 		}.getType());
-		adapter = new NearBysListAdapter(SearchActivity.this, nearBys);
+		adapter = new NearBysListAdapter(NearByActivity.this, nearBys);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 		if(this.nearBys.size()==0)
@@ -238,9 +220,8 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(SearchActivity.this, LinesActivity.class);
+		Intent intent = new Intent(NearByActivity.this, LinesActivity.class);
 		NearBy nearBy = nearBys.get(position);
-		 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("nearBy", nearBy);
 		intent.putExtra("cityId", cityId);
