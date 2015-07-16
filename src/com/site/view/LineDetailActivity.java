@@ -30,6 +30,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.adapter.LineAdapter;
 import com.site.model.City;
@@ -78,8 +79,13 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		initView();
 	}
 
- 
-
+	@OnClick(R.id.lineName)
+	public void toMap(View v)
+	{
+		Intent intent = new Intent(LineDetailActivity.this,WebActivity.class);
+		
+		startActivity(intent);
+	}
 	@Override
 	protected void initView()
 	{
@@ -151,11 +157,6 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
                 
         	}
         }
-        
-       
-
-        
-		 
 	}
 
 	@Override

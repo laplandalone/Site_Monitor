@@ -1000,6 +1000,7 @@ containing a value of this type.
         public static final int voice_length=0x7f09002d;
         public static final int walk=0x7f090105;
         public static final int web=0x7f090022;
+        public static final int webView=0x7f090348;
         public static final int website=0x7f0901a0;
         public static final int webview=0x7f090017;
         public static final int webview_loading=0x7f09022d;
@@ -1017,15 +1018,15 @@ containing a value of this type.
         public static final int work2=0x7f09019c;
         public static final int work3=0x7f09019d;
         public static final int x_check_get=0x7f090049;
-        public static final int xlistview_footer_content=0x7f090348;
-        public static final int xlistview_footer_hint_textview=0x7f09034a;
-        public static final int xlistview_footer_progressbar=0x7f090349;
-        public static final int xlistview_header_arrow=0x7f09034f;
-        public static final int xlistview_header_content=0x7f09034b;
-        public static final int xlistview_header_hint_textview=0x7f09034d;
-        public static final int xlistview_header_progressbar=0x7f090350;
-        public static final int xlistview_header_text=0x7f09034c;
-        public static final int xlistview_header_time=0x7f09034e;
+        public static final int xlistview_footer_content=0x7f090349;
+        public static final int xlistview_footer_hint_textview=0x7f09034b;
+        public static final int xlistview_footer_progressbar=0x7f09034a;
+        public static final int xlistview_header_arrow=0x7f090350;
+        public static final int xlistview_header_content=0x7f09034c;
+        public static final int xlistview_header_hint_textview=0x7f09034e;
+        public static final int xlistview_header_progressbar=0x7f090351;
+        public static final int xlistview_header_text=0x7f09034d;
+        public static final int xlistview_header_time=0x7f09034f;
         public static final int yc_btn=0x7f090339;
         public static final int yc_btnaaa=0x7f090334;
         public static final int yg_btn=0x7f09032a;
@@ -1039,10 +1040,12 @@ containing a value of this type.
         public static final int common_title=0x7f030005;
         public static final int line=0x7f030006;
         public static final int line_list_item=0x7f030007;
-        public static final int table_list_item=0x7f030008;
-        public static final int user_sign_in=0x7f030009;
-        public static final int xlistview_footer=0x7f03000a;
-        public static final int xlistview_header=0x7f03000b;
+        public static final int map=0x7f030008;
+        public static final int table_list_item=0x7f030009;
+        public static final int user_sign_in=0x7f03000a;
+        public static final int visit_detail_webview=0x7f03000b;
+        public static final int xlistview_footer=0x7f03000c;
+        public static final int xlistview_header=0x7f03000d;
     }
     public static final class raw {
         public static final int config=0x7f050000;
