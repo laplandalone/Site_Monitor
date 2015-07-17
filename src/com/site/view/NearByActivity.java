@@ -222,10 +222,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(NearByActivity.this, LinesActivity.class);
 		NearBy nearBy = nearBys.get(position);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("nearBy", nearBy);
 		intent.putExtra("cityId", cityId);
-		intent.putExtras(bundle);
+		intent.putExtra("stopName", nearBy.getStopName());
+		intent.putExtra("stopId", nearBy.getStopId());
 		startActivity(intent);
 	}
 }

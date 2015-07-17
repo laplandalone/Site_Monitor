@@ -83,6 +83,7 @@
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LineDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LinesActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.QueryActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
 </application>
 
 </manifest>

@@ -84,16 +84,13 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	{
 		Intent intent = new Intent(LinesActivity.this, LineDetailActivity.class);
 		Bundle bundle = new Bundle();
-		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
+		String stopName=getIntent().getStringExtra("stopName"); 
 		for(Line l:choose)
 		{
-			for(int i=0;i<5;i++)
-			{
 			linesb.append(l.getLineName()+",");
-			}
 		}
 		bundle.putString("lines", linesb.toString());
-		bundle.putString("nearby",nearyBy.getStopName());
+		bundle.putString("nearby",stopName);
 		intent.putExtras(bundle);
 		startActivity(intent);
 	
@@ -117,8 +114,8 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
 		String cityId=getIntent().getStringExtra("cityId");
-		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
-		RequestParams param = webInterface.getLines(cityId, nearyBy.getStopId(), "0");
+		String stopId=getIntent().getStringExtra("stopId");
+		RequestParams param = webInterface.getLines(cityId,stopId, "0");
 		invokeWebServer(param, GET_LIST);
 
 	}

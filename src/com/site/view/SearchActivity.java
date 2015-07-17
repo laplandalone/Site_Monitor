@@ -241,12 +241,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	{
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(SearchActivity.this, LinesActivity.class);
-//		NearBy nearBy = nearBys.get(position);
-//		 
-//		Bundle bundle = new Bundle();
-//		bundle.putSerializable("nearBy", nearBy);
-//		intent.putExtra("cityId", cityId);
-//		intent.putExtras(bundle);
-//		startActivity(intent);
+		SearchLine searchLine = searchLines.get(position);
+		 
+		Bundle bundle = new Bundle();
+		intent.putExtra("cityId", cityId);
+		intent.putExtra("stopName", searchLine.getStopName());
+		intent.putExtra("stopId", searchLine.getStopId());
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 }

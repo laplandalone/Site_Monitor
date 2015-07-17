@@ -38,10 +38,7 @@ import com.site.model.Line;
 import com.site.tools.HealthConstant;
 import com.site.tools.HealthUtil;
 
-/**
- * 医院资讯
- * 
- */
+
 @SuppressLint("ResourceAsColor")
 public class LineDetailActivity extends BaseActivity implements OnItemClickListener
 {

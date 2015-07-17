@@ -13,6 +13,16 @@ public class SearchLine implements java.io.Serializable {
 	
 	private String stopId;
 
+	private String linelist;
+	
+	public String getLinelist() {
+		return linelist;
+	}
+
+	public void setLinelist(String linelist) {
+		this.linelist = linelist;
+	}
+
 	public String getStopName() {
 		return stopName;
 	}
