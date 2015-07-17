@@ -82,7 +82,6 @@ public class CityAdapter extends BaseAdapter
 			 City city=cities.get(position);
 			// localImageView.setVisibility(0);
 			 textView.setText(city.getCityName());
-			 
 		
 		return convertView;
 	}
