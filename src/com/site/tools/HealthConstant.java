@@ -15,6 +15,8 @@ public class HealthConstant
  	
  	public static final String URL_lineName ="http://op.yg84.com:7000/universe/car/linename?";
  	
+ 	public static final String URL_query ="http://op.yg84.com:7000/universe/car/query?";
+ 	
 //	public static final String URL ="http://192.168.1.106:7001/mobile.htm?method=axis";
 //	public static final String URL ="http://www.hiseemedical.com:10821/mobile.htm?method=axis";
 	

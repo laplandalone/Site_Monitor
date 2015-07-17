@@ -41,11 +41,6 @@ public class CityAdapter extends BaseAdapter
 	}
 
 
-
-
-
-
-
 	@Override
 	public int getCount()
 	{
