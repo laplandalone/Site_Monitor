@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="layout_temp612">请输入站牌</string>
+    <string name="hello">搜索站名</string>
 	<string name="checkUpdate_title">更新提示</string>
 	<string name="checkUpdate_msg1">"正在检测新版本…"</string>
 	<string name="checkUpdate_msg2">"发现新版本，是否更新?"</string>
@@ -89,7 +90,7 @@
     <string name="name4">乙肝E抗体(HBeAb)</string>
     <string name="name5">乙肝核心抗体(HBcAb)</string>
     <string name="btn_user_hit">帐号必须以字母开头</string>
-    <string name="hello">搜素站名</string>
+
     <string name="hint_question">请输入您的性别、年龄，并详细描述您的病情以便与我们进一步确诊！</string>
     <string name="app_name">路测工具</string>
     <string name="dlg_info">提示</string>

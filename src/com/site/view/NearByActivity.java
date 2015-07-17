@@ -80,7 +80,7 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	{
 		Intent intent = new Intent(NearByActivity.this, CityActivity.class);
 		startActivity(intent);
-		exit();
+		
 	}
 
 	@OnClick(R.id.editUser)

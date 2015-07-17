@@ -41,7 +41,7 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_GPS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+ 
     <!-- Push -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	<uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
@@ -79,11 +79,10 @@
             </intent-filter>
         </activity>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CityActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:configChanges="orientation|keyboardHidden" android:name="com.scom.site.view.SearchActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.SearchActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LineDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LinesActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
 </application>
 
 </manifest>

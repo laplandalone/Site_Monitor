@@ -31,8 +31,10 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.adapter.NearBysListAdapter;
+import com.site.adapter.SearchLineAdapter;
 import com.site.model.City;
 import com.site.model.NearBy;
+import com.site.model.SearchLine;
 import com.site.tools.HealthConstant;
 import com.site.tools.HealthUtil;
 
@@ -57,12 +59,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
 	
-	private List<NearBy> nearBys;
+	private List<SearchLine> searchLines;
 	private ListView list;
 	
  
 	
-	NearBysListAdapter adapter;
+	SearchLineAdapter adapter;
 	String cityId="";
 	
 	@Override
@@ -70,7 +72,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_list);
-		this.list=(ListView) findViewById(R.id.newlist);
+		this.list=(ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
@@ -100,7 +102,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		 cityId=getIntent().getStringExtra("cityId");
 		 
-			title.setText("周边站点");
+	    title.setText("周边站点");
 			editUser.setText("站名");
 			 
 		 
@@ -127,7 +129,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 					String text = edit.getText().toString();
 					if (text != null && !text.trim().equalsIgnoreCase("")) 
 					{
-						RequestParams param = webInterface.getLineName(cityId,"\\U706b\\U8f66\\U7ad9","0");
+						RequestParams param = webInterface.getLineName(cityId,text,"0");
 						invokeWebServer(param, GET_LIST);
 					}else
 					{
@@ -219,15 +221,15 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
 		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("nearby");
+		JsonArray nearby  =  data.getAsJsonArray("stoplist");
 		Gson gson = new Gson();
-		this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
+		this.searchLines = gson.fromJson(nearby, new TypeToken<List<SearchLine>>()
 		{
 		}.getType());
-		adapter = new NearBysListAdapter(SearchActivity.this, nearBys);
+		adapter = new SearchLineAdapter(SearchActivity.this, searchLines);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
-		if(this.nearBys.size()==0)
+		if(this.searchLines.size()==0)
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
@@ -239,12 +241,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	{
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(SearchActivity.this, LinesActivity.class);
-		NearBy nearBy = nearBys.get(position);
-		 
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("nearBy", nearBy);
-		intent.putExtra("cityId", cityId);
-		intent.putExtras(bundle);
-		startActivity(intent);
+//		NearBy nearBy = nearBys.get(position);
+//		 
+//		Bundle bundle = new Bundle();
+//		bundle.putSerializable("nearBy", nearBy);
+//		intent.putExtra("cityId", cityId);
+//		intent.putExtras(bundle);
+//		startActivity(intent);
 	}
 }
