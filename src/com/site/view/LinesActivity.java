@@ -56,7 +56,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	List<Line> choose= new ArrayList<Line>();
 	
 	private StringBuffer linesb = new StringBuffer();
-	
+	private StringBuffer lineIds = new StringBuffer();
 	LineAdapter
 	adapter;
 	String adpterFlag="normal";
@@ -65,8 +65,8 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.common_article_list);
-		this.list=(ListView) findViewById(R.id.newlist);
+		setContentView(R.layout.line_list);
+		this.list=(ListView) findViewById(R.id.linelist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
@@ -85,8 +85,11 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		for(Line l:choose)
 		{
 			linesb.append(l.getLineName()+",");
+			lineIds.append(l.getLineId()+",");
 		}
 		intent.putExtra("lines", linesb.toString());
+		intent.putExtra("lineIds", lineIds.toString());
+		
 		intent.putExtra("stopName",stopName);
 		intent.putExtra("stopId",stopId);
 		intent.putExtra("cityId",cityId);
@@ -207,13 +210,6 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		// TODO Auto-generated method stub
-//		Intent intent = new Intent(LinesActivity.this, NewsActivity.class);
-//		City city =cities.get(position); 
-//		Bundle bundle = new Bundle();
-//		bundle.putSerializable("city", city);
-//		intent.putExtras(bundle);
-//		startActivity(intent);
 		ImageView imageView =(ImageView) view.findViewById(R.id.choose);
 		
 		if(imageView.getVisibility()==View.VISIBLE)

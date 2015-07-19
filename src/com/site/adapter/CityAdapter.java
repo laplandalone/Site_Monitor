@@ -73,7 +73,6 @@ public class CityAdapter extends BaseAdapter
 			 TextView textView =  (TextView)convertView.findViewById( R.id.newsTitle);
 			 TextView textView2 = (TextView)convertView.findViewById( R.id.newsContent);
 			 TextView textView3 = (TextView)convertView.findViewById( R.id.newsDate);
-			 ImageView imageView = (ImageView) convertView.findViewById( R.id.news_photo);
 			 City city=cities.get(position);
 			// localImageView.setVisibility(0);
 			 textView.setText(city.getCityName());

@@ -1,8 +1,8 @@
  package com.site.view;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.gson.JsonElement;
@@ -15,6 +15,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
 import com.site.tools.Constant;
@@ -25,18 +26,12 @@ public class CardActivity extends BaseActivity
 	@ViewInject(R.id.title)
 	private TextView title;
 	
-	@ViewInject(R.id.sign_in)
-	private ImageButton loginBtn;
-	
-	@ViewInject(R.id.userName)
-	private EditText userName;
-
-	@ViewInject(R.id.password)
-	private EditText password;
- 
 	@ViewInject(R.id.site)
 	private TextView site;
 	
+
+	@ViewInject(R.id.card)
+	private EditText card;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -64,19 +59,22 @@ public class CardActivity extends BaseActivity
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-		dialog.setMessage("正在加载,请稍后...");
-		dialog.show();
-		String cityId="";
-		String oriLineId="";
-		String realLineId="";
-		String carNo="";
-		String stopId="";
-		String stopName="";
-		RequestParams param = webInterface.record("0", "004", "0571-458qj-1", "0571-458qj-1", "t5555555555", "0571-4805", "何家边");
-		invokeWebServer(param, GET_LIST);
+	
 
 	}
 
+	@OnClick(R.id.submit)
+	public void submit(View v)
+	{
+		String cityId=SiteUtil.getCity();
+		String oriLineId=getIntent().getStringExtra("lineId");
+		String realLineId=getIntent().getStringExtra("lineId");
+		String carNo=card.getText().toString();
+		String stopId=SiteUtil.getStopId();
+		String stopName=SiteUtil.getStopName();
+		RequestParams param = webInterface.record("0", cityId, oriLineId, realLineId, carNo, stopId, stopName);
+		invokeWebServer(param, GET_LIST); 
+	}
 	/**
 	 * 链接web服务
 	 * 

@@ -1,10 +1,6 @@
 package com.site.model;
 
 
-/**
- * HospitalNewsT entity. @author MyEclipse Persistence Tools
- */
-
 public class SearchLine implements java.io.Serializable {
 
 	private String stopName;

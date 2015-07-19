@@ -31,10 +31,7 @@ import com.site.model.City;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
-/**
- * 医院资讯
- * 
- */
+ 
 public class CityActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
@@ -63,8 +60,8 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.common_article_list);
-		this.list=(ListView) findViewById(R.id.newlist);
+		setContentView(R.layout.city_list);
+		this.list=(ListView) findViewById(R.id.citylist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();

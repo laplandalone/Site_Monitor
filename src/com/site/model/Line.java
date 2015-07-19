@@ -1,13 +1,17 @@
 package com.site.model;
 
 
-/**
- * HospitalNewsT entity. @author MyEclipse Persistence Tools
- */
-
 public class Line implements java.io.Serializable {
 
 	// Fields
+
+	public String getLineId() {
+		return lineId;
+	}
+
+	public void setLineId(String lineId) {
+		this.lineId = lineId;
+	}
 
 	private String endStopName;
 	
@@ -15,7 +19,7 @@ public class Line implements java.io.Serializable {
 	
 	private String nextStop;
 	
-	
+	private String lineId;
 
 	public String getNextStop() {
 		return nextStop;

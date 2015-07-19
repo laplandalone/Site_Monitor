@@ -245,6 +245,8 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		intent.putExtra("cityId", cityId);
 		intent.putExtra("stopName", searchLine.getStopName());
 		intent.putExtra("stopId", searchLine.getStopId());
+		SiteUtil.writeStopId(searchLine.getStopId());
+		SiteUtil.writeStopName(searchLine.getStopName());
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}

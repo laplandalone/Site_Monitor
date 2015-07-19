@@ -220,9 +220,9 @@ public class WebActivity extends BaseActivity
 
 						}
 						break;
-					case R.id.btn_cancel:
-						finish();
-						break;
+//					case R.id.btn_cancel:
+//						finish();
+//						break;
 					default:
 						break;
 					}
@@ -424,7 +424,8 @@ public class WebActivity extends BaseActivity
 			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image", "application/octet-stream");
 			formFiles[i] = formFile;
 		}
-		UploadThread uploadThread = new UploadThread(formFiles, mHandler, "004", "0571-458qj-1", "t5555555555", "何家边", "0571-4805", "30.5490875", "119.7676665");
+		
+		UploadThread uploadThread = new UploadThread(formFiles, mHandler, SiteUtil.getCity(), "0571-458qj-1", "t5555555555", SiteUtil.getStopName(), SiteUtil.getStopId(), SiteUtil.getLongitude(),SiteUtil.getLatitude());
 		new Thread(uploadThread).start();
 	}
 	

@@ -266,6 +266,8 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		intent.putExtra("cityId", cityId);
 		intent.putExtra("stopName", nearBy.getStopName());
 		intent.putExtra("stopId", nearBy.getStopId());
+		SiteUtil.writeStopId(nearBy.getStopId());
+		SiteUtil.writeStopName(nearBy.getStopName());
 		startActivity(intent);
 	}
 }

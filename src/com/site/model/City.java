@@ -1,10 +1,6 @@
 package com.site.model;
 
 
-/**
- * HospitalNewsT entity. @author MyEclipse Persistence Tools
- */
-
 public class City implements java.io.Serializable {
 
 	// Fields

@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,8 +45,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.site.application.RegApplication;
+import com.site.model.Line;
 
 /**
  * 
@@ -85,7 +88,26 @@ public class SiteUtil {
 		 }
 		
 	 
-	
+		public static void writeChooseUsers(Line line,boolean flag)
+		{
+			String chooseUserTs= userPreferences.getString("chooseUsers","");
+			Gson gson = new Gson();  
+			List<Line> lines= gson.fromJson(chooseUserTs, new TypeToken<List<Line>>(){}.getType());   
+			if(line!=null)
+			{
+				if(flag)
+				{
+					for(Line lineT:lines)
+					{
+						
+					}
+				}
+			
+			}
+			
+			
+		}
+		
 		public static String getVersionName() {
 			  PackageManager pm = mContext.getPackageManager();
 				try {
@@ -583,11 +605,27 @@ public class SiteUtil {
 				userPreferences.edit().putString("lbs_location_Longitude", location).commit();
 			}
 			
+			public static String getStopId() {
+				return userPreferences.getString("stopId", "");
+			}
+			
+			public static void writeStopId(String stopId) {
+				userPreferences.edit().putString("stopId", stopId).commit();
+			}
+			
 			public static String getCity() {
 				return userPreferences.getString("city", "");
 			}
 			
 			public static void writeCity(String city) {
 				userPreferences.edit().putString("city", city).commit();
+			}
+			
+			public static String getStopName() {
+				return userPreferences.getString("stopName", "");
+			}
+			
+			public static void writeStopName(String stopName) {
+				userPreferences.edit().putString("stopName", stopName).commit();
 			}
 }

@@ -87,6 +87,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	{
 		// TODO Auto-generated method stub
 		String lines = getIntent().getStringExtra("lines");
+		String lineIds = getIntent().getStringExtra("lineIds");
 		String stopName=getIntent().getStringExtra("stopName");
 		lineName.setText(stopName);
 		title.setText("选择线路");
@@ -95,10 +96,16 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		
 		
         String[] ls = null;
+        String[] ids = null;
         if(lines!=null && !"".equals(lines))
         {
         	ls=lines.split(",");
         }
+        if(lineIds!=null && !"".equals(lineIds))
+        {
+        	ids=lineIds.split(",");
+        }
+        
         if(ls!=null && ls.length!=0)
         {
         	int count=0;
@@ -122,9 +129,11 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
         		
         		
         		String lname = ls[i];
+        		String id=ids[i];
         		Button btn1=new Button(this);  
                 btn1.setText(lname);         
-                
+                btn1.setTag(R.id.tag_one, lname); 
+                btn1.setTag(R.id.tag_two, id); 
                 btn1.setBackgroundResource(R.drawable.bg);
                 LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(200, 150);
         		linearLayout.setMargins(20,20,20, 20);//设置边距
@@ -140,7 +149,8 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 					{
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(LineDetailActivity.this, CardActivity.class);
-						intent.putExtra("line",arg0.getTag()+"");
+						intent.putExtra("line",arg0.getTag(R.id.tag_one)+"");
+						intent.putExtra("lineId",arg0.getTag(R.id.tag_two)+"");
 						startActivity(intent);
 					}
 				});
@@ -158,12 +168,14 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-//		dialog.setMessage("正在加载,请稍后...");
-//		dialog.show();
-//		String cityId=getIntent().getStringExtra("cityId");
-//		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
-//		RequestParams param = webInterface.getLines(cityId, nearyBy.getStopId(), "0");
-//		invokeWebServer(param, GET_LIST);
+		dialog.setMessage("正在加载,请稍后...");
+		dialog.show();
+		String cityId=getIntent().getStringExtra("cityId");
+		String stopId=getIntent().getStringExtra("stopId");
+		String stopName=getIntent().getStringExtra("stopName");
+		String lineIds = getIntent().getStringExtra("lineIds");
+		RequestParams param = webInterface.query(cityId, stopId, stopName, lineIds);
+		invokeWebServer(param, GET_LIST);
 
 	}
 
@@ -180,7 +192,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lines, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_query, param, requestCallBack);
 	}
 
 	/**
@@ -237,20 +249,21 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
-		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("lines");
-		Gson gson = new Gson();
-		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
-		{
-		}.getType());
-		adapter = new LineAdapter(LineDetailActivity.this, lines);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.lines.size()==0)
-		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
-		}
+		System.out.println(json);
+//		JsonObject data =  jsonr.getAsJsonObject("data");
+//		JsonArray nearby  =  data.getAsJsonArray("lines");
+//		Gson gson = new Gson();
+//		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
+//		{
+//		}.getType());
+//		adapter = new LineAdapter(LineDetailActivity.this, lines);
+//		this.list.setAdapter(adapter);
+//		this.list.setOnItemClickListener(this);
+//		if(this.lines.size()==0)
+//		{
+//			layout.setVisibility(View.VISIBLE);
+//			list.setVisibility(View.GONE);
+//		}
 	}
 
 	@Override
