@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.LocationClient;
-import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,18 +27,18 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
+import com.site.R;
 import com.site.adapter.NearBysListAdapter;
 import com.site.model.City;
 import com.site.model.NearBy;
-import com.site.tools.HealthConstant;
-import com.site.tools.HealthUtil;
+import com.site.tools.Constant;
+import com.site.tools.SiteUtil;
+import com.site.view.RefreshableView.PullToRefreshListener;
 
-/**
- * 医院资讯
- * 
- */
+ 
 public class NearByActivity extends BaseActivity implements OnItemClickListener
 {
+	RefreshableView refreshableView;
 	
 	@ViewInject(R.id.title)
 	private TextView title;
@@ -67,6 +66,7 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_article_list);
+		refreshableView = (RefreshableView) findViewById(R.id.refreshable_view);
 		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
@@ -99,9 +99,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		City city=(City) getIntent().getSerializableExtra("city");
 		title.setText("周边站点");
 		editUser.setText("站名");
-		if(HealthUtil.getCity()!=null && !"".equals(HealthUtil.getCity()) && !"null".equals(HealthUtil.getCity()) )
+		if(SiteUtil.getCity()!=null && !"".equals(SiteUtil.getCity()) && !"null".equals(SiteUtil.getCity()) )
 		{
-			site.setText(HealthUtil.getCity());
+			site.setText(SiteUtil.getCity());
 		}
 		
 		if(city!=null)
@@ -109,25 +109,38 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			site.setText(city.getCityName());
 			cityId=city.getCityId();
 		}
+		
+		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
+			@Override
+			public void onRefresh() 
+			{
+				RequestParams param = webInterface.getNearBy(cityId,SiteUtil.getLongitude(),SiteUtil.getLatitude());
+				invokeWebServer(param, GET_LIST);
+			}
+		}, 0);
+		
 	}
 
 	@Override
 	protected void initValue()
 	{
-		City city=(City) getIntent().getSerializableExtra("city");
-		 
-		String lat=HealthUtil.getLatitude();
-		String lit=HealthUtil.getLongitude();
-		if(city!=null)
+		initBase(1002);
+	}
+	
+	/**
+	 * 链接web服务
+	 * 
+	 * @param param
+	 */
+	private void initBase(int responseCode)
+	{
+		SiteUtil.LOG_D(getClass(), "connect to web server");
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
+		if (httpHandler != null)
 		{
-			// TODO Auto-generated method stub
-			dialog.setMessage("正在加载,请稍后...");
-			dialog.show();
-		
-			RequestParams param = webInterface.getNearBy(city.getCityId(),HealthUtil.getLongitude(),HealthUtil.getLatitude());
-			invokeWebServer(param, GET_LIST);
+			httpHandler.cancel();
 		}
-		 
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_citylist, null, requestCallBack);
 	}
 
 	/**
@@ -137,13 +150,13 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void invokeWebServer(RequestParams param, int responseCode)
 	{
-		HealthUtil.LOG_D(getClass(), "connect to web server");
+		SiteUtil.LOG_D(getClass(), "connect to web server");
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL, param, requestCallBack);
 	}
 
 	/**
@@ -163,20 +176,20 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		@Override
 		public void onFailure(HttpException error, String msg)
 		{
-			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
+			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(NearByActivity.this, "信息加载失败，请检查网络后重试");
+			SiteUtil.infoAlert(NearByActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
 		public void onSuccess(ResponseInfo<String> arg0)
 		{
 			// TODO Auto-generated method stub
-			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
+			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();
@@ -185,6 +198,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			{
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
+				break;
+			case GET_CITY:
+				returnMsg(arg0.result, GET_CITY);
 				break;
 			}
 		}
@@ -201,19 +217,44 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
 		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
 		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("nearby");
 		Gson gson = new Gson();
-		this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
+		switch (code)
 		{
-		}.getType());
-		adapter = new NearBysListAdapter(NearByActivity.this, nearBys);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.nearBys.size()==0)
-		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
+		case GET_LIST:
+			JsonArray nearby  =  data.getAsJsonArray("nearby");
+			
+			this.nearBys = gson.fromJson(nearby, new TypeToken<List<NearBy>>()
+			{
+			}.getType());
+			adapter = new NearBysListAdapter(NearByActivity.this, nearBys);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			if(this.nearBys.size()==0)
+			{
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}
+			refreshableView.finishRefreshing();
+			break;
+		case GET_CITY:
+			JsonArray city  =  data.getAsJsonArray("cities");
+			List<City> cities = gson.fromJson(city, new TypeToken<List<City>>()
+			{
+			}.getType());
+			String cityName = SiteUtil.getCity();
+			for(City c:cities)
+			{
+				if(cityName.indexOf(c.getCityName())>-1)
+				{
+					cityId=c.getCityId();
+					RequestParams param = webInterface.getNearBy(c.getCityId(),SiteUtil.getLongitude(),SiteUtil.getLatitude());
+					invokeWebServer(param, GET_LIST);
+					break;
+				}
+			}
+			break;
 		}
+		
 	}
 
 	@Override

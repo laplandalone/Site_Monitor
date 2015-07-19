@@ -10,7 +10,7 @@ import java.util.Map;
 
 import android.util.Log;
 
-import com.site.tools.HealthUtil;
+import com.site.tools.SiteUtil;
 
 /**
  * 上传文件到服务器
@@ -34,7 +34,7 @@ public class SocketHttpRequester {
     public static String post(String path, Map<String, String> params, FormFile[] files) throws Exception{     
         final String BOUNDARY = "---------------------------7da2137580612"; //数据分隔线
         final String endline = "--" + BOUNDARY + "--\r\n";//数据结束标志
-        HealthUtil.LOG_D(SocketHttpRequester.class, "upload--->post");
+        SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->post");
         int fileDataLength = 0;
         for(FormFile uploadFile : files){//得到文件类型数据的总长度
             StringBuilder fileExplain = new StringBuilder();
@@ -48,7 +48,7 @@ public class SocketHttpRequester {
             if(uploadFile.getInStream()!=null)
             {
             	long len= uploadFile.getFile().length();
-            	HealthUtil.LOG_D(SocketHttpRequester.class, "File size:"+len);
+            	SiteUtil.LOG_D(SocketHttpRequester.class, "File size:"+len);
             	if (uploadFile.getFile() != null)
             	{
             		fileDataLength +=len;
@@ -127,16 +127,16 @@ public class SocketHttpRequester {
         boolean requestCodeSuccess = false;
         boolean uploadSuccess = false;
         while((str = reader.readLine()) != null) {
-        	HealthUtil.LOG_D(SocketHttpRequester.class, "upload--->str=" + str);
+        	SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->str=" + str);
         	if (str.indexOf("200") > 0) {
         		requestCodeSuccess = true;
         	}
 //        	if ("true".equals(str.trim())) {
 //        		uploadSuccess = true;
 //        	}
-        	if (str.trim().startsWith("{")) {
+        	 
         		uploadSuccess = true;
-        	}
+        	 
         	if (requestCodeSuccess && uploadSuccess) {
     	        outStream.close();
     	        reader.close();

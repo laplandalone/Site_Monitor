@@ -12,6 +12,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,14 +25,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dm.yx.R;
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
-import com.site.tools.HealthConstant;
-import com.site.tools.HealthUtil;
+import com.site.R;
+import com.site.tools.Constant;
+import com.site.tools.SiteUtil;
+import com.site.upload.FormFile;
+import com.site.upload.UploadThread;
 
 public class WebActivity extends BaseActivity
 {
@@ -130,8 +135,8 @@ public class WebActivity extends BaseActivity
 //		// TODO Auto-generated method stub
 //		title.setText(titleT);
 //		String url = getIntent().getStringExtra("url");
-		String l=HealthUtil.getLongitude();
-		String lat=HealthUtil.getLatitude();
+		String l=SiteUtil.getLongitude();
+		String lat=SiteUtil.getLatitude();
 		String url="http://api.map.baidu.com/marker?location="+lat+","+l+"&title=我的位置&content=百度奎科大厦&output=html";
 		System.out.println("url:"+url);
 		 if(web != null) 
@@ -161,7 +166,7 @@ public class WebActivity extends BaseActivity
 					public void onReceivedError(WebView view, int errorCode,
 							String description, String failingUrl) 
 					{
-						HealthUtil.infoAlert(WebActivity.this, "加载失败,请重试...");
+						SiteUtil.infoAlert(WebActivity.this, "加载失败,请重试...");
 						web.setVisibility(View.GONE);
 						super.onReceivedError(view, errorCode, description, failingUrl);
 					} 
@@ -196,7 +201,7 @@ public class WebActivity extends BaseActivity
 						try
 						{
 							Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-							intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(HealthConstant.IMG_PATH, mPicName)));
+							intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Constant.IMG_PATH, mPicName)));
 							startActivityForResult(intent, 1);
 						} catch (Exception e)
 						{
@@ -235,7 +240,7 @@ public class WebActivity extends BaseActivity
 		{
 		 
 		case 1:
-			File imageFile = new File(HealthConstant.IMG_PATH, mPicName);
+			File imageFile = new File(Constant.IMG_PATH, mPicName);
 			File file = new File(imageFile.getAbsolutePath());
 			if(file.exists())
 			{
@@ -289,7 +294,7 @@ public class WebActivity extends BaseActivity
 					break;
 				}  else
 				{
-					HealthUtil.infoAlert(WebActivity.this, "最多可添加6张图片");
+					SiteUtil.infoAlert(WebActivity.this, "最多可添加6张图片");
 					break;
 				}
 			}
@@ -340,7 +345,7 @@ public class WebActivity extends BaseActivity
 								break;
 							} else
 							{
-								HealthUtil.infoAlert(WebActivity.this, "最多可添加三张图片");
+								SiteUtil.infoAlert(WebActivity.this, "最多可添加三张图片");
 								break;
 							}
 						}
@@ -376,7 +381,7 @@ public class WebActivity extends BaseActivity
 				imagesUrl.add(imagePath);
 			} else
 			{
-				HealthUtil.infoAlert(this, "照片个数已经达到上限，请删除之后新增");
+				SiteUtil.infoAlert(this, "照片个数已经达到上限，请删除之后新增");
 			}
 		} catch (Exception e)
 		{
@@ -402,5 +407,66 @@ public class WebActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		data.add("拍照");
 		data.add("从相册选择");
+	}
+	
+	@OnClick(R.id.input_img)
+	public void submitQuestion(View v)
+	{
+
+
+		Gson gson = new Gson();
+		String questionStr = "";
+		int imageSize = imagesUrl.size();
+		FormFile[] formFiles = new FormFile[imageSize];
+		for (int i = 0; i < imageSize; i++)
+		{
+			File imageFile = new File(imagesUrl.get(i));
+			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image", "application/octet-stream");
+			formFiles[i] = formFile;
+		}
+		UploadThread uploadThread = new UploadThread(formFiles, mHandler, "004", "0571-458qj-1", "t5555555555", "何家边", "0571-4805", "30.5490875", "119.7676665");
+		new Thread(uploadThread).start();
+	}
+	
+	private Handler mHandler = new Handler()
+	{
+
+		@Override
+		public void handleMessage(Message msg)
+		{
+			super.handleMessage(msg);
+			try
+			{
+				if (dialog != null)
+				{
+					dialog.cancel();
+				}
+				if (msg.obj == null)
+				{
+					showFailureDialog("提交失败，请核对信息之后重新提交");
+					return;
+				}
+				switch (msg.arg1)
+				{
+				case 1001:
+//					submitResult(msg.obj.toString());
+					break;
+				case 1002:
+					// parseData(msg.obj.toString());
+					break;
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	};
+	
+	private void showFailureDialog(String msg)
+	{
+
+		AlertDialog alertDialog = new AlertDialog.Builder(this).setPositiveButton("确定", null).setTitle("失败提醒").setMessage(msg).create();
+		alertDialog.setCanceledOnTouchOutside(false);
+		alertDialog.show();
 	}
 }

@@ -6,31 +6,34 @@ import java.util.Map;
 import android.os.Handler;
 import android.os.Message;
 
-import com.site.tools.HealthConstant;
-import com.site.tools.HealthUtil;
+import com.site.tools.Constant;
+import com.site.tools.SiteUtil;
 
 public class UploadThread implements Runnable{
 
 	
 	private FormFile[] formFile;
 	private Handler mHandler;
-	private String questionT;
-	private String hospitalId;
-	private String uploadType;
-	private String userId;
-	private String visitType;
-	
+	private String cityId;
+	private String linelist;
+	private String carNo;
+	private String stopName;
+	private String stopId;
+	private String jingdu;
+	private String weidu;
 
 	public UploadThread(FormFile[] formFile, Handler mHandler,
-			String questionT,String hospitalId,String uploadType,String userId,String visitType) {
+			String cityId,String linelist,String carNo,String stopName,String stopId,String jingdu,String weidu) {
 		super();
 		this.formFile = formFile;
 		this.mHandler = mHandler;
-		this.questionT = questionT;
-		this.hospitalId=hospitalId;
-		this.uploadType=uploadType;
-		this.userId=userId;
-		this.visitType=visitType;
+		this.cityId = cityId;
+		this.linelist=linelist;
+		this.carNo=carNo;
+		this.stopName=stopName;
+		this.stopId=stopId;
+		this.jingdu=jingdu;
+		this.weidu=weidu;
 	}
 
 	@Override
@@ -58,14 +61,15 @@ public class UploadThread implements Runnable{
             //请求普通信息
             Map<String, String> params = new HashMap<String, String>();
             params.put("method", "uploadFile");
-            params.put("questionT", questionT);
-            params.put("hospitalId", hospitalId);
-            params.put("uploadType", uploadType);
-            params.put("userId", userId);
-            params.put("visitType", visitType);
-            HealthUtil.LOG_D(getClass(), "url uploadType=" + uploadType);
+            params.put("cityId", cityId);
+            params.put("linelist", linelist);
+            params.put("carNo", carNo);
+            params.put("stopName", stopName);
+            params.put("stopId", stopId);
+            params.put("jingdu", jingdu);
+            params.put("weidu", weidu);
 
-            String result = SocketHttpRequester.post(HealthConstant.UPLOAD_URL, params, formFiles);
+            String result = SocketHttpRequester.post(Constant.UPLOAD_URL, params, formFiles);
             return result;
         } catch (Exception e) {
             e.printStackTrace();

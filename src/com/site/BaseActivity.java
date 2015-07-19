@@ -28,7 +28,7 @@ import com.lurencun.android.webservice.IWebServiceInterface;
 import com.lurencun.android.webservice.WebServiceInterfaceImpl;
 import com.site.adapter.MyProgressDialog;
 import com.site.application.RegApplication;
-import com.site.tools.HealthUtil;
+import com.site.tools.SiteUtil;
 
 public abstract class BaseActivity extends FragmentActivity {
 
@@ -36,26 +36,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	private LocationClient locationClient;
 	public HttpUtils mHttpUtils = new HttpUtils();
 	public static final int GET_LIST = 1001;
-	public static final int GET_DATE_INFO = 1002;
-	public static final int GET_LIST_MORE = 1003;
-	public static final int ADD_REGISTER_ORDER = 1004;
-	public static final int USER_LOGIN = 1005;
-	public static final int ADD_QUESTION = 1006;
-	public static final int ADD_USER = 1007;
-	public static final int UPDATE_USER = 1008;
-	public static final int GET_ORDER_NUM = 1009;
-	public static final int AUTH_CODE = 10010;
-	public static final int CHECK_AUTH_CODE = 10011;
-	public static final int SET_PSW = 10012;
-	public static final int PAY_STATE = 10003;
-	public static final int RSA_SIGN = 10004;
-	public static final int GET_ORDER_LIST = 10005;
-	public static final int ADD_VISIT = 10006;
-	public static final int ADD = 10007;
-	public static final int DELETE = 10007;
-	public static final int CHOOSE_USER_LOGIN = 1008;
-	public static final int EDIT_PHONE = 1009;
-	public static final int HIS = 1010;
+	public static final int GET_CITY = 1002; 
 	
 	
 	protected ProgressDialog dialog;
@@ -191,8 +172,8 @@ public abstract class BaseActivity extends FragmentActivity {
 					return;
 				}
 				//先把转换成百度的经纬度存到本地，防止获取地址失败，后面需要用到经纬度时但为空的情况
-				HealthUtil.writeLongitude(arg0.getLongitude()+"");
-				HealthUtil.writeLatitude(arg0.getLatitude()+"");
+				SiteUtil.writeLongitude(arg0.getLongitude()+"");
+				SiteUtil.writeLatitude(arg0.getLatitude()+"");
 				String district = arg0.getDistrict();
 				String city = arg0.getCity();
 				String addressString = arg0.getAddrStr();

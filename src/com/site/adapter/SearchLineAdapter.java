@@ -7,13 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.lidroid.xutils.BitmapUtils;
-import com.site.model.City;
-import com.site.model.Line;
+import com.site.R;
 import com.site.model.SearchLine;
 
 public class SearchLineAdapter extends BaseAdapter

@@ -35,14 +35,12 @@ import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -54,7 +52,7 @@ import com.site.application.RegApplication;
  * 工具类
  *
  */
-public class HealthUtil {
+public class SiteUtil {
 	
 	 public static final boolean DEBUG = true;
 	  private static final int LOG_SIZE_LIMIT = 3500;
@@ -170,7 +168,7 @@ public class HealthUtil {
 	  			}
   		    }
   		    else {
-  		    	HealthUtil.LOG_D(HealthUtil.class, "convert2Json--http--->keys.lenght != values.lenght");
+  		    	SiteUtil.LOG_D(SiteUtil.class, "convert2Json--http--->keys.lenght != values.lenght");
   		    }
   			}
   		    builder.append("},");
@@ -185,7 +183,7 @@ public class HealthUtil {
 		 RequestParams requestParams = new RequestParams("UTF-8");
 		 BasicNameValuePair nameValuePair = new BasicNameValuePair("param", paramValue);
 		 requestParams.addBodyParameter(nameValuePair);
-		 HealthUtil.LOG_D(HealthUtil.class, "url param=" + paramValue);
+		 SiteUtil.LOG_D(SiteUtil.class, "url param=" + paramValue);
 		 return requestParams;
 	 }
 	  	
@@ -297,7 +295,7 @@ public class HealthUtil {
 		File tessdata = new File(sdPath + "tessdata");
 		if (!tessdata.exists() || !tessdata.isDirectory()) {
 			boolean b = tessdata.mkdirs();
-			LOG_D(HealthUtil.class, "----b=" + b);
+			LOG_D(SiteUtil.class, "----b=" + b);
 		}
 		
 		return tessdata.getAbsolutePath().endsWith(File.separator)?tessdata.getAbsolutePath():tessdata.getAbsolutePath() + File.separator;
@@ -528,7 +526,7 @@ public class HealthUtil {
 				return;
 			}
 			
-			 File destDir = new File(HealthConstant.IMG_PATH);
+			 File destDir = new File(Constant.IMG_PATH);
 			  if (!destDir.exists())
 			  {
 				  destDir.mkdirs();
@@ -536,7 +534,7 @@ public class HealthUtil {
 
 			FileOutputStream outputStream;
 			try {
-				outputStream = new FileOutputStream(new File(HealthConstant.IMG_PATH + fileName));
+				outputStream = new FileOutputStream(new File(Constant.IMG_PATH + fileName));
 				bitmap.compress(Bitmap.CompressFormat.PNG, compressFactor,outputStream);
 				outputStream.flush();
 				outputStream.close();

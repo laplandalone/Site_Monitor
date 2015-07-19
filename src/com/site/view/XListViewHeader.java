@@ -1,9 +1,5 @@
 package com.site.view;
 
-import com.dm.yx.R;
-import com.dm.yx.R.id;
-import com.dm.yx.R.layout;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -15,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.site.R;
 
 public class XListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;

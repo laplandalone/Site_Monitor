@@ -12,6 +12,18 @@ public class Line implements java.io.Serializable {
 	private String endStopName;
 	
 	private String lineName;
+	
+	private String nextStop;
+	
+	
+
+	public String getNextStop() {
+		return nextStop;
+	}
+
+	public void setNextStop(String nextStop) {
+		this.nextStop = nextStop;
+	}
 
 	public String getEndStopName() {
 		return endStopName;

@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -25,12 +24,12 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
+import com.site.R;
 import com.site.adapter.CityAdapter;
 import com.site.model.City;
-import com.site.tools.HealthConstant;
-import com.site.tools.HealthUtil;
+import com.site.tools.Constant;
+import com.site.tools.SiteUtil;
 
 /**
  * 医院资讯
@@ -93,8 +92,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		dialog.show();
 		String type=getIntent().getStringExtra("type");
 		String typeId=getIntent().getStringExtra("typeId");
-		RequestParams param = webInterface.getNearBy("004","123.123456","23.123456");
-		invokeWebServer(param, GET_LIST);
+		invokeWebServer(null, GET_LIST);
 
 	}
 
@@ -105,13 +103,13 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void invokeWebServer(RequestParams param, int responseCode)
 	{
-		HealthUtil.LOG_D(getClass(), "connect to web server");
+		SiteUtil.LOG_D(getClass(), "connect to web server");
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_citylist, null, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_citylist, null, requestCallBack);
 	}
 
 	/**
@@ -131,20 +129,20 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		@Override
 		public void onFailure(HttpException error, String msg)
 		{
-			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
+			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(CityActivity.this, "信息加载失败，请检查网络后重试");
+			SiteUtil.infoAlert(CityActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
 		public void onSuccess(ResponseInfo<String> arg0)
 		{
 			// TODO Auto-generated method stub
-			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
+			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();

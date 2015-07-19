@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.lidroid.xutils.BitmapUtils;
+import com.site.R;
 import com.site.model.NearBy;
 
 public class NearBysListAdapter extends BaseAdapter

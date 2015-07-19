@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.lidroid.xutils.BitmapUtils;
+import com.site.R;
 import com.site.model.City;
 
 public class CityAdapter extends BaseAdapter

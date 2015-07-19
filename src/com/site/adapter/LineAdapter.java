@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.lidroid.xutils.BitmapUtils;
-import com.site.model.City;
+import com.site.R;
 import com.site.model.Line;
 
 public class LineAdapter extends BaseAdapter
@@ -78,7 +76,7 @@ public class LineAdapter extends BaseAdapter
 			 Line line=lines.get(position);
 			// localImageView.setVisibility(0);
 			 textView.setText(line.getLineName());
-			 textView2.setText("开往:"+line.getEndStopName());
+			 textView2.setText("开往:"+line.getNextStop());
 		
 		return convertView;
 	}

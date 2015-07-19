@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dm.yx.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -30,13 +29,12 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
-import com.site.adapter.NearBysListAdapter;
+import com.site.R;
 import com.site.adapter.SearchLineAdapter;
 import com.site.model.City;
-import com.site.model.NearBy;
 import com.site.model.SearchLine;
-import com.site.tools.HealthConstant;
-import com.site.tools.HealthUtil;
+import com.site.tools.Constant;
+import com.site.tools.SiteUtil;
 
 /**
  * 医院资讯
@@ -157,13 +155,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void invokeWebServer(RequestParams param, int responseCode)
 	{
-		HealthUtil.LOG_D(getClass(), "connect to web server");
+		SiteUtil.LOG_D(getClass(), "connect to web server");
 		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
 		if (httpHandler != null)
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, HealthConstant.URL_lineName, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lineName, param, requestCallBack);
 	}
 
 	/**
@@ -183,20 +181,20 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		@Override
 		public void onFailure(HttpException error, String msg)
 		{
-			HealthUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
+			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();
 			}
 
-			HealthUtil.infoAlert(SearchActivity.this, "信息加载失败，请检查网络后重试");
+			SiteUtil.infoAlert(SearchActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
 		public void onSuccess(ResponseInfo<String> arg0)
 		{
 			// TODO Auto-generated method stub
-			HealthUtil.LOG_D(getClass(), "result=" + arg0.result);
+			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
 			if (dialog.isShowing())
 			{
 				dialog.cancel();

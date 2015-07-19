@@ -3,7 +3,7 @@ package com.site.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import com.site.tools.HealthUtil;
+import com.site.tools.SiteUtil;
 
 public class MyProgressDialog extends ProgressDialog{
 	
@@ -56,7 +56,7 @@ public class MyProgressDialog extends ProgressDialog{
 	@Override
 	public void dismiss() {
 //		cancelTimer();
-		HealthUtil.LOG_D(getClass(), "dialog cancel , and stop connected webservice");
+		SiteUtil.LOG_D(getClass(), "dialog cancel , and stop connected webservice");
 //		AccessWebServiceCtrlImpl.stopAccessWebService();
 		if (isShowing()) {
 			super.dismiss();
