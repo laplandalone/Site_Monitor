@@ -187,6 +187,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		City city =cities.get(position); 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("city", city);
+		SiteUtil.writeCity(city.getCityId());
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}

@@ -13,5 +13,5 @@
 	<string name="time_error">时间有问题</string>
 	<item type="id" name="tag_one"></item>
 	<item type="id" name="tag_two"></item>
-	
+	<item type="id" name="tag_three"></item>
 </resources>

@@ -31,11 +31,13 @@ import com.site.BaseActivity;
 import com.site.R;
 import com.site.adapter.LineAdapter;
 import com.site.model.Line;
+import com.site.model.NearBy;
+import com.site.model.SearchLine;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
-
-public class LinesActivity extends BaseActivity implements OnItemClickListener
+ 
+public class QueryActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
 	private TextView title;
@@ -56,7 +58,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	List<Line> choose= new ArrayList<Line>();
 	
 	private StringBuffer linesb = new StringBuffer();
-	private StringBuffer lineIds = new StringBuffer();
+	
 	LineAdapter
 	adapter;
 	String adpterFlag="normal";
@@ -65,8 +67,8 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.line_list);
-		this.list=(ListView) findViewById(R.id.linelist);
+		setContentView(R.layout.common_article_list);
+		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
@@ -78,23 +80,16 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	@OnClick(R.id.editUser)
 	public void toSubmit(View v)
 	{
-		Intent intent = new Intent(LinesActivity.this, LineDetailActivity.class);
-		String stopName=getIntent().getStringExtra("stopName"); 
-		String stopId=getIntent().getStringExtra("stopId");
-		String cityId=getIntent().getStringExtra("cityId");
-		linesb=new StringBuffer();
-		lineIds=new StringBuffer();
+		Intent intent = new Intent(QueryActivity.this, LineDetailActivity.class);
+		Bundle bundle = new Bundle();
+		NearBy nearyBy =(NearBy) getIntent().getSerializableExtra("nearBy");
 		for(Line l:choose)
 		{
 			linesb.append(l.getLineName()+",");
-			lineIds.append(l.getLineId()+",");
 		}
-		intent.putExtra("lines", linesb.toString());
-		intent.putExtra("lineIds", lineIds.toString());
-		
-		intent.putExtra("stopName",stopName);
-		intent.putExtra("stopId",stopId);
-		intent.putExtra("cityId",cityId);
+		bundle.putString("lines", linesb.toString());
+		bundle.putString("nearby",nearyBy.getStopName());
+		intent.putExtras(bundle);
 		startActivity(intent);
 	
 	}
@@ -116,9 +111,9 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String cityId=SiteUtil.getCity();
-		String stopId=getIntent().getStringExtra("stopId");
-		RequestParams param = webInterface.getLines(cityId,stopId, "0");
+		String cityId=getIntent().getStringExtra("cityId");
+		SearchLine searchLine =(SearchLine) getIntent().getSerializableExtra("searchLine");
+		RequestParams param = webInterface.query(cityId, searchLine.getStopId(), searchLine.getStopName(), "0571-458qj-0");
 		invokeWebServer(param, GET_LIST);
 
 	}
@@ -136,7 +131,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		{
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lines, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_query, param, requestCallBack);
 	}
 
 	/**
@@ -162,7 +157,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 				dialog.cancel();
 			}
 
-			SiteUtil.infoAlert(LinesActivity.this, "信息加载失败，请检查网络后重试");
+			SiteUtil.infoAlert(QueryActivity.this, "信息加载失败，请检查网络后重试");
 		}
 
 		@Override
@@ -199,7 +194,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
 		{
 		}.getType());
-		adapter = new LineAdapter(LinesActivity.this, lines);
+		adapter = new LineAdapter(QueryActivity.this, lines);
 		this.list.setAdapter(adapter);
 		this.list.setOnItemClickListener(this);
 		if(this.lines.size()==0)
@@ -212,6 +207,13 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
+		// TODO Auto-generated method stub
+//		Intent intent = new Intent(LinesActivity.this, NewsActivity.class);
+//		City city =cities.get(position); 
+//		Bundle bundle = new Bundle();
+//		bundle.putSerializable("city", city);
+//		intent.putExtras(bundle);
+//		startActivity(intent);
 		ImageView imageView =(ImageView) view.findViewById(R.id.choose);
 		
 		if(imageView.getVisibility()==View.VISIBLE)

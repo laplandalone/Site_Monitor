@@ -5,6 +5,8 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -33,9 +35,10 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
 import com.site.adapter.LineAdapter;
-import com.site.model.Line;
+import com.site.model.Car;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
+import com.site.tools.StringUtil;
 
 
 @SuppressLint("ResourceAsColor")
@@ -56,13 +59,18 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	@ViewInject(R.id.layout)
 	private LinearLayout layout;
 	
-	private List<Line> lines;
+	private List<Car> cars;
 	private ListView list;
 	
 	
 	
 	LineAdapter adapter;
 	String adpterFlag="normal";
+	
+	String cityId;
+	String stopId;
+	String stopName;
+	String lineIds;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -85,32 +93,22 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	@Override
 	protected void initView()
 	{
-		// TODO Auto-generated method stub
-		String lines = getIntent().getStringExtra("lines");
-		String lineIds = getIntent().getStringExtra("lineIds");
+	 
 		String stopName=getIntent().getStringExtra("stopName");
 		lineName.setText(stopName);
 		title.setText("选择线路");
 		editUser.setText("确定");
 		site.setText("周边站点");
-		
-		
-        String[] ls = null;
-        String[] ids = null;
-        if(lines!=null && !"".equals(lines))
-        {
-        	ls=lines.split(",");
-        }
-        if(lineIds!=null && !"".equals(lineIds))
-        {
-        	ids=lineIds.split(",");
-        }
-        
-        if(ls!=null && ls.length!=0)
-        {
+	}
+	
+	public void initCar()
+	{
         	int count=0;
         	LinearLayout layout2 = null;
-        	for(int i=0;i<ls.length;i++)
+        	layout.removeAllViews();
+        	if(cars!=null)
+        	{
+        	for(Car car:cars)
         	{
         		if(count==0)
         		{
@@ -126,21 +124,21 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
         		{
         			count=0;
         		}
-        		
-        		
-        		String lname = ls[i];
-        		String id=ids[i];
+        	 
         		Button btn1=new Button(this);  
-                btn1.setText(lname);         
-                btn1.setTag(R.id.tag_one, lname); 
-                btn1.setTag(R.id.tag_two, id); 
+                btn1.setText(car.getLineName());         
+                btn1.setTag(R.id.tag_one, car.getCarNo()); 
+                btn1.setTag(R.id.tag_two, car.getLineId());
+              
+                String stopFlag=car.getDeltStops();
+                btn1.setTag(R.id.tag_three, stopFlag);
                 btn1.setBackgroundResource(R.drawable.bg);
+                
+               
                 LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(200, 150);
         		linearLayout.setMargins(20,20,20, 20);//设置边距
         		btn1.setLayoutParams(linearLayout);
         		layout2.addView(btn1);
-        		
-        		
         		
                 btn1.setOnClickListener(new OnClickListener() 
                 {
@@ -149,8 +147,9 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 					{
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(LineDetailActivity.this, CardActivity.class);
-						intent.putExtra("line",arg0.getTag(R.id.tag_one)+"");
+						intent.putExtra("carName",arg0.getTag(R.id.tag_one)+"");
 						intent.putExtra("lineId",arg0.getTag(R.id.tag_two)+"");
+						intent.putExtra("stopFlag",arg0.getTag(R.id.tag_three)+"");
 						startActivity(intent);
 					}
 				});
@@ -158,25 +157,56 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
                 {
                 	layout.addView(layout2);
                 }
-                
-                
         	}
-        }
+        
 	}
+	}
+	Handler handler = new Handler() {  
+	    public void handleMessage(Message msg) {  
+	        // 要做的事情   
+	        super.handleMessage(msg);  
+	        RequestParams param = webInterface.query(cityId, stopId, stopName, lineIds);
+			invokeWebServer(param, GET_LIST);
 
+	    }  
+	};  
+
+	
+	public class MyThread implements Runnable {  
+	    @Override  
+	    public void run() {  
+	        // TODO Auto-generated method stub   
+	        while (true) {  
+	            try {  
+	                Thread.sleep(5000);// 线程暂停10秒，单位毫秒   
+	                Message message = new Message();  
+	                message.what = 1;  
+	                handler.sendMessage(message);// 发送消息   
+	            } catch (InterruptedException e) {  
+	                // TODO Auto-generated catch block   
+	                e.printStackTrace();  
+	            }  
+	        }  
+	    }  
+	} 
+	
 	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String cityId=getIntent().getStringExtra("cityId");
-		String stopId=getIntent().getStringExtra("stopId");
-		String stopName=getIntent().getStringExtra("stopName");
-		String lineIds = getIntent().getStringExtra("lineIds");
+		cityId=SiteUtil.getCity();
+		stopId=getIntent().getStringExtra("stopId");
+		stopName=getIntent().getStringExtra("stopName");
+		lineIds = getIntent().getStringExtra("lineIds");
+		if(lineIds!=null && lineIds.length()>0)
+		{
+			lineIds=lineIds.substring(0, lineIds.length()-1);
+		}
 		RequestParams param = webInterface.query(cityId, stopId, stopName, lineIds);
 		invokeWebServer(param, GET_LIST);
-
+		new Thread(new MyThread()).start();  
 	}
 
 	/**
@@ -248,22 +278,14 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
+		JsonObject jsonr = jsonObject.getAsJsonObject("data");
+		JsonArray cars =  jsonr.getAsJsonArray("cars");
+		Gson gson = new Gson();
+		this.cars = gson.fromJson(cars, new TypeToken<List<Car>>()
+		{
+		}.getType());
 		System.out.println(json);
-//		JsonObject data =  jsonr.getAsJsonObject("data");
-//		JsonArray nearby  =  data.getAsJsonArray("lines");
-//		Gson gson = new Gson();
-//		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
-//		{
-//		}.getType());
-//		adapter = new LineAdapter(LineDetailActivity.this, lines);
-//		this.list.setAdapter(adapter);
-//		this.list.setOnItemClickListener(this);
-//		if(this.lines.size()==0)
-//		{
-//			layout.setVisibility(View.VISIBLE);
-//			list.setVisibility(View.GONE);
-//		}
+		initCar();
 	}
 
 	@Override

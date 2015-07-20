@@ -114,10 +114,14 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void onRefresh() 
 			{
-				RequestParams param = webInterface.getNearBy(cityId,SiteUtil.getLongitude(),SiteUtil.getLatitude());
+				RequestParams param = webInterface.getNearBy(cityId,"120.154724","30.275079");
 				invokeWebServer(param, GET_LIST);
 			}
 		}, 0);
+		
+		SiteUtil.writeCity("004");
+		RequestParams param = webInterface.getNearBy("004","120.154724","30.275079");
+		invokeWebServer(param, GET_LIST);
 		
 	}
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:orientation="vertical"   android:layout_width="fill_parent" android:layout_height="50.0dip"
   xmlns:android="http://schemas.android.com/apk/res/android">
+   
     <RelativeLayout   android:paddingLeft="13.0dip" android:paddingRight="13.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent">
-         
         <TextView android:ellipsize="marquee" android:id="@+id/title" android:layout_marginLeft="45.0dip" android:layout_marginRight="45.0dip" android:layout_centerInParent="true" style="@style/title" />
         <ImageView android:id="@+id/settings" android:background="@drawable/confirm_focus" android:visibility="gone" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
         <Button android:id="@+id/header_right_for_more" android:visibility="invisible"     android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:layout_toLeftOf="@id/settings" android:layout_centerVertical="true" />

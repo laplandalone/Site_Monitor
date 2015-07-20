@@ -29,8 +29,10 @@ public class RegApplication extends Application
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		startLocation();
-		locationClient.start();
+//		startLocation();
+//		locationClient.start();
+		SiteUtil.writeLongitude("");
+		SiteUtil.writeLatitude("");
 	}
 	
 	public void startLocation() {

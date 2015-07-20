@@ -20,6 +20,7 @@ import com.site.BaseActivity;
 import com.site.R;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
+import com.site.tools.StringUtil;
 
 public class CardActivity extends BaseActivity
 {
@@ -29,7 +30,9 @@ public class CardActivity extends BaseActivity
 	@ViewInject(R.id.site)
 	private TextView site;
 	
-
+	@ViewInject(R.id.carName)
+	private TextView carName;
+	
 	@ViewInject(R.id.card)
 	private EditText card;
 	
@@ -59,8 +62,26 @@ public class CardActivity extends BaseActivity
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-	
-
+		String cardName= getIntent().getStringExtra("carName");
+		String stopFlag = getIntent().getStringExtra("stopFlag");
+		this.carName.setText(cardName);
+		 int stop=0;
+         if(StringUtil.checkStringIsNum(stopFlag))
+         {
+         	stop=Integer.parseInt(stopFlag);
+         }
+         if(stop==0)//到站
+         {
+        	 this.carName.setBackgroundResource(R.drawable.red_bg);
+         }else
+         if(stop>=1 && stop<=3)//到站
+         {
+        	 this.carName.setBackgroundResource(R.drawable.bg);
+         }else
+         if(stop<0)//到站
+         {
+        	 this.carName.setBackgroundResource(R.drawable.arrived);
+         }
 	}
 
 	@OnClick(R.id.submit)

@@ -64,7 +64,7 @@ public class StringUtil
 		String cheStr = cheStrT.toString();
 		for (int i = 0; i < cheStr.length(); i++) 
 		{
-			if (new String("9876543210").indexOf(cheStr.substring(i, i + 1)) == -1)
+			if (new String("9876543210-").indexOf(cheStr.substring(i, i + 1)) == -1)
 				return false;
 		}
 		return true;

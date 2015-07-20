@@ -2,6 +2,7 @@
 <LinearLayout android:orientation="vertical"   android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <include layout="@layout/common_title" />
+   <TextView   android:gravity="center" android:layout_marginTop="8.0dip" android:textSize="22.0dip" android:textColor="@color/TextColorBlack" android:id="@+id/carName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title"  />
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="13.0dip" android:layout_marginTop="13.0dip" android:layout_marginRight="13.0dip">
         <LinearLayout android:gravity="center_vertical" android:background="@drawable/login_input_bg" android:layout_width="fill_parent" android:layout_height="40.0dip">
             <EditText android:textSize="16.0sp" android:textColor="#ffafafaf" android:id="@+id/card" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:hint="@string/layout_temp612" android:singleLine="true" />

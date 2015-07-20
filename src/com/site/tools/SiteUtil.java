@@ -587,7 +587,7 @@ public class SiteUtil {
 			 * @return
 			 */
 			public static String getLatitude() {
-				return userPreferences.getString("lbs_location_Latitude", "");
+				return userPreferences.getString("lbs_location_Latitude", "30.275079");
 			}
 			
 			public static void writeLatitude(String location) {
@@ -598,7 +598,7 @@ public class SiteUtil {
 			 * @return
 			 */
 			public static String getLongitude() {
-				return userPreferences.getString("lbs_location_Longitude", "");
+				return userPreferences.getString("lbs_location_Longitude", "120.154724");
 			}
 			
 			public static void writeLongitude(String location) {
