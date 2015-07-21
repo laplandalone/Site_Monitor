@@ -22,5 +22,5 @@
         <TextView   android:text="123"    android:textSize="18.0sp" android:textColor="@color/TextColorBlack" android:id="@+id/endStopName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1"  />
    </LinearLayout>
     </LinearLayout>
-         <ImageView   android:visibility="gone" android:id="@+id/choose" android:layout_width="wrap_content"  android:layout_height="wrap_content"   android:layout_marginRight="10.0dip" android:src="@drawable/confirm_focus" />
+         <ImageView  android:layout_gravity="center_vertical"  android:visibility="gone" android:id="@+id/choose" android:layout_width="wrap_content"  android:layout_height="wrap_content"   android:layout_marginRight="10.0dip" android:src="@drawable/confirm_focus" />
 </LinearLayout>

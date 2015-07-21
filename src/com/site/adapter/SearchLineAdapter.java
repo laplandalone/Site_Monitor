@@ -84,7 +84,7 @@ public class SearchLineAdapter extends BaseAdapter
 	{
 		
 			 convertView = LayoutInflater.from(mContext).inflate(R.layout.common_article_list_item, null);
-			 TextView textView =  (TextView)convertView.findViewById( R.id.newsTitle);
+			 TextView textView =  (TextView)convertView.findViewById( R.id.title);
 			 SearchLine line=searchLines.get(position);
 			// localImageView.setVisibility(0);
 			 textView.setText(line.getStopName());

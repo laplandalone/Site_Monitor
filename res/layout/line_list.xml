@@ -4,7 +4,7 @@
     <include android:id="@+id/layout1" layout="@layout/common_title" />
  <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
   
- <ListView android:id="@+id/linelist" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+ <ListView android:id="@+id/linelist" android:layout_width="fill_parent" android:layout_height="fill_parent" />
      
   <RelativeLayout   android:visibility="gone"  android:id="@+id/contentnull"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
     <TextView  android:layout_centerHorizontal="true"  android:layout_centerVertical="true"  android:textSize="18.0sp" android:textColor="@color/TextColorBlack" android:id="@+id/hospitalName" android:layout_width="wrap_content" android:layout_height="wrap_content"   android:text="暂无信息"/>

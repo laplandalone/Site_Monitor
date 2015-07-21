@@ -91,7 +91,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		 cityId=getIntent().getStringExtra("cityId");
+		 cityId=SiteUtil.getCity();
 		 
 	    title.setText("站点查询");
 	    site.setText("周边站点");
