@@ -26,6 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.hp.hpl.sparta.xpath.Step;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -175,18 +179,41 @@ public class WebActivity extends BaseActivity
 	             
 	            loadUrl(url); 
 	        } 
+		 
 		 frm1.setOnClickListener(new Li());
 		 frm2.setOnClickListener(new Li());
 		 frm3.setOnClickListener(new Li());
 		 frm4.setOnClickListener(new Li());
 		 frm5.setOnClickListener(new Li());
 		 frm6.setOnClickListener(new Li());
+		 
+		 frm1.setTag("frm1");
+		 frm2.setTag("frm2");
+		 frm3.setTag("frm3");
+		 frm4.setTag("frm4");
+		 frm5.setTag("frm5");
+		 frm6.setTag("frm6");
+		 
+		 delete1.setTag("frm1");
+		 img1.setTag("frm1");
+		 delete2.setTag("frm2");
+		 img2.setTag("frm2");
+		 delete3.setTag("frm3");
+		 img3.setTag("frm3");
+		 delete4.setTag("frm4");
+		 img4.setTag("frm4");
+		 delete5.setTag("frm5");
+		 img5.setTag("frm5");
+		 delete6.setTag("frm6");
+		 img6.setTag("frm6");
+			
 	}
 
 	class Li implements OnClickListener
 	{
 		@Override
 		public void onClick(View v) {
+			currentImg=v.getTag()+"";
 			// TODO Auto-generated method stub
 			new AlertDialog.Builder(WebActivity.this).setTitle("提示").setIcon(android.R.drawable.ic_dialog_map)
 			.setAdapter(new ArrayAdapter<String>(WebActivity.this, android.R.layout.simple_list_item_1, data), new DialogInterface.OnClickListener()
@@ -194,6 +221,7 @@ public class WebActivity extends BaseActivity
 				@Override
 				public void onClick(DialogInterface dialog, int which)
 				{
+					
 					getPicName();
 					switch (which)
 					{
@@ -235,6 +263,7 @@ public class WebActivity extends BaseActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		// TODO Auto-generated method stub
+		Bitmap image = null;
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode)
 		{
@@ -242,55 +271,59 @@ public class WebActivity extends BaseActivity
 		case 1:
 			File imageFile = new File(Constant.IMG_PATH, mPicName);
 			File file = new File(imageFile.getAbsolutePath());
+			SiteUtil.compressBitmap(imageFile.getAbsolutePath(), mPicName);
 			if(file.exists())
 			{
-				addImage(imageFile.getAbsolutePath());
+				addImage(Constant.IMG_PATH+mPicName);
 				imagesLayout.setVisibility(View.VISIBLE);
 				if ("frm1".equals(currentImg))
 				{
 					bitmapUtils.display(img1, imageFile.getAbsolutePath());
-					currentImg="frm2";
 					frm2.setVisibility(View.VISIBLE);
 					delete1.setVisibility(View.VISIBLE);
+					frm1.setOnClickListener(null);
+					img1.setOnClickListener(new deleteImg());
 					break;
 				} else if ("frm2".equals(currentImg))
 				{
 					frm2.setVisibility(View.VISIBLE);
 					bitmapUtils.display(img2, imageFile.getAbsolutePath());
-					currentImg="frm3";
 					frm3.setVisibility(View.VISIBLE);
 					delete2.setVisibility(View.VISIBLE);
+					img2.setOnClickListener(new deleteImg());
 					break;
 				} else if ("frm3".equals(currentImg))
 				{
 					frm3.setVisibility(View.VISIBLE);
 					bitmapUtils.display(img3, imageFile.getAbsolutePath());
-					currentImg="frm4";
 					frm4.setVisibility(View.VISIBLE);
 					delete3.setVisibility(View.VISIBLE);
+					img3.setOnClickListener(new deleteImg());
 					break;
 				}if ("frm4".equals(currentImg))
 				{
 					frm4.setVisibility(View.VISIBLE);
 					bitmapUtils.display(img4, imageFile.getAbsolutePath());
-					currentImg="frm5";
 					frm5.setVisibility(View.VISIBLE);
 					delete4.setVisibility(View.VISIBLE);
+					img4.setOnClickListener(new deleteImg());
 					break;
+					
 					
 				} else if ("frm5".equals(currentImg))
 				{
 					frm5.setVisibility(View.VISIBLE);
 					bitmapUtils.display(img5, imageFile.getAbsolutePath());
-					currentImg="frm6";
 					frm6.setVisibility(View.VISIBLE);
 					delete5.setVisibility(View.VISIBLE);
+					img5.setOnClickListener(new deleteImg());
 					break;
 				} else if ("frm6".equals(currentImg))
 				{
 					frm6.setVisibility(View.VISIBLE);
 					bitmapUtils.display(img6, imageFile.getAbsolutePath());
 					delete6.setVisibility(View.VISIBLE);
+					img6.setOnClickListener(new deleteImg());
 					break;
 				}  else
 				{
@@ -306,7 +339,6 @@ public class WebActivity extends BaseActivity
 				// 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
 				if (mImageCaptureUri != null)
 				{
-//					Bitmap image = null;
 					try
 					{
 						String[] proj = { MediaStore.Images.Media.DATA };
@@ -318,45 +350,78 @@ public class WebActivity extends BaseActivity
 						// 最后根据索引值获取图片路径
 						String path = cursor.getString(column_index);
 						// 这个方法是根据Uri获取Bitmap图片的静态方法
-//						image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
-						File image = new File(path);
-						addImage(path);
-						
-						if (image != null)
+						if(path!=null && !"".equals(path))
 						{
-							imagesLayout.setVisibility(View.VISIBLE);
-							if (frm1.getVisibility() == 8)
-							{
-								frm1.setVisibility(View.VISIBLE);
-//								img1.setImageBitmap(image);
-								bitmapUtils.display(img1, image.getAbsolutePath());
-								break;
-							} else if (frm2.getVisibility() == 8)
-							{
-								frm2.setVisibility(View.VISIBLE);
-//								img2.setImageBitmap(image);
-								bitmapUtils.display(img2, image.getAbsolutePath());
-								break;
-							} else if (frm3.getVisibility() == 8)
-							{
-								frm3.setVisibility(View.VISIBLE);
-//								img3.setImageBitmap(image);
-								bitmapUtils.display(img3, image.getAbsolutePath());
-								break;
-							} else
-							{
-								SiteUtil.infoAlert(WebActivity.this, "最多可添加三张图片");
-								break;
-							}
+							image=SiteUtil.compressBitmap(path,mPicName);
+						}else
+						{
+							image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
+							SiteUtil.compressImage(image,mPicName);
 						}
+						 
+						addImage(Constant.IMG_PATH + mPicName);
+						if ("frm1".equals(currentImg))
+						{
+							img1.setImageBitmap(image);
+							img1.setOnClickListener(null);
+							frm2.setVisibility(View.VISIBLE);
+							delete1.setVisibility(View.VISIBLE);
+							img1.setOnClickListener(new deleteImg());
+							break;
+						}else if ("frm2".equals(currentImg))
+						{
+							frm2.setVisibility(View.VISIBLE);
+							img2.setImageBitmap(image);
+							frm3.setVisibility(View.VISIBLE);
+							delete2.setVisibility(View.VISIBLE);
+							img2.setOnClickListener(new deleteImg());
+							break;
+						} else if ("frm3".equals(currentImg))
+						{
+							frm3.setVisibility(View.VISIBLE);
+							img3.setImageBitmap(image);
+							currentImg="frm4";
+							frm4.setVisibility(View.VISIBLE);
+							delete3.setVisibility(View.VISIBLE);
+							delete3.setTag("frm3");
+							img3.setTag("frm3");
+							img3.setOnClickListener(new deleteImg());
+							break;
+						}if ("frm4".equals(currentImg))
+						{
+							frm4.setVisibility(View.VISIBLE);
+							img4.setImageBitmap(image);
+							frm5.setVisibility(View.VISIBLE);
+							delete4.setVisibility(View.VISIBLE);
+							img4.setOnClickListener(new deleteImg());
+							break;
+							
+						} else if ("frm5".equals(currentImg))
+						{
+							frm5.setVisibility(View.VISIBLE);
+							img5.setImageBitmap(image);
+							frm6.setVisibility(View.VISIBLE);
+							delete5.setVisibility(View.VISIBLE);
+							img5.setOnClickListener(new deleteImg());
+							break;
+						} else if ("frm6".equals(currentImg))
+						{
+							frm6.setVisibility(View.VISIBLE);
+							img6.setImageBitmap(image);
+							delete6.setVisibility(View.VISIBLE);
+							img6.setOnClickListener(new deleteImg());
+							break;
+						}  else
+						{
+							SiteUtil.infoAlert(WebActivity.this, "最多可添加6张图片");
+							break;
+						} 
 					} catch (Exception e)
 					{
 						e.printStackTrace();
 					}
 				}
-
 			}
-
 			break;
 		default:
 			break;
@@ -369,6 +434,56 @@ public class WebActivity extends BaseActivity
 		return mPicName;
 	}
 
+ 
+	class deleteImg implements OnClickListener
+	{
+		@Override
+		public void onClick(View v)
+		{
+			String tag= v.getTag()+"";
+			if("frm1".equals(tag))
+			{
+				delete1.setVisibility(View.GONE);
+				img1.setImageBitmap(null);
+				img1.setOnClickListener(new Li());
+				imagesUrl.remove(0);
+			}else if("frm2".equals(tag))
+			{
+				delete2.setVisibility(View.GONE);
+				img2.setImageBitmap(null);
+				img2.setOnClickListener(new Li());
+				imagesUrl.remove(1);
+			}
+			else if("frm3".equals(tag))
+			{
+				delete3.setVisibility(View.GONE);
+				img3.setImageBitmap(null);
+				img3.setOnClickListener(new Li());
+				imagesUrl.remove(2);
+			}
+			else if("frm4".equals(tag))
+			{
+				delete4.setVisibility(View.GONE);
+				img4.setImageBitmap(null);
+				img4.setOnClickListener(new Li());
+				imagesUrl.remove(3);
+			}
+			else if("frm5".equals(tag))
+			{
+				delete5.setVisibility(View.GONE);
+				img5.setImageBitmap(null);
+				img5.setOnClickListener(new Li());
+				imagesUrl.remove(4);
+			}else if("frm6".equals(tag))
+			{
+				delete6.setVisibility(View.GONE);
+				img6.setImageBitmap(null);
+				img6.setOnClickListener(new Li());
+				imagesUrl.remove(5);
+			} 
+		}
+	}
+	
 	private void addImage(String imagePath)
 	{
 		try
@@ -394,7 +509,6 @@ public class WebActivity extends BaseActivity
 	        if(web != null) 
 	        { 
 	            web.loadUrl(url); 
-	          
 	        } 
 	    } 
 
@@ -413,7 +527,8 @@ public class WebActivity extends BaseActivity
 	public void submitQuestion(View v)
 	{
 
-
+		dialog.setMessage("正在上传,请稍后...");
+		dialog.show();
 		Gson gson = new Gson();
 		String questionStr = "";
 		int imageSize = imagesUrl.size();
@@ -444,13 +559,13 @@ public class WebActivity extends BaseActivity
 				}
 				if (msg.obj == null)
 				{
-					showFailureDialog("提交失败，请核对信息之后重新提交");
+					SiteUtil.infoAlert(WebActivity.this,"提交失败，请核对信息之后重新提交");
 					return;
 				}
 				switch (msg.arg1)
 				{
 				case 1001:
-//					submitResult(msg.obj.toString());
+					submitResult(msg.obj.toString());
 					break;
 				case 1002:
 					// parseData(msg.obj.toString());
@@ -463,11 +578,21 @@ public class WebActivity extends BaseActivity
 		}
 	};
 	
-	private void showFailureDialog(String msg)
+	public void submitResult(String json)
 	{
-
-		AlertDialog alertDialog = new AlertDialog.Builder(this).setPositiveButton("确定", null).setTitle("失败提醒").setMessage(msg).create();
-		alertDialog.setCanceledOnTouchOutside(false);
-		alertDialog.show();
+		JsonParser jsonParser = new JsonParser();
+		JsonElement jsonElement = jsonParser.parse(json);
+		JsonObject jsonObject = jsonElement.getAsJsonObject();
+		String status = jsonObject.get("status").getAsString();
+		if("00".equals(status))
+		{
+			SiteUtil.infoAlert(WebActivity.this,"上传成功");
+			finish();
+		}else
+		{
+			SiteUtil.infoAlert(WebActivity.this,"上传失败,请重试");
+		}
 	}
+
+	 
 }

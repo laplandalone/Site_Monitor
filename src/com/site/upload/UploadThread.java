@@ -60,10 +60,8 @@ public class UploadThread implements Runnable{
         	 
             //请求普通信息
             Map<String, String> params = new HashMap<String, String>();
-            params.put("method", "uploadFile");
             params.put("cityId", cityId);
             params.put("linelist", linelist);
-            params.put("carNo", carNo);
             params.put("stopName", stopName);
             params.put("stopId", stopId);
             params.put("jingdu", jingdu);

@@ -3,6 +3,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,19 +48,12 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 	@ViewInject(R.id.card)
 	private EditText card;
 	
-	private String cityId ;
-	private String oriLineId ;
-	private String realLineId ;
-	private String carNo;
-	private String stopId;
-	private String stopName;
-	private String lineName;
 	private CancelAdapter adapter;
 	private ListView list;
 	
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
-	
+	private Cancel cancel;
 	private List<Cancel> cancels = new ArrayList<Cancel>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -165,10 +161,11 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		String status=jsonObject.get("status").toString();
+		String status=jsonObject.get("status").getAsString();
 		if("00".equals(status))
 		{
-			 
+			showDialog();
+			SiteUtil.writeCancels(cancel, "delete");
 		}
 	}
 
@@ -177,11 +174,26 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 	{
 		// TODO Auto-generated method stub
-		Cancel cancel = cancels.get(arg2);
+		 cancel = cancels.get(arg2);
 		
 		RequestParams param = webInterface.cancel(cancel.getCancelId());
 		invokeWebServer(param, GET_LIST);
 	}
 
-	
+	private void showDialog()
+	{
+		AlertDialog alertDialog = new AlertDialog.Builder(this)
+		.setPositiveButton("确定", new OnClickListener()
+		{
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				// TODO Auto-generated method stub
+				finish();
+			}
+		}).setTitle("提示").setMessage("处理成功").create();
+			alertDialog.setCanceledOnTouchOutside(false);
+			alertDialog.show();
+	}
 }

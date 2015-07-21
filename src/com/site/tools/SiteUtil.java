@@ -20,6 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.string;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -477,46 +478,22 @@ public class SiteUtil {
 				if (file.exists()) 
 				{
 					BitmapFactory.Options opts = new BitmapFactory.Options();
-//					opts.inJustDecodeBounds = true;
-					opts.inSampleSize=1;
-					long size=file.length()/1024;
-					 if(size>3000)
-					{
-						opts.inSampleSize = 10;
-					}else if(size>1000 && size<3000)
-					{
-						opts.inSampleSize = 6;
-					}else if(size>500 && size<1000)
-					{
-						opts.inSampleSize = 5;
-					} 
-					Bitmap bitmap = BitmapFactory.decodeFile(file.getPath(),opts);
+  
+					Bitmap image = BitmapFactory.decodeFile(file.getPath(),opts);
 					
-					if (bitmap == null)  // 若获取图片失败就取消压缩
-					{
-						return null;
-					}
-					/*
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-					HealthUtil.LOG_D(HealthUtil.class, "baos size before: "+ baos.toByteArray().length/1024);
-					
-					int options = 100;
-					while (baos.toByteArray().length / 1024 > 200)
-					{
-						baos.reset();
-						options -= 10;
-						bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
-					}
-					
-					HealthUtil.LOG_D(HealthUtil.class, "baos size after: "+ baos.toByteArray().length/1024);
-					ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-							baos.toByteArray());
-				
-					Bitmap bitmap2 = BitmapFactory.decodeStream(byteArrayInputStream);
-					*/
-					saveFileBitmap(name, bitmap, 100);
-					return bitmap;
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();   
+			        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中   
+			        int options = 100;   
+			        while ( baos.toByteArray().length / 1024>700) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩          
+			            baos.reset();//重置baos即清空baos   
+			            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中   
+			            options -= 10;//每次都减少10   
+			        }   
+			        
+					ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中   
+				    Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片   
+				    saveFileBitmap(name, bitmap, 100);
+					return image;
 				}
 			}
 			return null;
@@ -548,20 +525,21 @@ public class SiteUtil {
 			}
 		}
 
-		 public static Bitmap compressBmpFromBmp(Bitmap image,String fileName)
-		 {  
-		        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-		        if(baos.toByteArray().length / 1024 > 3000) 
-		        {   
-		           baos.reset();  
-		           image.compress(Bitmap.CompressFormat.JPEG, 10, baos);  
-		        }
-		        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());  
-		        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);  
-		        saveFileBitmap(fileName, bitmap, 100);
-		        return bitmap;  
-		 }  
+		public static Bitmap compressImage(Bitmap image,String fileName) {   
+			  
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();   
+	        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中   
+	        int options = 100;   
+	        while ( baos.toByteArray().length / 1024>700) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩          
+	            baos.reset();//重置baos即清空baos   
+	            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中   
+	            options -= 10;//每次都减少10   
+	        }   
+	        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中   
+	        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片   
+	        saveFileBitmap(fileName, bitmap, 100);
+	        return bitmap;   
+	    }
 
 		 /**
 			 * 纬度

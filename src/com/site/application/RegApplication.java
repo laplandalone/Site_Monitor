@@ -31,8 +31,8 @@ public class RegApplication extends Application
 		super.onCreate();
 //		startLocation();
 //		locationClient.start();
-		SiteUtil.writeLongitude("");
-		SiteUtil.writeLatitude("");
+		SiteUtil.writeLongitude("120.154724");
+		SiteUtil.writeLatitude("30.275079");
 	}
 	
 	public void startLocation() {

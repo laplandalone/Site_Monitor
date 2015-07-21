@@ -1,5 +1,8 @@
  package com.site.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -75,6 +78,7 @@ public class CardActivity extends BaseActivity
 		String cardName= getIntent().getStringExtra("carName");
 		String stopFlag = getIntent().getStringExtra("stopFlag");
 		this.carName.setText(cardName);
+		this.card.setText(cardName);
 		 int stop=0;
          if(StringUtil.checkStringIsNum(stopFlag))
          {
@@ -94,6 +98,12 @@ public class CardActivity extends BaseActivity
          }
 	}
 
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
+	
 	@OnClick(R.id.submit)
 	public void submit(View v)
 	{
@@ -104,6 +114,11 @@ public class CardActivity extends BaseActivity
 		  stopId=SiteUtil.getStopId();
 		  stopName=SiteUtil.getStopName();
 		  lineName=getIntent().getStringExtra("lineName");
+		  if(carNo==null || "".equals(carNo))
+		  {
+			  SiteUtil.infoAlert(CardActivity.this, "站牌为空");
+			  return;
+		  }
 		RequestParams param = webInterface.record("0", cityId, oriLineId, realLineId, carNo, stopId, stopName);
 		invokeWebServer(param, GET_LIST); 
 	}
@@ -187,8 +202,23 @@ public class CardActivity extends BaseActivity
 			cancel.setStopName(stopName);
 			cancel.setCancelId(cancelId);
 			SiteUtil.writeCancels(cancel, "add");
+			showDialog();
 		}
 	}
 
-	
+	private void showDialog()
+	{
+		AlertDialog alertDialog = new AlertDialog.Builder(this).setPositiveButton("确定", new OnClickListener()
+		{
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				// TODO Auto-generated method stub
+				finish();
+			}
+		}).setTitle("提示").setMessage("处理成功").create();
+			alertDialog.setCanceledOnTouchOutside(false);
+			alertDialog.show();
+	}
 }

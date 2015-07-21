@@ -217,7 +217,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		}
 		RequestParams param = webInterface.query(cityId, stopId, stopName, lineIds);
 		invokeWebServer(param, GET_LIST);
-		new Thread(new MyThread()).start();  
+//		new Thread(new MyThread()).start();  
 	}
 
 	/**

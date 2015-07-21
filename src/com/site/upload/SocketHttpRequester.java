@@ -121,29 +121,47 @@ public class SocketHttpRequester {
         //下面发送数据结束标志，表示数据已经结束
         outStream.write(endline.getBytes());
         outStream.flush();
-        
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        String str = "";
-        boolean requestCodeSuccess = false;
-        boolean uploadSuccess = false;
-        while((str = reader.readLine()) != null) {
-        	SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->str=" + str);
-        	if (str.indexOf("200") > 0) {
-        		requestCodeSuccess = true;
-        	}
-//        	if ("true".equals(str.trim())) {
+        InputStreamReader reader = new InputStreamReader(socket.getInputStream());
+        int i=0;
+        char[] buffer = new char[1024];
+        while((i=reader.read(buffer)) != -1) 
+        {
+	          boolean requestCodeSuccess = false;
+	          boolean uploadSuccess = false;
+	          String str =new String(buffer);
+	           
+	          int start=str.trim().indexOf("{");
+	          int end=str.trim().indexOf("}");
+	          if(start>-1 && end >0)
+	          {
+	        	 return str.substring(start, end+1);
+	          }
+	        	  
+        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//        String str = "";
+//        boolean requestCodeSuccess = false;
+//        boolean uploadSuccess = false;
+//        while((str = reader.readLine()) != null) {
+//        	SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->str=" + str);
+//        	if (str.indexOf("200") > 0) {
+//        		requestCodeSuccess = true;
+//        	}
+////        	if ("true".equals(str.trim())) {
+////        		uploadSuccess = true;
+////        	}
+//        	 
+//        	if (str.trim().startsWith("{")) {
 //        		uploadSuccess = true;
 //        	}
-        	 
-        		uploadSuccess = true;
-        	 
-        	if (requestCodeSuccess && uploadSuccess) {
-    	        outStream.close();
-    	        reader.close();
-    	        socket.close();
-        		return str.trim();
-        	}
-        }
+//        	 
+//        	if (requestCodeSuccess && uploadSuccess) {
+//    	        outStream.close();
+//    	        reader.close();
+//    	        socket.close();
+//        		return str.trim();
+//        	}
+//        }
         outStream.flush();
         outStream.close();
         reader.close();
