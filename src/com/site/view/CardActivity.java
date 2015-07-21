@@ -18,7 +18,9 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
+import com.site.model.Cancel;
 import com.site.tools.Constant;
+import com.site.tools.DateUtils;
 import com.site.tools.SiteUtil;
 import com.site.tools.StringUtil;
 
@@ -35,6 +37,14 @@ public class CardActivity extends BaseActivity
 	
 	@ViewInject(R.id.card)
 	private EditText card;
+	
+	private String cityId ;
+	private String oriLineId ;
+	private String realLineId ;
+	private String carNo;
+	private String stopId;
+	private String stopName;
+	private String lineName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -87,12 +97,13 @@ public class CardActivity extends BaseActivity
 	@OnClick(R.id.submit)
 	public void submit(View v)
 	{
-		String cityId=SiteUtil.getCity();
-		String oriLineId=getIntent().getStringExtra("lineId");
-		String realLineId=getIntent().getStringExtra("lineId");
-		String carNo=card.getText().toString();
-		String stopId=SiteUtil.getStopId();
-		String stopName=SiteUtil.getStopName();
+		  cityId=SiteUtil.getCity();
+		  oriLineId=getIntent().getStringExtra("lineId");
+		  realLineId=getIntent().getStringExtra("lineId");
+		  carNo=card.getText().toString();
+		  stopId=SiteUtil.getStopId();
+		  stopName=SiteUtil.getStopName();
+		  lineName=getIntent().getStringExtra("lineName");
 		RequestParams param = webInterface.record("0", cityId, oriLineId, realLineId, carNo, stopId, stopName);
 		invokeWebServer(param, GET_LIST); 
 	}
@@ -165,7 +176,18 @@ public class CardActivity extends BaseActivity
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
-	
+		String status=jsonObject.get("status").getAsString();
+		String cancelId=jsonObject.get("data").getAsString();
+		if("00".equals(status))
+		{
+			Cancel cancel = new Cancel();
+			cancel.setCarNo(carNo);
+			cancel.setLineName(lineName);
+			cancel.setDate(DateUtils.getDateTime());
+			cancel.setStopName(stopName);
+			cancel.setCancelId(cancelId);
+			SiteUtil.writeCancels(cancel, "add");
+		}
 	}
 
 	

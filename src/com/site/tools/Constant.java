@@ -21,6 +21,8 @@ public class Constant
  	
 	public static final String UPLOAD_URL ="http://op.yg84.com:7000/universe/car2/upload?";
 	
+	public static final String URL_cancel ="http://op.yg84.com:7000/universe/car/cancel?";
+	
 	public static final String IMG_PATH = Environment.getExternalStorageDirectory().getPath()+"/hbgzocr/";
 	
 	public static final String Download_path = Environment.getExternalStorageDirectory().getPath() + "/health/download/";

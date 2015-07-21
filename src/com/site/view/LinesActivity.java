@@ -57,8 +57,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	
 	private StringBuffer linesb = new StringBuffer();
 	private StringBuffer lineIds = new StringBuffer();
-	LineAdapter
-	adapter;
+	LineAdapter adapter;
 	String adpterFlag="normal";
 	
 	@Override

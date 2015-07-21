@@ -90,15 +90,24 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		
 		startActivity(intent);
 	}
+	
+	@OnClick(R.id.editUser)
+	public void toCancel(View v)
+	{
+		Intent intent = new Intent(LineDetailActivity.this,CancelActivity.class);
+		
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void initView()
 	{
 	 
 		String stopName=getIntent().getStringExtra("stopName");
 		lineName.setText(stopName);
-		title.setText("选择线路");
-		editUser.setText("确定");
-		site.setText("周边站点");
+		title.setText("线路列表");
+		editUser.setText("撤销");
+		site.setText("选择线路");
 	}
 	
 	public void initCar()
@@ -132,6 +141,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
               
                 String stopFlag=car.getDeltStops();
                 btn1.setTag(R.id.tag_three, stopFlag);
+                btn1.setTag(R.id.tag_four, car.getLineName());
                 btn1.setBackgroundResource(R.drawable.bg);
                 
                
@@ -150,6 +160,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 						intent.putExtra("carName",arg0.getTag(R.id.tag_one)+"");
 						intent.putExtra("lineId",arg0.getTag(R.id.tag_two)+"");
 						intent.putExtra("stopFlag",arg0.getTag(R.id.tag_three)+"");
+						intent.putExtra("lineName",arg0.getTag(R.id.tag_four)+"");
 						startActivity(intent);
 					}
 				});

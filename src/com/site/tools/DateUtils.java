@@ -543,6 +543,11 @@ public class DateUtils
 		return ORA_DATE_TIME_EXTENDED_FORMAT.format(new Date());
 	}
 
+	public static String getDateTime()
+	{
+		return CHN_DATE_TIME_EXTENDED_FORMAT.format(new Date());
+	}
+	
 	public static String getCHNDate()
 	{
 		return CHN_DATE_FORMAT.format(new Date());

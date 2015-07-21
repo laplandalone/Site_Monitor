@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.site.application.RegApplication;
+import com.site.model.Cancel;
 import com.site.model.Line;
 
 /**
@@ -86,27 +88,6 @@ public class SiteUtil {
 			  userPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 			}
 		 }
-		
-	 
-		public static void writeChooseUsers(Line line,boolean flag)
-		{
-			String chooseUserTs= userPreferences.getString("chooseUsers","");
-			Gson gson = new Gson();  
-			List<Line> lines= gson.fromJson(chooseUserTs, new TypeToken<List<Line>>(){}.getType());   
-			if(line!=null)
-			{
-				if(flag)
-				{
-					for(Line lineT:lines)
-					{
-						
-					}
-				}
-			
-			}
-			
-			
-		}
 		
 		public static String getVersionName() {
 			  PackageManager pm = mContext.getPackageManager();
@@ -627,5 +608,41 @@ public class SiteUtil {
 			
 			public static void writeStopName(String stopName) {
 				userPreferences.edit().putString("stopName", stopName).commit();
+			}
+			
+			public static void writeCancels(Cancel cancelT,String flag)
+			{
+				String cancelStr= userPreferences.getString("cancels","");
+				Gson gson = new Gson();  
+				List<Cancel> cancels= gson.fromJson(cancelStr, new TypeToken<List<Cancel>>(){}.getType());   
+				if(cancels!=null)
+				{
+					if("delete".equals(flag))
+					{
+						for(Cancel cancel:cancels)
+						{
+							if(cancelT.getCancelId().equals(cancel.getCancelId()))
+							{
+								cancels.remove(cancel);
+							}
+						}
+					}
+				}else
+				{
+					cancels=new ArrayList<Cancel>();
+				}
+				if("add".equals(flag))
+				{
+					cancels.add(cancelT);
+				}
+				userPreferences.edit().putString("cancels",gson.toJson(cancels)).commit();
+			}
+			
+			public static List<Cancel> readCancels()
+			{
+				String cancelStr= userPreferences.getString("cancels","");
+				Gson gson = new Gson();  
+				List<Cancel> cancels= gson.fromJson(cancelStr, new TypeToken<List<Cancel>>(){}.getType());   
+				return cancels;
 			}
 }
