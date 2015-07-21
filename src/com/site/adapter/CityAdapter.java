@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.site.R;
 import com.site.model.City;
+import com.site.tools.SiteUtil;
 
 public class CityAdapter extends BaseAdapter
 {
@@ -70,11 +71,13 @@ public class CityAdapter extends BaseAdapter
 	{
 		
 			 convertView = LayoutInflater.from(mContext).inflate(R.layout.common_article_list_item, null);
-			 TextView textView =  (TextView)convertView.findViewById( R.id.newsTitle);
-			 TextView textView2 = (TextView)convertView.findViewById( R.id.newsContent);
-			 TextView textView3 = (TextView)convertView.findViewById( R.id.newsDate);
+			 TextView textView =  (TextView)convertView.findViewById( R.id.title);
+			 ImageView view = (ImageView) convertView.findViewById( R.id.choose);
 			 City city=cities.get(position);
-			// localImageView.setVisibility(0);
+			 if(SiteUtil.getCity().equals(city.getCityId()))
+			 {
+				 view.setVisibility(View.VISIBLE);
+			 }
 			 textView.setText(city.getCityName());
 		
 		return convertView;

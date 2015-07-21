@@ -129,7 +129,7 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void initValue()
 	{
-		initBase(1002);
+		//initBase(1002);
 	}
 	
 	/**

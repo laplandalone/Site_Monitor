@@ -73,9 +73,7 @@ public class NearBysListAdapter extends BaseAdapter
 	{
 		
 			 convertView = LayoutInflater.from(mContext).inflate(R.layout.common_article_list_item, null);
-			 TextView textView =  (TextView)convertView.findViewById( R.id.newsTitle);
-			 TextView textView2 = (TextView)convertView.findViewById( R.id.newsContent);
-			 TextView textView3 = (TextView)convertView.findViewById( R.id.newsDate);
+			 TextView textView =  (TextView)convertView.findViewById( R.id.title);
 			 NearBy nearyBy=nearBys.get(position);
 			// localImageView.setVisibility(0);
 			 textView.setText(nearyBy.getStopName());
