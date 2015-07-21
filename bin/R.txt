@@ -163,6 +163,7 @@ int drawable xlistview_arrow 0x7f020016
 int id arrow 0x7f0a0039
 int id article_list_layout 0x7f0a000f
 int id ask_buttom 0x7f0a0015
+int id cancel 0x7f0a0029
 int id carName 0x7f0a003d
 int id card 0x7f0a003e
 int id choose 0x7f0a0036
@@ -211,7 +212,6 @@ int id settings 0x7f0a002e
 int id sign_in 0x7f0a003f
 int id site 0x7f0a0030
 int id submit 0x7f0a0040
-int id submit_question 0x7f0a0029
 int id tag_four 0x7f0a0003
 int id tag_one 0x7f0a0000
 int id tag_three 0x7f0a0002

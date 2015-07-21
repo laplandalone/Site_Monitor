@@ -31,6 +31,7 @@ public class RegApplication extends Application
 		super.onCreate();
 //		startLocation();
 //		locationClient.start();
+		SiteUtil.writeCity("004");
 		SiteUtil.writeLongitude("120.154724");
 		SiteUtil.writeLatitude("30.275079");
 	}
@@ -63,7 +64,8 @@ public class RegApplication extends Application
 				sb.append(location.getAddrStr());
 				SiteUtil.writeLongitude(location.getLongitude()+"");
 				SiteUtil.writeLatitude(location.getLatitude()+"");
-				SiteUtil.writeCity(location.getCity()+"");
+				SiteUtil.writeCityName(location.getCity()+"");
+				SiteUtil.writeAddress(location.getAddrStr());
 				if (location.getLocType() == BDLocation.TypeGpsLocation){
 					sb.append("\nspeed : ");
 					sb.append(location.getSpeed());

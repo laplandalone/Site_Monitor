@@ -96,12 +96,13 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
+	
 		City city=(City) getIntent().getSerializableExtra("city");
 		title.setText("周边站点");
 		editUser.setText("站名");
 		if(SiteUtil.getCity()!=null && !"".equals(SiteUtil.getCity()) && !"null".equals(SiteUtil.getCity()) )
 		{
-			site.setText(SiteUtil.getCity());
+			site.setText(SiteUtil.getCityName());
 		}
 		
 		if(city!=null)
@@ -237,15 +238,17 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			{
 				layout.setVisibility(View.VISIBLE);
 				list.setVisibility(View.GONE);
+			}else
+			{
+				refreshableView.finishRefreshing();
 			}
-			refreshableView.finishRefreshing();
 			break;
 		case GET_CITY:
 			JsonArray city  =  data.getAsJsonArray("cities");
 			List<City> cities = gson.fromJson(city, new TypeToken<List<City>>()
 			{
 			}.getType());
-			String cityName = SiteUtil.getCity();
+			String cityName = SiteUtil.getCityName();
 			for(City c:cities)
 			{
 				if(cityName.indexOf(c.getCityName())>-1)

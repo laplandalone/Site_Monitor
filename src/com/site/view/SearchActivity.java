@@ -36,10 +36,7 @@ import com.site.model.SearchLine;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
-/**
- * 医院资讯
- * 
- */
+
 public class SearchActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
@@ -60,8 +57,6 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	private List<SearchLine> searchLines;
 	private ListView list;
 	
- 
-	
 	SearchLineAdapter adapter;
 	String cityId="";
 	
@@ -81,9 +76,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	@OnClick(R.id.site)
 	public void toCity(View v)
 	{
-		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
-		startActivity(intent);
-		exit();
+		finish();
 	}
 
 	@OnClick(R.id.editUser)
@@ -100,11 +93,9 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		 cityId=getIntent().getStringExtra("cityId");
 		 
-	    title.setText("周边站点");
-			editUser.setText("站名");
-			 
-		 
-	 
+	    title.setText("站点查询");
+	    site.setText("周边站点");
+	    editUser.setText("");
 		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
 		 edit.addTextChangedListener(new TextWatcher() {
 				

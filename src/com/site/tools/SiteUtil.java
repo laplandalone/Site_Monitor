@@ -580,6 +580,22 @@ public class SiteUtil {
 				userPreferences.edit().putString("city", city).commit();
 			}
 			
+			public static String getCityName() {
+				return userPreferences.getString("cityName", "");
+			}
+			
+			public static void writeCityName(String city) {
+				userPreferences.edit().putString("cityName", city).commit();
+			}
+			
+			public static String getAddress() {
+				return userPreferences.getString("address", "");
+			}
+			
+			public static void writeAddress(String address) {
+				userPreferences.edit().putString("address", address).commit();
+			}
+			
 			public static String getStopName() {
 				return userPreferences.getString("stopName", "");
 			}

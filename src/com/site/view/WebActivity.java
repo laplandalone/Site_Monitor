@@ -48,6 +48,12 @@ public class WebActivity extends BaseActivity
 	private TextView title;
 	WebView web;
 	
+	@ViewInject(R.id.editUser)
+	private TextView editUser;
+	
+	@ViewInject(R.id.site)
+	private TextView site;
+	
 	ArrayList<String> data = new ArrayList<String>();
 
 	private ArrayList<String> imagesUrl = new ArrayList<String>();
@@ -130,18 +136,31 @@ public class WebActivity extends BaseActivity
 		initView();
 		initValue();
 	}
+	
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
 
+	@OnClick(R.id.cancel)
+	public void cancel(View v)
+	{
+		finish();
+	}
 	
 	@Override
 	protected void initView()
 	{
 //		String titleT = getIntent().getStringExtra("title");
 //		// TODO Auto-generated method stub
-//		title.setText(titleT);
+		title.setText("上班站点信息");
 //		String url = getIntent().getStringExtra("url");
+		site.setText("线路列表");
+		editUser.setText("");
 		String l=SiteUtil.getLongitude();
 		String lat=SiteUtil.getLatitude();
-		String url="http://api.map.baidu.com/marker?location="+lat+","+l+"&title=我的位置&content=百度奎科大厦&output=html";
+		String url="http://api.map.baidu.com/marker?location="+lat+","+l+"&title="+SiteUtil.getAddress()+"&content=&output=html";
 		System.out.println("url:"+url);
 		 if(web != null) 
 	        { 

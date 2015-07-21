@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
 import com.site.adapter.CityAdapter;
@@ -93,6 +94,11 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 
 	}
 
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
 	/**
 	 * 链接web服务
 	 * 

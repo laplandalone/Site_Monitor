@@ -83,6 +83,12 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		initView();
 	}
 
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
+	
 	@OnClick(R.id.lineName)
 	public void toMap(View v)
 	{

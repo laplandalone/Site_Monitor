@@ -72,7 +72,11 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		initView();
 	}
 
-	 
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	} 
 
 	@OnClick(R.id.editUser)
 	public void toSubmit(View v)
@@ -83,6 +87,12 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		String cityId=getIntent().getStringExtra("cityId");
 		linesb=new StringBuffer();
 		lineIds=new StringBuffer();
+		if(choose==null || choose.size()==0)
+		{
+			SiteUtil.infoAlert(LinesActivity.this, "为选择线路");
+			return;
+		}
+		
 		for(Line l:choose)
 		{
 			linesb.append(l.getLineName()+",");
