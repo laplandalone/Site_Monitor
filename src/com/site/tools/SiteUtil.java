@@ -525,6 +525,30 @@ public class SiteUtil {
 			}
 		}
 
+		public static void saveBitmap(Bitmap bitmap,String fileName) {
+			if (bitmap == null) {
+				return;
+			}
+			
+			 File destDir = new File(Constant.IMG_PATH);
+			  if (!destDir.exists())
+			  {
+				  destDir.mkdirs();
+			  }
+
+			FileOutputStream outputStream;
+			try {
+				outputStream = new FileOutputStream(new File(Constant.IMG_PATH + fileName));
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100,outputStream);
+				outputStream.flush();
+				outputStream.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		public static Bitmap compressImage(Bitmap image,String fileName) {   
 			  
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();   
@@ -608,6 +632,7 @@ public class SiteUtil {
 			{
 				String cancelStr= userPreferences.getString("cancels","");
 				Gson gson = new Gson();  
+				List<Cancel> cancelsT=new ArrayList<Cancel>();
 				List<Cancel> cancels= gson.fromJson(cancelStr, new TypeToken<List<Cancel>>(){}.getType());   
 				if(cancels!=null)
 				{
@@ -615,11 +640,12 @@ public class SiteUtil {
 					{
 						for(Cancel cancel:cancels)
 						{
-							if(cancelT.getCancelId().equals(cancel.getCancelId()))
+							if(!cancelT.getCancelId().equals(cancel.getCancelId()))
 							{
-								cancels.remove(cancel);
+								cancelsT.add(cancel);
 							}
 						}
+						cancels=cancelsT;
 					}
 				}else
 				{

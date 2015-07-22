@@ -2,6 +2,7 @@
 <LinearLayout android:orientation="vertical"   android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <include layout="@layout/common_title" />
+    <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
     <include android:id="@+id/search"  layout="@layout/common_search" />
     <ListView android:orientation="vertical" android:id="@+id/comlist" android:paddingLeft="0.0dip" android:paddingRight="0.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" />
    <RelativeLayout android:visibility="gone" android:id="@+id/contentnull"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">

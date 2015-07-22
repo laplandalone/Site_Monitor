@@ -165,6 +165,7 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void returnMsg(String json, int code)
 	{
+		try{
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -183,6 +184,12 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
 		}
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		layout.setVisibility(View.VISIBLE);
+		list.setVisibility(View.GONE);
+	}
 	}
 
 	@Override

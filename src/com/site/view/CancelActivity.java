@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,12 +42,13 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 	
 	@ViewInject(R.id.site)
 	private TextView site;
-	
-	@ViewInject(R.id.carName)
-	private TextView carName;
+	@ViewInject(R.id.editUser)
+	private TextView editUser;
+ 
 	
 	@ViewInject(R.id.card)
 	private EditText card;
+	
 	
 	private CancelAdapter adapter;
 	private ListView list;
@@ -73,10 +75,17 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-		title.setText("提交车牌");
+		title.setText("撤销列表");
 		site.setText("线路列表");
+		editUser.setText("");
 	}
 
+
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
 	@Override
 	protected void initValue()
 	{
@@ -158,6 +167,8 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 	 */
 	private void returnMsg(String json, int code)
 	{
+		try
+		{
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -166,6 +177,13 @@ public class CancelActivity  extends BaseActivity implements OnItemClickListener
 		{
 			showDialog();
 			SiteUtil.writeCancels(cancel, "delete");
+		}else
+		{
+			SiteUtil.infoAlert(CancelActivity.this, "处理失败,请重试...");
+		}
+		}catch(Exception e)
+		{
+			SiteUtil.infoAlert(CancelActivity.this, "处理失败,请重试...");
 		}
 	}
 

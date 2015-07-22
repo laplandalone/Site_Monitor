@@ -3,55 +3,35 @@
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+ <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
- 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- LBS -->
-    <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
-    </uses-permission>
-    <!-- 这个权限用于获取wifi的获取权限,wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
-    </uses-permission>
-   
-    <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS">
-    </uses-permission>
-    <!-- 允许应用读取低级别的系统日志文件 -->
-    <uses-permission android:name="android.permission.READ_LOGS">
-    </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS">
-    </uses-permission>
- 
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_GPS"/>
- 
-    <!-- Push -->
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-	<uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 使用相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- BAIDU 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- BAIDU 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- BAIDU 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- BAIDU 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- BAIDU 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- BAIDU 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- BAIDU 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- BAIDU SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- BAIDU 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
     
-    
-
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.autofocus"/>
-
     <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.site.application.RegApplication" android:theme="@style/AppTheme">
  <service
             android:name="com.baidu.location.f"
@@ -62,7 +42,7 @@
                 </action>
             </intent-filter>
         </service>
-        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="s4a6MjKzUcv8weBL2pqZlTaS"/>
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="dGDOeO5mE3L0SgcqNAVsfulF"/>
         <meta-data android:name="UMENG_APPKEY" android:value="54505c06fd98c5a68b01a516"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="zhangshangyaxin"/>
 		<activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:windowSoftInputMode="stateVisible|adjustResize">
@@ -83,7 +63,6 @@
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.QueryActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CancelActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-        
 </application>
 
 </manifest>

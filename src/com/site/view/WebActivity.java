@@ -3,9 +3,12 @@ package com.site.view;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,18 +21,31 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hp.hpl.sparta.xpath.Step;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -43,7 +59,21 @@ import com.site.upload.UploadThread;
 
 public class WebActivity extends BaseActivity
 {
-	
+	// 定位相关
+	LocationClient mLocClient;
+	public MyLocationListenner myListener = new MyLocationListenner();
+	private LocationMode mCurrentMode;
+	BitmapDescriptor mCurrentMarker;
+	 
+	MapView mMapView;
+	private BaiduMap baiduMap;;
+
+	// UI相关
+	OnCheckedChangeListener radioButtonListener;
+	Button requestLocButton;
+	boolean isFirstLoc = true;// 是否首次定位
+ 
+		
 	@ViewInject(R.id.title)
 	private TextView title;
 	WebView web;
@@ -56,7 +86,7 @@ public class WebActivity extends BaseActivity
 	
 	ArrayList<String> data = new ArrayList<String>();
 
-	private ArrayList<String> imagesUrl = new ArrayList<String>();
+	private Map<String,String> imagesUrl = new HashMap<String,String>();
 	private String mPicName = "";
 	private BitmapUtils bitmapUtils;
 	
@@ -127,77 +157,50 @@ public class WebActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.visit_detail_webview);
-		web = (WebView) findViewById(R.id.webview);  
-		web.getSettings().setJavaScriptEnabled(true);     
-		web.getSettings().setAllowFileAccess(true);  
-		web.getSettings().setDomStorageEnabled(true);//
+	
 		ViewUtils.inject(this);
 		addActivity(this);
 		initView();
 		initValue();
 	}
 	
-	@OnClick(R.id.site)
-	public void site(View v)
-	{
-		finish();
-	}
+	/**
+	 * 定位SDK监听函数
+	 */
+	public class MyLocationListenner implements BDLocationListener {
 
-	@OnClick(R.id.cancel)
-	public void cancel(View v)
-	{
-		finish();
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// map view 销毁后不在处理新接收的位置
+			if (location == null || mMapView == null)
+				return;
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			baiduMap.setMyLocationData(locData);
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				baiduMap.animateMapStatus(u);
+			}
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
 	}
+	
+
 	
 	@Override
 	protected void initView()
 	{
-//		String titleT = getIntent().getStringExtra("title");
-//		// TODO Auto-generated method stub
-		title.setText("上班站点信息");
-//		String url = getIntent().getStringExtra("url");
+		title.setText("上报站点信息");
 		site.setText("线路列表");
 		editUser.setText("");
-		String l=SiteUtil.getLongitude();
-		String lat=SiteUtil.getLatitude();
-		String url="http://api.map.baidu.com/marker?location="+lat+","+l+"&title="+SiteUtil.getAddress()+"&content=&output=html";
-		System.out.println("url:"+url);
-		 if(web != null) 
-	        { 
-//			    web.addJavascriptInterface(this, "javatojs");
-
-	            web.setWebViewClient(new WebViewClient() 
-	            { 
-	            	@Override
-	                public boolean shouldOverrideUrlLoading(WebView view, String url) { 
-	                    view.loadUrl(url); 
-	                    return true; 
-	                } 
-	            	
-	            	@Override
-	            	public void onPageStarted(WebView view, String url,
-	            			Bitmap favicon) {
-	            		super.onPageStarted(view, url, favicon);
-	            	}
-	                @Override 
-	                public void onPageFinished(WebView view,String url) 
-	                { 
-	                	
-	                }
-
-					@Override
-					public void onReceivedError(WebView view, int errorCode,
-							String description, String failingUrl) 
-					{
-						SiteUtil.infoAlert(WebActivity.this, "加载失败,请重试...");
-						web.setVisibility(View.GONE);
-						super.onReceivedError(view, errorCode, description, failingUrl);
-					} 
-	                
-	            }); 
-	             
-	            loadUrl(url); 
-	        } 
 		 
 		 frm1.setOnClickListener(new Li());
 		 frm2.setOnClickListener(new Li());
@@ -290,10 +293,10 @@ public class WebActivity extends BaseActivity
 		case 1:
 			File imageFile = new File(Constant.IMG_PATH, mPicName);
 			File file = new File(imageFile.getAbsolutePath());
-			SiteUtil.compressBitmap(imageFile.getAbsolutePath(), mPicName);
+//			SiteUtil.compressBitmap(imageFile.getAbsolutePath(), mPicName);
 			if(file.exists())
 			{
-				addImage(Constant.IMG_PATH+mPicName);
+				addImage(currentImg,imageFile.getAbsolutePath());
 				imagesLayout.setVisibility(View.VISIBLE);
 				if ("frm1".equals(currentImg))
 				{
@@ -371,14 +374,15 @@ public class WebActivity extends BaseActivity
 						// 这个方法是根据Uri获取Bitmap图片的静态方法
 						if(path!=null && !"".equals(path))
 						{
-							image=SiteUtil.compressBitmap(path,mPicName);
+//							image=SiteUtil.compressBitmap(path,mPicName);
 						}else
 						{
 							image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
-							SiteUtil.compressImage(image,mPicName);
+//							SiteUtil.saveBitmap(image,mPicName);
+							selectImage(this, intent);
 						}
 						 
-						addImage(Constant.IMG_PATH + mPicName);
+						addImage(currentImg,path);
 						if ("frm1".equals(currentImg))
 						{
 							img1.setImageBitmap(image);
@@ -447,6 +451,25 @@ public class WebActivity extends BaseActivity
 		}
 	}
 	
+	public static String selectImage(Context context,Intent data){  
+        Uri selectedImage = data.getData();  
+//      Log.e(TAG, selectedImage.toString());   
+        if(selectedImage!=null){              
+            String uriStr=selectedImage.toString();  
+            String path=uriStr.substring(10,uriStr.length());  
+            if(path.startsWith("com.sec.android.gallery3d")){  
+                return null;  
+            }  
+        }         
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };  
+        Cursor cursor = context.getContentResolver().query(selectedImage,filePathColumn, null, null, null);  
+        cursor.moveToFirst();  
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);  
+        String picturePath = cursor.getString(columnIndex);  
+        cursor.close();  
+        return picturePath;       
+    }  
+	
 	private String getPicName()
 	{
 		mPicName = new Date().getTime() + ".jpg";
@@ -460,50 +483,45 @@ public class WebActivity extends BaseActivity
 		public void onClick(View v)
 		{
 			String tag= v.getTag()+"";
+			imagesUrl.remove(tag);
 			if("frm1".equals(tag))
 			{
 				delete1.setVisibility(View.GONE);
 				img1.setImageBitmap(null);
 				img1.setOnClickListener(new Li());
-				imagesUrl.remove(0);
 			}else if("frm2".equals(tag))
 			{
 				delete2.setVisibility(View.GONE);
 				img2.setImageBitmap(null);
 				img2.setOnClickListener(new Li());
-				imagesUrl.remove(1);
 			}
 			else if("frm3".equals(tag))
 			{
 				delete3.setVisibility(View.GONE);
 				img3.setImageBitmap(null);
 				img3.setOnClickListener(new Li());
-				imagesUrl.remove(2);
 			}
 			else if("frm4".equals(tag))
 			{
 				delete4.setVisibility(View.GONE);
 				img4.setImageBitmap(null);
 				img4.setOnClickListener(new Li());
-				imagesUrl.remove(3);
 			}
 			else if("frm5".equals(tag))
 			{
 				delete5.setVisibility(View.GONE);
 				img5.setImageBitmap(null);
 				img5.setOnClickListener(new Li());
-				imagesUrl.remove(4);
 			}else if("frm6".equals(tag))
 			{
 				delete6.setVisibility(View.GONE);
 				img6.setImageBitmap(null);
 				img6.setOnClickListener(new Li());
-				imagesUrl.remove(5);
 			} 
 		}
 	}
 	
-	private void addImage(String imagePath)
+	private void addImage(String key,String imagePath)
 	{
 		try
 		{
@@ -512,7 +530,7 @@ public class WebActivity extends BaseActivity
 				return;
 			} else if (imagesUrl.size() < 7)
 			{
-				imagesUrl.add(imagePath);
+				imagesUrl.put(key,imagePath);
 			} else
 			{
 				SiteUtil.infoAlert(this, "照片个数已经达到上限，请删除之后新增");
@@ -540,6 +558,28 @@ public class WebActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		data.add("拍照");
 		data.add("从相册选择");
+		
+		// 地图初始化
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		baiduMap = mMapView.getMap();
+		// 开启定位图层
+		baiduMap.setMyLocationEnabled(true);
+		// 定位初始化
+		mLocClient = new LocationClient(this);
+		mLocClient.registerLocationListener(myListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(72000);
+		mLocClient.setLocOption(option);
+		//普通地图
+		baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+		//开启交通图线
+		baiduMap.setTrafficEnabled(true);
+		//设置比例尺
+		baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().zoom(16).build()));
+		
+		mLocClient.start();
 	}
 	
 	@OnClick(R.id.input_img)
@@ -552,14 +592,17 @@ public class WebActivity extends BaseActivity
 		String questionStr = "";
 		int imageSize = imagesUrl.size();
 		FormFile[] formFiles = new FormFile[imageSize];
-		for (int i = 0; i < imageSize; i++)
+		int i=0;
+		for (String key : imagesUrl.keySet())
 		{
-			File imageFile = new File(imagesUrl.get(i));
+			File imageFile = new File(imagesUrl.get(key));
 			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image", "application/octet-stream");
 			formFiles[i] = formFile;
+			i++;
 		}
 		
-		UploadThread uploadThread = new UploadThread(formFiles, mHandler, SiteUtil.getCity(), "0571-458qj-1", "t5555555555", SiteUtil.getStopName(), SiteUtil.getStopId(), SiteUtil.getLongitude(),SiteUtil.getLatitude());
+		String lineIds=getIntent().getStringExtra("lineIds");
+		UploadThread uploadThread = new UploadThread(formFiles, mHandler, SiteUtil.getCity(), lineIds, "555", SiteUtil.getStopName(), SiteUtil.getStopId(), SiteUtil.getLongitude(),SiteUtil.getLatitude());
 		new Thread(uploadThread).start();
 	}
 	
@@ -613,5 +656,38 @@ public class WebActivity extends BaseActivity
 		}
 	}
 
-	 
+	@OnClick(R.id.site)
+	public void site(View v)
+	{
+		finish();
+	}
+
+	@OnClick(R.id.cancel)
+	public void cancel(View v)
+	{
+		finish();
+	}
+	
+	@Override
+	protected void onPause() {
+		mMapView.onPause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		mMapView.onResume();
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// 退出时销毁定位
+		mLocClient.stop();
+		// 关闭定位图层
+		baiduMap.setMyLocationEnabled(false);
+		mMapView.onDestroy();
+		mMapView = null;
+		super.onDestroy();
+	} 
 }

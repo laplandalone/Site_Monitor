@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"   android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-  <include android:id="@+id/layout1" layout="@layout/common_title" />
-   <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    <ScrollView android:id="@id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <WebView  android:id="@+id/webview" android:layout_width="fill_parent" android:layout_height="350.0dip" />
-    </LinearLayout>
-  </ScrollView>
-   <include layout="@layout/common_ask_button" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/layout1"
+        layout="@layout/common_title" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nav_horizontal_line" />
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true" />
+
+    <include layout="@layout/common_ask_button" />
+
 </LinearLayout>

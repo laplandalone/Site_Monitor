@@ -118,6 +118,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 					String text = edit.getText().toString();
 					if (text != null && !text.trim().equalsIgnoreCase("")) 
 					{
+						if(cityId==null || "".equals(cityId) || "null".equals(cityId))
+						{
+							SiteUtil.infoAlert(SearchActivity.this,"定位失败,稍后再试...");
+							return;
+						} 
+						
 						RequestParams param = webInterface.getLineName(cityId,text,"0");
 						invokeWebServer(param, GET_LIST);
 					}else
@@ -205,6 +211,8 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void returnMsg(String json, int code)
 	{
+		try
+		{
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -220,6 +228,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		this.list.setOnItemClickListener(this);
 		if(this.searchLines.size()==0)
 		{
+			layout.setVisibility(View.VISIBLE);
+			list.setVisibility(View.GONE);
+		}
+	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
 		}

@@ -93,7 +93,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	public void toMap(View v)
 	{
 		Intent intent = new Intent(LineDetailActivity.this,WebActivity.class);
-		
+		intent.putExtra("lineIds", lineIds);
 		startActivity(intent);
 	}
 	
@@ -114,69 +114,67 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		title.setText("线路列表");
 		editUser.setText("撤销");
 		site.setText("选择线路");
+		initCar();
 	}
 	
 	public void initCar()
 	{
-        	int count=0;
-        	LinearLayout layout2 = null;
-        	layout.removeAllViews();
-        	if(cars!=null)
-        	{
-        	for(Car car:cars)
-        	{
-        		if(count==0)
-        		{
-        			LinearLayout.LayoutParams linearLayout1 = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-        			
-        			layout2=new LinearLayout(this);
-        			layout2.setLayoutParams(linearLayout1);
-            		layout2.setOrientation(LinearLayout.HORIZONTAL);
-        			layout.addView(layout2);
-        		}
-        		count++;
-        		if(count==3)
-        		{
-        			count=0;
-        		}
-        	 
-        		Button btn1=new Button(this);  
-                btn1.setText(car.getLineName());         
-                btn1.setTag(R.id.tag_one, car.getCarNo()); 
-                btn1.setTag(R.id.tag_two, car.getLineId());
-              
-                String stopFlag=car.getDeltStops();
-                btn1.setTag(R.id.tag_three, stopFlag);
-                btn1.setTag(R.id.tag_four, car.getLineName());
-                btn1.setBackgroundResource(R.drawable.bg);
-                
-               
-                LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(200, 150);
-        		linearLayout.setMargins(20,20,20, 20);//设置边距
-        		btn1.setLayoutParams(linearLayout);
-        		layout2.addView(btn1);
-        		
-                btn1.setOnClickListener(new OnClickListener() 
-                {
-					@Override
-					public void onClick(View arg0) 
-					{
-						// TODO Auto-generated method stub
-						Intent intent = new Intent(LineDetailActivity.this, CardActivity.class);
-						intent.putExtra("carName",arg0.getTag(R.id.tag_one)+"");
-						intent.putExtra("lineId",arg0.getTag(R.id.tag_two)+"");
-						intent.putExtra("stopFlag",arg0.getTag(R.id.tag_three)+"");
-						intent.putExtra("lineName",arg0.getTag(R.id.tag_four)+"");
-						startActivity(intent);
-					}
-				});
-                if(count==3)
-                {
-                	layout.addView(layout2);
-                }
-        	}
-        
-	}
+		String lines=getIntent().getStringExtra("lines");
+		String lineIdStr=getIntent().getStringExtra("lineIds");
+		
+		String[] lineNames=lines.split(",");
+		String[] lineIds=lineIdStr.split(",");
+		int count=0;
+		layout.removeAllViews();
+    	LinearLayout layout2 = null;
+		for(int i=0;i<lineNames.length;i++)
+		{
+			String name=lineNames[i];
+			String lineId=lineIds[i];
+    		if(count==0)
+    		{
+    			LinearLayout.LayoutParams linearLayout1 = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+    			
+    			layout2=new LinearLayout(this);
+    			layout2.setLayoutParams(linearLayout1);
+        		layout2.setOrientation(LinearLayout.HORIZONTAL);
+    			layout.addView(layout2);
+    		}
+    		count++;
+    		if(count==3)
+    		{
+    			count=0;
+    		}
+    	 
+    		Button btn1=new Button(this);  
+            btn1.setText(name);   
+            btn1.setTag(R.id.tag_one,name);
+            btn1.setTag(R.id.tag_two, lineId);
+            btn1.setBackgroundResource(R.drawable.bg);
+            LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(200, 150);
+    		linearLayout.setMargins(20,20,20, 20);//设置边距
+    		btn1.setLayoutParams(linearLayout);
+    		layout2.addView(btn1);
+    		
+            btn1.setOnClickListener(new OnClickListener() 
+            {
+				@Override
+				public void onClick(View arg0) 
+				{
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(LineDetailActivity.this, CardActivity.class);
+					intent.putExtra("lineName",arg0.getTag(R.id.tag_one)+"");
+					intent.putExtra("lineId",arg0.getTag(R.id.tag_two)+"");
+					String catStr=new Gson().toJson(cars);
+					intent.putExtra("car",catStr);
+					startActivity(intent);
+				}
+			});
+            if(count==3)
+            {
+            	layout.addView(layout2);
+            }
+    	}
 	}
 	Handler handler = new Handler() {  
 	    public void handleMessage(Message msg) {  
@@ -301,8 +299,6 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 		this.cars = gson.fromJson(cars, new TypeToken<List<Car>>()
 		{
 		}.getType());
-		System.out.println(json);
-		initCar();
 	}
 
 	@Override

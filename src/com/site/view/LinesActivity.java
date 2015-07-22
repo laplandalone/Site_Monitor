@@ -53,7 +53,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	private List<Line> lines;
 	private ListView list;
 	
-	List<Line> choose= new ArrayList<Line>();
+	List<Line> choose;
 	
 	private StringBuffer linesb = new StringBuffer();
 	private StringBuffer lineIds = new StringBuffer();
@@ -111,6 +111,7 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void initView()
 	{
+		choose= new ArrayList<Line>();
 		// TODO Auto-generated method stub
 		String cityId=getIntent().getStringExtra("typeName");
 		title.setText("选择线路");
@@ -198,21 +199,30 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void returnMsg(String json, int code)
 	{
-		JsonParser jsonParser = new JsonParser();
-		JsonElement jsonElement = jsonParser.parse(json);
-		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
-		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("lines");
-		Gson gson = new Gson();
-		this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
+		try
 		{
-		}.getType());
-		adapter = new LineAdapter(LinesActivity.this, lines);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.lines.size()==0)
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(json);
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			 
+			JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
+			JsonObject data =  jsonr.getAsJsonObject("data");
+			JsonArray nearby  =  data.getAsJsonArray("lines");
+			Gson gson = new Gson();
+			this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
+			{
+			}.getType());
+			adapter = new LineAdapter(LinesActivity.this, lines);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			if(this.lines.size()==0)
+			{
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}
+		}catch(Exception e)
 		{
+			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
 		}

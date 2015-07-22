@@ -5,12 +5,9 @@
    <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
      <ScrollView android:id="@+id/detail" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.1" android:layout_below="@+id/top_bar_include">
        <LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:orientation="vertical" >
-            <TextView   android:gravity="center" android:layout_marginTop="8.0dip" android:textSize="22.0dip" android:textColor="@color/TextColorBlue" android:id="@+id/lineName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title"  />
+            <TextView android:height="50.0dip"  android:gravity="center" android:layout_marginTop="8.0dip" android:textSize="22.0dip" android:textColor="@color/TextColorBlue" android:id="@+id/lineName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title"  />
             
-              <LinearLayout android:gravity="center_vertical" android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="35.0dip" >
-   				<TextView android:layout_marginLeft="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"    android:layout_width="wrap_content" android:layout_height="17.0dip" android:text=""   />
-                <TextView android:layout_marginRight="7.0dip" android:textSize="14.0sp" android:textColor="#ff979797"  android:gravity="right"  android:id="@+id/newsDate"   android:layout_width="fill_parent" android:layout_height="17.0dip"  />
-    		</LinearLayout>
+               
         
             <ImageView android:background="@drawable/nav_horizontal_line"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
             

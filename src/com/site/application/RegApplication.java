@@ -12,6 +12,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.site.tools.SiteUtil;
 
 public class RegApplication extends Application
@@ -29,11 +30,13 @@ public class RegApplication extends Application
 	@Override
 	public void onCreate() {
 		super.onCreate();
-//		startLocation();
-//		locationClient.start();
-		SiteUtil.writeCity("004");
-		SiteUtil.writeLongitude("120.154724");
-		SiteUtil.writeLatitude("30.275079");
+		SDKInitializer.initialize(this);
+		startLocation();
+		locationClient.start();
+//		SiteUtil.writeCity("004");
+//		SiteUtil.writeCityName("杭州");
+//		SiteUtil.writeLongitude("120.154724");
+//		SiteUtil.writeLatitude("30.275079");
 	}
 	
 	public void startLocation() {
@@ -62,9 +65,15 @@ public class RegApplication extends Application
 				sb.append("\nradius : ");
 				sb.append(location.getRadius());
 				sb.append(location.getAddrStr());
+				
 				SiteUtil.writeLongitude(location.getLongitude()+"");
 				SiteUtil.writeLatitude(location.getLatitude()+"");
-				SiteUtil.writeCityName(location.getCity()+"");
+				String city=location.getCity();
+				sb.append("\n城市:"+city);
+				if(city!=null)
+				{
+					SiteUtil.writeCityName(location.getCity()+"");
+				}
 				SiteUtil.writeAddress(location.getAddrStr());
 				if (location.getLocType() == BDLocation.TypeGpsLocation){
 					sb.append("\nspeed : ");

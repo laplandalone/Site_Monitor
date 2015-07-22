@@ -70,8 +70,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
-		initValue();
+		
 		initView();
+		initValue();
 	}
 
 	
@@ -96,40 +97,53 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	protected void initView()
 	{
 		// TODO Auto-generated method stub
-	
+		String cityName=SiteUtil.getCityName();
+		 
 		City city=(City) getIntent().getSerializableExtra("city");
 		title.setText("周边站点");
 		editUser.setText("站名");
-		if(SiteUtil.getCity()!=null && !"".equals(SiteUtil.getCity()) && !"null".equals(SiteUtil.getCity()) )
-		{
-			site.setText(SiteUtil.getCityName());
-		}
 		
 		if(city!=null)
 		{
 			site.setText(city.getCityName());
-			cityId=city.getCityId();
+		}else
+		{
+			if(cityName!=null && !"".equals(cityName) && !"null".equals(cityName) )
+			{
+				site.setText(SiteUtil.getCityName());
+			}else
+			{
+				SiteUtil.infoAlert(NearByActivity.this,"定位失败,稍后再试...");
+			}
 		}
 		
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() 
 			{
-				RequestParams param = webInterface.getNearBy(cityId,SiteUtil.getLongitude(),SiteUtil.getLatitude());
-				invokeWebServer(param, GET_LIST);
+				initValue();
 			}
 		}, 0);
 		
-		SiteUtil.writeCity("004");
-		RequestParams param = webInterface.getNearBy("004",SiteUtil.getLongitude(),SiteUtil.getLatitude());
-		invokeWebServer(param, GET_LIST);
+//		SiteUtil.writeCity("004");
+//		RequestParams param = webInterface.getNearBy("004",SiteUtil.getLongitude(),SiteUtil.getLatitude());
+//		invokeWebServer(param, GET_LIST);
 		
 	}
 
 	@Override
 	protected void initValue()
 	{
-		//initBase(1002);
+		String cityId=SiteUtil.getCity();
+		if(cityId==null || "".equals(cityId) || "null".equals(cityId))
+		{
+			initBase(1002);
+		}else
+		{
+			RequestParams param = webInterface.getNearBy(cityId,SiteUtil.getLongitude(),SiteUtil.getLatitude());
+			invokeWebServer(param, GET_LIST);
+		}
+		
 	}
 	
 	/**
@@ -217,6 +231,8 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	 */
 	private void returnMsg(String json, int code)
 	{
+		try
+		{
 		JsonParser jsonParser = new JsonParser();
 		JsonElement jsonElement = jsonParser.parse(json);
 		JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -238,10 +254,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			{
 				layout.setVisibility(View.VISIBLE);
 				list.setVisibility(View.GONE);
-			}else
-			{
+			} 
 				refreshableView.finishRefreshing();
-			}
+			 
 			break;
 		case GET_CITY:
 			JsonArray city  =  data.getAsJsonArray("cities");
@@ -249,19 +264,33 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			{
 			}.getType());
 			String cityName = SiteUtil.getCityName();
+			boolean b=true;
 			for(City c:cities)
 			{
 				if(cityName.indexOf(c.getCityName())>-1)
 				{
 					cityId=c.getCityId();
+					SiteUtil.writeCity(cityId);
+					site.setText(c.getCityName());
 					RequestParams param = webInterface.getNearBy(c.getCityId(),SiteUtil.getLongitude(),SiteUtil.getLatitude());
 					invokeWebServer(param, GET_LIST);
+					b=false;
 					break;
 				}
 			}
+			if(b)
+			{
+				refreshableView.finishRefreshing();	
+			}
 			break;
 		}
-		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			layout.setVisibility(View.VISIBLE);
+			list.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

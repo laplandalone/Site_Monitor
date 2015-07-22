@@ -1,16 +1,25 @@
  package com.site.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -21,13 +30,15 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
+import com.site.adapter.CarAdapter;
 import com.site.model.Cancel;
+import com.site.model.Car;
 import com.site.tools.Constant;
 import com.site.tools.DateUtils;
 import com.site.tools.SiteUtil;
-import com.site.tools.StringUtil;
 
-public class CardActivity extends BaseActivity
+
+public class CardActivity extends BaseActivity implements OnItemClickListener
 {
 	@ViewInject(R.id.title)
 	private TextView title;
@@ -35,8 +46,9 @@ public class CardActivity extends BaseActivity
 	@ViewInject(R.id.site)
 	private TextView site;
 	
-	@ViewInject(R.id.carName)
-	private TextView carName;
+	@ViewInject(R.id.editUser)
+	private TextView editUser;
+	 
 	
 	@ViewInject(R.id.card)
 	private EditText card;
@@ -48,13 +60,18 @@ public class CardActivity extends BaseActivity
 	private String stopId;
 	private String stopName;
 	private String lineName;
-	
+	String cardName;
+	private CarAdapter adapter;
+	private ListView list;
+	private List<Car> cars2;
+	private Car carT;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_sign_in);
+		this.list=(ListView) findViewById(R.id.carlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		
@@ -69,33 +86,29 @@ public class CardActivity extends BaseActivity
 		// TODO Auto-generated method stub
 		title.setText("提交车牌");
 		site.setText("线路列表");
+		editUser.setText("");
 	}
 
 	@Override
 	protected void initValue()
 	{
 		// TODO Auto-generated method stub
-		String cardName= getIntent().getStringExtra("carName");
-		String stopFlag = getIntent().getStringExtra("stopFlag");
-		this.carName.setText(cardName);
-		this.card.setText(cardName);
-		 int stop=0;
-         if(StringUtil.checkStringIsNum(stopFlag))
-         {
-         	stop=Integer.parseInt(stopFlag);
-         }
-         if(stop==0)//到站
-         {
-        	 this.carName.setBackgroundResource(R.drawable.red_bg);
-         }else
-         if(stop>=1 && stop<=3)//到站
-         {
-        	 this.carName.setBackgroundResource(R.drawable.bg);
-         }else
-         if(stop<0)//到站
-         {
-        	 this.carName.setBackgroundResource(R.drawable.arrived);
-         }
+		 String lineId= getIntent().getStringExtra("lineId");
+		 String carStr=getIntent().getStringExtra("car");
+		 
+		 List<Car> cars= new Gson().fromJson(carStr, new TypeToken<List<Car>>(){}.getType());   
+		  cars2 = new ArrayList<Car>();
+		 for(Car car:cars)
+		 {
+			 if(lineId.equals(car.getLineId()))
+			 {
+				 cars2.add(car);
+			 }
+		 }
+		 
+		  adapter = new CarAdapter(CardActivity.this, cars2);
+		  this.list.setAdapter(adapter);
+	      this.list.setOnItemClickListener(this);
 	}
 
 	@OnClick(R.id.site)
@@ -114,11 +127,16 @@ public class CardActivity extends BaseActivity
 		  stopId=SiteUtil.getStopId();
 		  stopName=SiteUtil.getStopName();
 		  lineName=getIntent().getStringExtra("lineName");
-		  if(carNo==null || "".equals(carNo))
+		  if(carT!=null)
+		  {
+			  carNo=carT.getCarNo();
+		  }
+		  else if(carNo==null || "".equals(carNo))
 		  {
 			  SiteUtil.infoAlert(CardActivity.this, "站牌为空");
 			  return;
 		  }
+		  
 		RequestParams param = webInterface.record("0", cityId, oriLineId, realLineId, carNo, stopId, stopName);
 		invokeWebServer(param, GET_LIST); 
 	}
@@ -220,5 +238,29 @@ public class CardActivity extends BaseActivity
 		}).setTitle("提示").setMessage("处理成功").create();
 			alertDialog.setCanceledOnTouchOutside(false);
 			alertDialog.show();
+	}
+
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) 
+	{
+		
+		 	carT = cars2.get(position);
+		for(int i=0;i<cars2.size();i++)
+		{
+			ImageView v = (ImageView) view.findViewById(R.id.choose);
+			if(position==i)
+			{
+			
+			    v.setVisibility(View.VISIBLE);
+			}else
+			{
+				v.setVisibility(View.GONE);
+			}
+			
+		}
+		
+		
 	}
 }
