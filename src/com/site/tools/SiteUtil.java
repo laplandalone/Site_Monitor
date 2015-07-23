@@ -581,22 +581,7 @@ public class SiteUtil {
 			}
 		}
 		
-		public static Bitmap compressImage(Bitmap image,String fileName) {   
-			  
-	        ByteArrayOutputStream baos = new ByteArrayOutputStream();   
-	        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中   
-	        int options = 100;   
-	        while ( baos.toByteArray().length / 1024>700) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩          
-	            baos.reset();//重置baos即清空baos   
-	            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中   
-	            options -= 10;//每次都减少10   
-	        }   
-	        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中   
-	        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片   
-	        saveFileBitmap(fileName, bitmap, 100);
-	        return bitmap;   
-	    }
-
+	 
 		 /**
 			 * 纬度
 			 * @return
@@ -696,5 +681,98 @@ public class SiteUtil {
 				Gson gson = new Gson();  
 				List<Cancel> cancels= gson.fromJson(cancelStr, new TypeToken<List<Cancel>>(){}.getType());   
 				return cancels;
+			}
+			
+			/**
+			 * 压缩图片质量,返回图片名字
+			 * 
+			 * @param activity
+			 * @param uri
+			 * @return author 
+			 */
+			public static String compressBitmap(Activity activity,String path) {
+				File file = new File(path);
+				if (!file.exists()) {
+					return null;
+				}
+				if (file.length() / 1024 <= 200) {
+					return file.getName();
+				}
+				Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+				if (bitmap == null) { // 若获取图片失败就取消压缩
+					return file.getName();
+				}
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+				//压缩质量因数
+				//越低代表图片质量越差，但图片质量会减小
+				//为100时不减少图片质量
+				//经测试，从60开始比较不错
+				int options = 60;
+				//这里的200只是一个参考数
+				//压缩后的图片质量在此值左右浮动，浮动值很小
+				while (baos.toByteArray().length / 1024 > 200) {
+					baos.reset();
+					options -= 1;
+					if (options == 1) {
+						break;
+					}
+					bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+				}
+				//注意：
+				//这里千万别用BitmapFactory.decodeStream(is)去生成Bitmap后再去保存
+				//图片稍微大一点就会OOM
+				try {
+					//压缩后的图片覆盖掉之前的图片
+					FileOutputStream fos = new FileOutputStream(path);
+					fos.write(baos.toByteArray());
+					fos.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return file.getName();
+			}
+			
+			/**
+			 * 压缩图片质量,返回图片名字
+			 * 
+			 * @param activity
+			 * @param uri
+			 * @return author 
+			 */
+			public static void compressBitmap(Bitmap bitmap,String path) {
+		 
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+				//压缩质量因数
+				//越低代表图片质量越差，但图片质量会减小
+				//为100时不减少图片质量
+				//经测试，从60开始比较不错
+				int options = 60;
+				//这里的200只是一个参考数
+				//压缩后的图片质量在此值左右浮动，浮动值很小
+				while (baos.toByteArray().length / 1024 > 200) {
+					baos.reset();
+					options -= 1;
+					if (options == 1) {
+						break;
+					}
+					bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+				}
+				//注意：
+				//这里千万别用BitmapFactory.decodeStream(is)去生成Bitmap后再去保存
+				//图片稍微大一点就会OOM
+				try {
+					//压缩后的图片覆盖掉之前的图片
+					FileOutputStream fos = new FileOutputStream(path);
+					fos.write(baos.toByteArray());
+					fos.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 }

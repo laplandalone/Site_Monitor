@@ -1,6 +1,11 @@
 package com.site.view;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +21,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,7 +29,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
@@ -32,6 +38,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -61,18 +68,20 @@ import com.site.R;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 import com.site.upload.FormFile;
+import com.site.upload.SocketHttpRequester;
 import com.site.upload.UploadThread;
 
 public class WebActivity extends BaseActivity
 {
+	private ProgressBar mPgBar;
+	private TextView mTvProgress;
+	
 	// 定位相关
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
-	private LocationMode mCurrentMode;
 	BitmapDescriptor mCurrentMarker;
-	 
 	MapView mMapView;
-	private BaiduMap baiduMap;;
+	private BaiduMap baiduMap;
 
 	// UI相关
 	OnCheckedChangeListener radioButtonListener;
@@ -91,10 +100,13 @@ public class WebActivity extends BaseActivity
 	private TextView site;
 	
 	ArrayList<String> data = new ArrayList<String>();
-
 	private Map<String,String> imagesUrl = new HashMap<String,String>();
 	private String mPicName = "";
 	private BitmapUtils bitmapUtils;
+	
+	private FormFile[] formFiles;
+	private MyTask mTask;
+	private View upView;
 	
 	@ViewInject(R.id.layout1)
 	private LinearLayout imagesLayout;
@@ -168,6 +180,11 @@ public class WebActivity extends BaseActivity
 		addActivity(this);
 		initView();
 		initValue();
+		
+		 upView = getLayoutInflater().inflate(R.layout.filebrowser_uploading, null);
+		mPgBar = (ProgressBar)upView.findViewById(R.id.pb_filebrowser_uploading);
+		mTvProgress = (TextView)upView.findViewById(R.id.tv_filebrowser_uploading);
+	
 	}
 	
 	/**
@@ -194,7 +211,6 @@ public class WebActivity extends BaseActivity
 				baiduMap.animateMapStatus(u);
 			}
 		}
-
 		public void onReceivePoi(BDLocation poiLocation) {
 		}
 	}
@@ -235,6 +251,12 @@ public class WebActivity extends BaseActivity
 		 delete6.setTag("frm6");
 		 img6.setTag("frm6");
 			
+		 	File imagepath = new File(Constant.IMG_PATH);
+			
+			if (!imagepath.exists()) {
+				Log.i("zou", "imagepath.mkdir()");
+				imagepath.mkdir();
+			}
 	}
 
 	class Li implements OnClickListener
@@ -257,7 +279,9 @@ public class WebActivity extends BaseActivity
 						try
 						{
 							Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-							intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Constant.IMG_PATH, mPicName)));
+							intent.putExtra(MediaStore.EXTRA_OUTPUT,
+									Uri.fromFile(new File(Constant.IMG_PATH, mPicName)));
+							
 							startActivityForResult(intent, 1);
 						} catch (Exception e)
 						{
@@ -295,7 +319,6 @@ public class WebActivity extends BaseActivity
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode)
 		{
-		 
 		case 1:
 			File imageFile = new File(Constant.IMG_PATH, mPicName);
 			File file = new File(imageFile.getAbsolutePath());
@@ -369,22 +392,26 @@ public class WebActivity extends BaseActivity
 				{
 					try
 					{
-						String[] proj = { MediaStore.Images.Media.DATA };
-						Cursor cursor = managedQuery(mImageCaptureUri, proj, null, null, null);
-						// 按我个人理解 这个是获得用户选择的图片的索引值
-						int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-						// 将光标移至开头 ，这个很重要，不小心很容易引起越界
-						cursor.moveToFirst();
-						// 最后根据索引值获取图片路径
-						String path = cursor.getString(column_index);
-						// 这个方法是根据Uri获取Bitmap图片的静态方法
-						if(path!=null && !"".equals(path))
+							String path= getPath(this, mImageCaptureUri);
+						
+							if(path==null || "".equals(path))
+							{
+								String[] proj = { MediaStore.Images.Media.DATA };
+								Cursor cursor = managedQuery(mImageCaptureUri, proj, null, null, null);
+								// 按我个人理解 这个是获得用户选择的图片的索引值
+								int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+								// 将光标移至开头 ，这个很重要，不小心很容易引起越界
+								cursor.moveToFirst();
+								// 最后根据索引值获取图片路径
+								 path = cursor.getString(column_index);
+								// 这个方法是根据Uri获取Bitmap图片的静态方法
+								
+								image=SiteUtil.compressBitmapT(path,mPicName);
+							}
+						
+						else
 						{
-							image=SiteUtil.compressBitmapT(path,mPicName);
-						}else
-						{
-							path=getPath(this, mImageCaptureUri);
-							image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
+							image = SiteUtil.compressBitmapT(path,mPicName);
 //							SiteUtil.compressBitmapT(image,mPicName);
 //							selectImage(this, intent);
 						}
@@ -707,13 +734,8 @@ public class WebActivity extends BaseActivity
 	@OnClick(R.id.input_img)
 	public void submitQuestion(View v)
 	{
-
-		dialog.setMessage("正在上传,请稍后...");
-		dialog.show();
-		Gson gson = new Gson();
-		String questionStr = "";
 		int imageSize = imagesUrl.size();
-		FormFile[] formFiles = new FormFile[imageSize];
+		formFiles = new FormFile[imageSize];
 		int i=0;
 		for (String key : imagesUrl.keySet())
 		{
@@ -722,45 +744,14 @@ public class WebActivity extends BaseActivity
 			formFiles[i] = formFile;
 			i++;
 		}
-		
-		String lineIds=getIntent().getStringExtra("lineIds");
-		UploadThread uploadThread = new UploadThread(formFiles, mHandler, SiteUtil.getCity(), lineIds, "555", SiteUtil.getStopName(), SiteUtil.getStopId(), SiteUtil.getLongitude(),SiteUtil.getLatitude());
-		new Thread(uploadThread).start();
+		new AlertDialog.Builder(WebActivity.this).setTitle("上传进度").setView(upView).create().show(); 
+		mTask = new MyTask();
+		mTask.execute();
+//		UploadThread uploadThread = new UploadThread(formFiles, mHandler, SiteUtil.getCity(), lineIds, "555", SiteUtil.getStopName(), SiteUtil.getStopId(), SiteUtil.getLongitude(),SiteUtil.getLatitude());
+//		new Thread(uploadThread).start();
 	}
 	
-	private Handler mHandler = new Handler()
-	{
-
-		@Override
-		public void handleMessage(Message msg)
-		{
-			super.handleMessage(msg);
-			try
-			{
-				if (dialog != null)
-				{
-					dialog.cancel();
-				}
-				if (msg.obj == null)
-				{
-					SiteUtil.infoAlert(WebActivity.this,"提交失败，请核对信息之后重新提交");
-					return;
-				}
-				switch (msg.arg1)
-				{
-				case 1001:
-					submitResult(msg.obj.toString());
-					break;
-				case 1002:
-					// parseData(msg.obj.toString());
-					break;
-				}
-			} catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	};
+ 
 	
 	public void submitResult(String json)
 	{
@@ -812,4 +803,173 @@ public class WebActivity extends BaseActivity
 		mMapView = null;
 		super.onDestroy();
 	} 
+	
+	private class MyTask extends AsyncTask<String, Integer, String>
+	{
+
+		@Override
+		protected void onPostExecute(String result)
+		{
+			submitResult(result);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			mTvProgress.setText("loading...");
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			mPgBar.setProgress(values[0]);
+			System.out.println(values[0]);
+			mTvProgress.setText("loading..." + values[0] + "%");
+		}
+
+		@Override
+		protected String doInBackground(String... param)
+		{
+			 String lineIds=getIntent().getStringExtra("lineIds");
+			 Map<String, String> params = new HashMap<String, String>();
+	         params.put("cityId", SiteUtil.getCity());
+	         params.put("linelist", lineIds);
+	         params.put("stopName",  SiteUtil.getStopName());
+	         params.put("stopId", SiteUtil.getStopId());
+	         params.put("jingdu", SiteUtil.getLongitude());
+	         params.put("weidu",  SiteUtil.getLatitude());
+	         
+			try
+			{
+				return	post(Constant.UPLOAD_URL, params, formFiles);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		 public String post(String path, Map<String, String> params, FormFile[] files) throws Exception
+		 {     
+		        final String BOUNDARY = "---------------------------7da2137580612"; //数据分隔线
+		        final String endline = "--" + BOUNDARY + "--\r\n";//数据结束标志
+		        SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->post");
+		        int fileDataLength = 0;
+		        for(FormFile uploadFile : files){//得到文件类型数据的总长度
+		            StringBuilder fileExplain = new StringBuilder();
+		             fileExplain.append("--");
+		             fileExplain.append(BOUNDARY);
+		             fileExplain.append("\r\n");
+		             fileExplain.append("Content-Disposition: form-data;name=\""+ uploadFile.getParameterName()+"\";filename=\""+ uploadFile.getFilname() + "\"\r\n");
+		             fileExplain.append("Content-Type: "+ uploadFile.getContentType()+"\r\n\r\n");
+		             fileExplain.append("\r\n");
+		             fileDataLength += fileExplain.length();
+		            if(uploadFile.getInStream()!=null)
+		            {
+		            	long len= uploadFile.getFile().length();
+		            	SiteUtil.LOG_D(SocketHttpRequester.class, "File size:"+len);
+		            	if (uploadFile.getFile() != null)
+		            	{
+		            		fileDataLength +=len;
+		            	} else
+		            	{
+		            		fileDataLength += len;
+		            	}
+		             }else
+		             {
+		                 fileDataLength += uploadFile.getData().length;
+		             }
+		        }
+		        StringBuilder textEntity = new StringBuilder();
+		        for (Map.Entry<String, String> entry : params.entrySet()) {//构造文本类型参数的实体数据
+		            textEntity.append("--");
+		            textEntity.append(BOUNDARY);
+		            textEntity.append("\r\n");
+		            textEntity.append("Content-Disposition: form-data; name=\""+ entry.getKey() + "\"\r\n\r\n");
+		            textEntity.append(entry.getValue());
+		            textEntity.append("\r\n");
+		        }
+		        //计算传输给服务器的实体数据总长度
+		        int dataLength = textEntity.toString() .getBytes().length + fileDataLength +  endline.getBytes().length;
+		        
+		        URL url = new URL(path);
+		        int port = url.getPort()==-1 ? 80 : url.getPort();
+		        Socket socket = new Socket(InetAddress.getByName(url.getHost()), port);   
+		        Log.i("hbgz", "socket connected is " + socket.isConnected());
+		        OutputStream outStream = socket.getOutputStream();
+		        //下面完成HTTP请求头的发送
+		        String requestmethod = "POST "+ url.getPath()+" HTTP/1.1\r\n";
+		        outStream.write(requestmethod.getBytes());
+		        String accept = "Accept: image/gif, image/jpeg, image/pjpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*\r\n";
+		        outStream.write(accept.getBytes());
+		        String language = "Accept-Language: zh-CN\r\n";
+		        outStream.write(language.getBytes());
+		        String contenttype = "Content-Type: multipart/form-data; boundary="+ BOUNDARY+ "\r\n";
+		        outStream.write(contenttype.getBytes());
+		        String contentlength = "Content-Length: "+ dataLength + "\r\n";
+		        outStream.write(contentlength.getBytes());
+		        String alive = "Connection: Keep-Alive\r\n";
+		        outStream.write(alive.getBytes());
+		        String host = "Host: "+ url.getHost() +":"+ port +"\r\n";
+		        outStream.write(host.getBytes());
+		        //写完HTTP请求头后根据HTTP协议再写一个回车换行
+		        outStream.write("\r\n".getBytes());
+		        //把所有文本类型的实体数据发送出来
+		        outStream.write(textEntity.toString().getBytes());           
+		        //把所有文件类型的实体数据发送出来
+		       
+		        for(FormFile uploadFile : files){
+		            StringBuilder fileEntity = new StringBuilder();
+		             fileEntity.append("--");
+		             fileEntity.append(BOUNDARY);
+		             fileEntity.append("\r\n");
+		             fileEntity.append("Content-Disposition: form-data;name=\""+ uploadFile.getParameterName()+"\";filename=\""+ uploadFile.getFilname() + "\"\r\n");
+		             fileEntity.append("Content-Type: "+ uploadFile.getContentType()+"\r\n\r\n");
+		             outStream.write(fileEntity.toString().getBytes());
+		             if(uploadFile.getInStream()!=null)
+		             {
+		                 byte[] buffer = new byte[1024];
+		                 int len = 0;
+		                 int length = 0;
+		                 while((len = uploadFile.getInStream().read(buffer, 0, 1024))!=-1)
+		                 {
+		                    outStream.write(buffer, 0, len);
+		                    length += len;
+		                 	publishProgress((int) ((length / (float) dataLength) * 100));
+		                 }
+		                 uploadFile.getInStream().close();
+		             }else
+		             {
+		                 outStream.write(uploadFile.getData(), 0, uploadFile.getData().length);
+		             }
+		             outStream.write("\r\n".getBytes());
+		        }
+		        //下面发送数据结束标志，表示数据已经结束
+		        outStream.write(endline.getBytes());
+		        outStream.flush();
+		        InputStreamReader reader = new InputStreamReader(socket.getInputStream());
+		        int i=0;
+		        char[] buffer = new char[1024];
+		        while((i=reader.read(buffer)) != -1) 
+		        {
+			          boolean requestCodeSuccess = false;
+			          boolean uploadSuccess = false;
+			          String str =new String(buffer);
+			           
+			          int start=str.trim().indexOf("{");
+			          int end=str.trim().indexOf("}");
+			          if(start>-1 && end >0)
+			          {
+			        	 return str.substring(start, end+1);
+			          }
+			        	  
+		        }
+		        outStream.flush();
+		        outStream.close();
+		        reader.close();
+		        socket.close();
+		        return null;
+		     
+	}
+	}
+	
+	
 }

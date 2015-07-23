@@ -39,6 +39,7 @@ import com.site.model.Car;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 import com.site.tools.StringUtil;
+import com.site.ui.MainActivity;
 
 
 @SuppressLint("ResourceAsColor")
@@ -92,7 +93,7 @@ public class LineDetailActivity extends BaseActivity implements OnItemClickListe
 	@OnClick(R.id.lineName)
 	public void toMap(View v)
 	{
-		Intent intent = new Intent(LineDetailActivity.this,WebActivity.class);
+		Intent intent = new Intent(LineDetailActivity.this,MainActivity.class);
 		intent.putExtra("lineIds", lineIds);
 		startActivity(intent);
 	}

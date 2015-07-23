@@ -33,10 +33,9 @@ public class RegApplication extends Application
 		SDKInitializer.initialize(this);
 		startLocation();
 		locationClient.start();
-//		SiteUtil.writeCity("004");
-//		SiteUtil.writeCityName("杭州");
-//		SiteUtil.writeLongitude("120.154724");
-//		SiteUtil.writeLatitude("30.275079");
+		SiteUtil.writeCity("000");
+		SiteUtil.writeCityName("武汉");
+ 
 	}
 	
 	public void startLocation() {
@@ -70,11 +69,11 @@ public class RegApplication extends Application
 				SiteUtil.writeLatitude(location.getLatitude()+"");
 				String city=location.getCity();
 				sb.append("\n城市:"+city);
-				if(city!=null)
-				{
-					SiteUtil.writeCityName(location.getCity()+"");
-				}
-				SiteUtil.writeAddress(location.getAddrStr());
+//				if(city!=null)
+//				{
+//					SiteUtil.writeCityName(location.getCity()+"");
+//				}
+//				SiteUtil.writeAddress(location.getAddrStr());
 				if (location.getLocType() == BDLocation.TypeGpsLocation){
 					sb.append("\nspeed : ");
 					sb.append(location.getSpeed());
@@ -82,8 +81,6 @@ public class RegApplication extends Application
 					sb.append(location.getSatelliteNumber());
 					sb.append("\ndirection : ");
 					sb.append("\naddr : ");
-					sb.append(location.getAddrStr());
-					sb.append(location.getDirection());
 				} else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
 					sb.append("\naddr : ");
 					sb.append(location.getAddrStr());

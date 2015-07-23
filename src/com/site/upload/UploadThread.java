@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.site.tools.Constant;
-import com.site.tools.SiteUtil;
 
 public class UploadThread implements Runnable{
 
@@ -40,7 +39,7 @@ public class UploadThread implements Runnable{
 	public void run() {
 
 			String result = uploadFile(formFile);
-			Message msg= mHandler.obtainMessage();
+			Message msg = mHandler.obtainMessage();
 			if (msg != null) {
 				msg.obj = result;
 				msg.arg1 = 1001;
@@ -56,8 +55,6 @@ public class UploadThread implements Runnable{
     public String uploadFile(FormFile[] formFiles) {
         try {
             
-
-        	 
             //请求普通信息
             Map<String, String> params = new HashMap<String, String>();
             params.put("cityId", cityId);

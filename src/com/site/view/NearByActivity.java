@@ -88,7 +88,6 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	public void toSearch(View v)
 	{
 		Intent intent = new Intent(NearByActivity.this, SearchActivity.class);
-		Bundle bundle = new Bundle();
 		intent.putExtra("cityId", cityId);
 		startActivity(intent);
 	}
@@ -98,20 +97,13 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	{
 		// TODO Auto-generated method stub
 		String cityName=SiteUtil.getCityName();
-		 
-		City city=(City) getIntent().getSerializableExtra("city");
+		cityId=SiteUtil.getCity(); 
 		title.setText("周边站点");
 		editUser.setText("站名");
 		
-		if(city!=null)
+		if(cityName!=null && !"".equals(cityName) && !"null".equals(cityName) )
 		{
-			site.setText(city.getCityName());
-		}else
-		{
-			if(cityName!=null && !"".equals(cityName) && !"null".equals(cityName) )
-			{
-				site.setText(SiteUtil.getCityName());
-			}
+			site.setText(SiteUtil.getCityName());
 		}
 		
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
@@ -132,14 +124,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 	protected void initValue()
 	{
 		String cityId=SiteUtil.getCity();
-		if(cityId==null || "".equals(cityId) || "null".equals(cityId))
-		{
-			initBase(1002);
-		}else
-		{
+		
 			RequestParams param = webInterface.getNearBy(cityId,SiteUtil.getLongitude(),SiteUtil.getLatitude());
 			invokeWebServer(param, GET_LIST);
-		}
 		
 	}
 	

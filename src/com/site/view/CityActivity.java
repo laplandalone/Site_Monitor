@@ -88,8 +88,6 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String type=getIntent().getStringExtra("type");
-		String typeId=getIntent().getStringExtra("typeId");
 		invokeWebServer(null, GET_LIST);
 
 	}
@@ -198,10 +196,8 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(CityActivity.this, NearByActivity.class);
 		City city =cities.get(position); 
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("city", city);
 		SiteUtil.writeCity(city.getCityId());
-		intent.putExtras(bundle);
+		SiteUtil.writeCityName(city.getCityName());
 		startActivity(intent);
 	}
 }

@@ -22,7 +22,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawablePadding">8.0dip</item>
     </style>
-   
+    
+    <style name="PopupAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/activity_translate_in</item>
+        <item name="android:windowExitAnimation">@anim/activity_translate_out</item>
+    </style>
+	
+	<style name="PopupAnimation1" parent="android:Animation" mce_bogus="1">          
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>     
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>     
+    </style> 
   
     <style name="AlipayBGCanvas320x480">
         <item name="android:paddingBottom">2.0dip</item>
