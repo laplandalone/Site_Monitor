@@ -36,9 +36,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	private LocationClient locationClient;
 	public HttpUtils mHttpUtils = new HttpUtils();
 	public static final int GET_LIST = 1001;
-	public static final int GET_CITY = 1002; 
-	
-	
+	public static final int GET_CITY = 1002;
+
 	protected ProgressDialog dialog;
 	protected IWebServiceInterface webInterface = new WebServiceInterfaceImpl();
 
@@ -49,7 +48,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		dialog = new ProgressDialog(this);
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.setCancelable(false);
-//		startLocation();
+		// startLocation();
 	}
 
 	public void addActivity(Activity activity) {
@@ -60,6 +59,11 @@ public abstract class BaseActivity extends FragmentActivity {
 		RegApplication.getInstance().exit();
 	}
 
+	public void finish(Class name) 
+	{
+		RegApplication.getInstance().finish(name);
+	}
+	
 	/**
 	 * 初始化对象
 	 */
@@ -134,7 +138,7 @@ public abstract class BaseActivity extends FragmentActivity {
 			}
 		}
 	};
-	
+
 	protected ProgressDialog getProgressDialog(Context context) {
 		try {
 			if (dialog == null) {
@@ -154,38 +158,39 @@ public abstract class BaseActivity extends FragmentActivity {
 		return dialog;
 
 	}
-	
+
 	/**
 	 * 定位请求开始
 	 * 
 	 */
 	public void startLocation() {
 		LocationClientOption locationOption = new LocationClientOption();
-		locationOption.setIsNeedAddress(true);//获取文字地理信息
+		locationOption.setIsNeedAddress(true);// 获取文字地理信息
 		locationOption.setScanSpan(7200000);
-		locationClient = new LocationClient(getApplicationContext(),locationOption);
+		locationClient = new LocationClient(getApplicationContext(),
+				locationOption);
 		locationClient.registerLocationListener(new BDLocationListener() {
-			
+
 			@Override
 			public void onReceiveLocation(BDLocation arg0) {
 				if (arg0 == null) {
 					return;
 				}
-				//先把转换成百度的经纬度存到本地，防止获取地址失败，后面需要用到经纬度时但为空的情况
-				SiteUtil.writeLongitude(arg0.getLongitude()+"");
-				SiteUtil.writeLatitude(arg0.getLatitude()+"");
+				// 先把转换成百度的经纬度存到本地，防止获取地址失败，后面需要用到经纬度时但为空的情况
+				SiteUtil.writeLongitude(arg0.getLongitude() + "");
+				SiteUtil.writeLatitude(arg0.getLatitude() + "");
 				String district = arg0.getDistrict();
 				String city = arg0.getCity();
 				String addressString = arg0.getAddrStr();
-//				QueueUtil.writeLocationCityInfo(city);
-//				QueueUtil.writeLocationDirectInfo(district);
-//				QueueUtil.writeLocationDetailsInfo(addressString);
-//				QueueUtil.locationSuccess = true;
-//				sendLocationBroadCast();
-			} 
+				// QueueUtil.writeLocationCityInfo(city);
+				// QueueUtil.writeLocationDirectInfo(district);
+				// QueueUtil.writeLocationDetailsInfo(addressString);
+				// QueueUtil.locationSuccess = true;
+				// sendLocationBroadCast();
+			}
 		});
 		locationClient.start();
-		
+
 	};
 
 }

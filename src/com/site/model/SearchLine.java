@@ -1,16 +1,15 @@
 package com.site.model;
 
-
 public class SearchLine implements java.io.Serializable {
 
 	private String stopName;
-	
+
 	private String lineNum;
-	
+
 	private String stopId;
 
 	private String linelist;
-	
+
 	public String getLinelist() {
 		return linelist;
 	}
@@ -42,5 +41,5 @@ public class SearchLine implements java.io.Serializable {
 	public void setStopId(String stopId) {
 		this.stopId = stopId;
 	}
-	 
+
 }

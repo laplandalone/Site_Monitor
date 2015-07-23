@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
  * 
  * @author king
  * @QQ:595163260
- * @version 2014年10月18日  下午11:46:29
+ * @version 2014年10月18日 下午11:46:29
  */
 public class Res {
 

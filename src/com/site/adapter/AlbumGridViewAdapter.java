@@ -26,13 +26,14 @@ import com.site.tools.Res;
  * 这个是显示一个文件夹里面的所有图片时用的适配器
  * 
  */
-public class AlbumGridViewAdapter extends BaseAdapter{
+public class AlbumGridViewAdapter extends BaseAdapter {
 	final String TAG = getClass().getSimpleName();
 	private Context mContext;
 	private ArrayList<ImageItem> dataList;
 	private ArrayList<ImageItem> selectedDataList;
 	private DisplayMetrics dm;
 	BitmapCache cache;
+
 	public AlbumGridViewAdapter(Context c, ArrayList<ImageItem> dataList,
 			ArrayList<ImageItem> selectedDataList) {
 		mContext = c;
@@ -72,7 +73,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 			}
 		}
 	};
-	
+
 	/**
 	 * 存放列表项控件句柄
 	 */
@@ -88,16 +89,18 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(
-					Res.getLayoutID("plugin_camera_select_imageview"), parent, false);
-			viewHolder.imageView = (ImageView) convertView
-					.findViewById(Res.getWidgetID("image_view"));
+					Res.getLayoutID("plugin_camera_select_imageview"), parent,
+					false);
+			viewHolder.imageView = (ImageView) convertView.findViewById(Res
+					.getWidgetID("image_view"));
 			viewHolder.toggleButton = (ToggleButton) convertView
 					.findViewById(Res.getWidgetID("toggle_button"));
-			viewHolder.choosetoggle = (Button) convertView
-					.findViewById(Res.getWidgetID("choosedbt"));
-//			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,dipToPx(65)); 
-//			lp.setMargins(50, 0, 50,0); 
-//			viewHolder.imageView.setLayoutParams(lp);
+			viewHolder.choosetoggle = (Button) convertView.findViewById(Res
+					.getWidgetID("choosedbt"));
+			// RelativeLayout.LayoutParams lp = new
+			// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,dipToPx(65));
+			// lp.setMargins(50, 0, 50,0);
+			// viewHolder.imageView.setLayoutParams(lp);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -108,18 +111,21 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 		else
 			path = "camera_default";
 		if (path.contains("camera_default")) {
-			viewHolder.imageView.setImageResource(Res.getDrawableID("plugin_camera_no_pictures"));
+			viewHolder.imageView.setImageResource(Res
+					.getDrawableID("plugin_camera_no_pictures"));
 		} else {
-//			ImageManager2.from(mContext).displayImage(viewHolder.imageView,
-//					path, Res.getDrawableID("plugin_camera_camera_default"), 100, 100);
+			// ImageManager2.from(mContext).displayImage(viewHolder.imageView,
+			// path, Res.getDrawableID("plugin_camera_camera_default"), 100,
+			// 100);
 			final ImageItem item = dataList.get(position);
 			viewHolder.imageView.setTag(item.imagePath);
-			cache.displayBmp(viewHolder.imageView, item.thumbnailPath, item.imagePath,
-					callback);
+			cache.displayBmp(viewHolder.imageView, item.thumbnailPath,
+					item.imagePath, callback);
 		}
 		viewHolder.toggleButton.setTag(position);
 		viewHolder.choosetoggle.setTag(position);
-		viewHolder.toggleButton.setOnClickListener(new ToggleClickListener(viewHolder.choosetoggle));
+		viewHolder.toggleButton.setOnClickListener(new ToggleClickListener(
+				viewHolder.choosetoggle));
 		if (selectedDataList.contains(dataList.get(position))) {
 			viewHolder.toggleButton.setChecked(true);
 			viewHolder.choosetoggle.setVisibility(View.VISIBLE);
@@ -129,16 +135,18 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 		}
 		return convertView;
 	}
-	
+
 	public int dipToPx(int dip) {
 		return (int) (dip * dm.density + 0.5f);
 	}
-	private class ToggleClickListener implements OnClickListener{
+
+	private class ToggleClickListener implements OnClickListener {
 		Button chooseBt;
-		public ToggleClickListener(Button choosebt){
+
+		public ToggleClickListener(Button choosebt) {
 			this.chooseBt = choosebt;
 		}
-		
+
 		@Override
 		public void onClick(View view) {
 			if (view instanceof ToggleButton) {
@@ -146,12 +154,12 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 				int position = (Integer) toggleButton.getTag();
 				if (dataList != null && mOnItemClickListener != null
 						&& position < dataList.size()) {
-					mOnItemClickListener.onItemClick(toggleButton, position, toggleButton.isChecked(),chooseBt);
+					mOnItemClickListener.onItemClick(toggleButton, position,
+							toggleButton.isChecked(), chooseBt);
 				}
 			}
 		}
 	}
-	
 
 	private OnItemClickListener mOnItemClickListener;
 
@@ -161,7 +169,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 
 	public interface OnItemClickListener {
 		public void onItemClick(ToggleButton view, int position,
-				boolean isChecked,Button chooseBt);
+				boolean isChecked, Button chooseBt);
 	}
 
 }

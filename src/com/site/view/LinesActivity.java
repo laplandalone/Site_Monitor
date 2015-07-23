@@ -34,38 +34,34 @@ import com.site.model.Line;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
-
-public class LinesActivity extends BaseActivity implements OnItemClickListener
-{
+public class LinesActivity extends BaseActivity implements OnItemClickListener {
 	@ViewInject(R.id.title)
 	private TextView title;
-	
+
 	@ViewInject(R.id.editUser)
 	private TextView editUser;
-	
+
 	@ViewInject(R.id.site)
 	private TextView site;
-	
-	
+
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
-	
+
 	private List<Line> lines;
 	private ListView list;
-	
+
 	List<Line> choose;
-	
+
 	private StringBuffer linesb = new StringBuffer();
 	private StringBuffer lineIds = new StringBuffer();
 	LineAdapter adapter;
-	String adpterFlag="normal";
-	
+	String adpterFlag = "normal";
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.line_list);
-		this.list=(ListView) findViewById(R.id.linelist);
+		this.list = (ListView) findViewById(R.id.linelist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
@@ -73,62 +69,56 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	@OnClick(R.id.site)
-	public void site(View v)
-	{
+	public void site(View v) {
 		finish();
-	} 
+	}
 
 	@OnClick(R.id.editUser)
-	public void toSubmit(View v)
-	{
+	public void toSubmit(View v) {
 		Intent intent = new Intent(LinesActivity.this, LineDetailActivity.class);
-		String stopName=getIntent().getStringExtra("stopName"); 
-		String stopId=getIntent().getStringExtra("stopId");
-		String cityId=getIntent().getStringExtra("cityId");
-		linesb=new StringBuffer();
-		lineIds=new StringBuffer();
-		if(choose==null || choose.size()==0)
-		{
+		String stopName = getIntent().getStringExtra("stopName");
+		String stopId = getIntent().getStringExtra("stopId");
+		String cityId = getIntent().getStringExtra("cityId");
+		linesb = new StringBuffer();
+		lineIds = new StringBuffer();
+		if (choose == null || choose.size() == 0) {
 			SiteUtil.infoAlert(LinesActivity.this, "为选择线路");
 			return;
 		}
-		
-		for(Line l:choose)
-		{
-			linesb.append(l.getLineName()+",");
-			lineIds.append(l.getLineId()+",");
+
+		for (Line l : choose) {
+			linesb.append(l.getLineName() + ",");
+			lineIds.append(l.getLineId() + ",");
 		}
 		intent.putExtra("lines", linesb.toString());
 		intent.putExtra("lineIds", lineIds.toString());
-		
-		intent.putExtra("stopName",stopName);
-		intent.putExtra("stopId",stopId);
-		intent.putExtra("cityId",cityId);
+
+		intent.putExtra("stopName", stopName);
+		intent.putExtra("stopId", stopId);
+		intent.putExtra("cityId", cityId);
 		startActivity(intent);
-	
+
 	}
 
 	@Override
-	protected void initView()
-	{
-		choose= new ArrayList<Line>();
+	protected void initView() {
+		choose = new ArrayList<Line>();
 		// TODO Auto-generated method stub
-		String cityId=getIntent().getStringExtra("typeName");
+		String cityId = getIntent().getStringExtra("typeName");
 		title.setText("选择线路");
 		editUser.setText("确定");
 		site.setText("周边站点");
-		 
+
 	}
 
 	@Override
-	protected void initValue()
-	{
+	protected void initValue() {
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
-		String cityId=SiteUtil.getCity();
-		String stopId=getIntent().getStringExtra("stopId");
-		RequestParams param = webInterface.getLines(cityId,stopId, "0");
+		String cityId = SiteUtil.getCity();
+		String stopId = getIntent().getStringExtra("stopId");
+		RequestParams param = webInterface.getLines(cityId, stopId, "0");
 		invokeWebServer(param, GET_LIST);
 
 	}
@@ -138,37 +128,33 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	 * 
 	 * @param param
 	 */
-	private void invokeWebServer(RequestParams param, int responseCode)
-	{
+	private void invokeWebServer(RequestParams param, int responseCode) {
 		SiteUtil.LOG_D(getClass(), "connect to web server");
-		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
-		if (httpHandler != null)
-		{
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(
+				responseCode);
+		if (httpHandler != null) {
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lines, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lines,
+				param, requestCallBack);
 	}
 
 	/**
 	 * 获取后台返回的数据
 	 */
-	class MineRequestCallBack extends RequestCallBack<String>
-	{
+	class MineRequestCallBack extends RequestCallBack<String> {
 
 		private int responseCode;
 
-		public MineRequestCallBack(int responseCode)
-		{
+		public MineRequestCallBack(int responseCode) {
 			super();
 			this.responseCode = responseCode;
 		}
 
 		@Override
-		public void onFailure(HttpException error, String msg)
-		{
+		public void onFailure(HttpException error, String msg) {
 			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
 
@@ -176,16 +162,13 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 		}
 
 		@Override
-		public void onSuccess(ResponseInfo<String> arg0)
-		{
+		public void onSuccess(ResponseInfo<String> arg0) {
 			// TODO Auto-generated method stub
 			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
-			switch (responseCode)
-			{
+			switch (responseCode) {
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
 				break;
@@ -197,35 +180,29 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	/*
 	 * 处理返回结果数据
 	 */
-	private void returnMsg(String json, int code)
-	{
-		try
-		{
+	private void returnMsg(String json, int code) {
+		try {
 			JsonParser jsonParser = new JsonParser();
 			JsonElement jsonElement = jsonParser.parse(json);
 			JsonObject jsonObject = jsonElement.getAsJsonObject();
-			 
+
 			JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
-			JsonObject data =  jsonr.getAsJsonObject("data");
-			JsonArray nearby  =  data.getAsJsonArray("lines");
+			JsonObject data = jsonr.getAsJsonObject("data");
+			JsonArray nearby = data.getAsJsonArray("lines");
 			Gson gson = new Gson();
-			this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>()
-			{
+			this.lines = gson.fromJson(nearby, new TypeToken<List<Line>>() {
 			}.getType());
 			adapter = new LineAdapter(LinesActivity.this, lines);
 			this.list.setAdapter(adapter);
 			this.list.setOnItemClickListener(this);
-			if(this.lines.size()==0)
-			{
+			if (this.lines.size() == 0) {
 				layout.setVisibility(View.VISIBLE);
 				list.setVisibility(View.GONE);
-			}else
-			{
+			} else {
 				layout.setVisibility(View.GONE);
 				list.setVisibility(View.VISIBLE);
 			}
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
@@ -233,16 +210,14 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-	{
-		ImageView imageView =(ImageView) view.findViewById(R.id.choose);
-		
-		if(imageView.getVisibility()==View.VISIBLE)
-		{
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		ImageView imageView = (ImageView) view.findViewById(R.id.choose);
+
+		if (imageView.getVisibility() == View.VISIBLE) {
 			choose.remove(lines.get(position));
 			imageView.setVisibility(View.GONE);
-		}else
-		{
+		} else {
 			imageView.setVisibility(View.VISIBLE);
 			choose.add(lines.get(position));
 		}

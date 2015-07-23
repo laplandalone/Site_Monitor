@@ -1,20 +1,18 @@
 package com.site.model;
 
-
 public class Cancel implements java.io.Serializable {
 
 	// Fields
 
 	private String carNo;
-	
+
 	private String stopName;
-	
+
 	private String lineName;
-	
+
 	private String date;
 	private String cancelId;
-	
-	
+
 	public String getCancelId() {
 		return cancelId;
 	}
@@ -54,8 +52,5 @@ public class Cancel implements java.io.Serializable {
 	public void setDate(String date) {
 		this.date = date;
 	}
- 
 
-	 
-	 
 }

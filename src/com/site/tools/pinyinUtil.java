@@ -34,33 +34,31 @@ public class pinyinUtil {
 
 	/**
 	 * 是否是字母
+	 * 
 	 * @param src
 	 * @return
 	 */
-	public static boolean checkFirstChar(String src)
-	{
+	public static boolean checkFirstChar(String src) {
 		StringBuffer sb = new StringBuffer();
-		if (src != null && !src.trim().equalsIgnoreCase("")) 
-		{
+		if (src != null && !src.trim().equalsIgnoreCase("")) {
 			char[] srcChar;
 			srcChar = src.toCharArray();
 			char c = srcChar[0];
 			// 是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)
-			if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) 
-			{
+			if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) {
 				return false;
 			} else if (((int) c >= 65 && (int) c <= 90)
-					|| ((int) c >= 97 && (int) c <= 122)) 
-			{
-				
+					|| ((int) c >= 97 && (int) c <= 122)) {
+
 				return true;
 			} else {
-				return false; 
+				return false;
 			}
 		}
 		return false;
-		
+
 	}
+
 	/**
 	 * 获取拼音集合
 	 * 
@@ -68,11 +66,9 @@ public class pinyinUtil {
 	 * @param src
 	 * @return Set<String>
 	 */
-	public static String getPinyin(String src) 
-	{
+	public static String getPinyin(String src) {
 		StringBuffer sb = new StringBuffer();
-		if (src != null && !src.trim().equalsIgnoreCase("")) 
-		{
+		if (src != null && !src.trim().equalsIgnoreCase("")) {
 			char[] srcChar;
 			srcChar = src.toCharArray();
 			// 汉语拼音格式输出类
@@ -84,17 +80,14 @@ public class pinyinUtil {
 			hanYuPinOutputFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
 
 			String[][] temp = new String[src.length()][];
-			for (int i = 0; i < srcChar.length; i++) 
-			{
+			for (int i = 0; i < srcChar.length; i++) {
 				char c = srcChar[i];
 				// 是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)
-				if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) 
-				{
-					try
-					{
-						temp[i] = PinyinHelper.toHanyuPinyinStringArray(srcChar[i], hanYuPinOutputFormat);
-					} catch (BadHanyuPinyinOutputFormatCombination e)
-					{
+				if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) {
+					try {
+						temp[i] = PinyinHelper.toHanyuPinyinStringArray(
+								srcChar[i], hanYuPinOutputFormat);
+					} catch (BadHanyuPinyinOutputFormatCombination e) {
 						e.printStackTrace();
 					}
 				} else if (((int) c >= 65 && (int) c <= 90)
@@ -104,72 +97,72 @@ public class pinyinUtil {
 					temp[i] = new String[] { "" };
 				}
 			}
-//			String[] pingyinArray = Exchange(temp);
-//			Set<String> pinyinSet = new HashSet<String>();
-			if(temp!=null && temp.length!=0)
-			{
-				for (int i = 0; i < temp.length; i++)
-				{
-					String str=temp[i][0];
-					if(str!=null && !"".equals(str))
-					{
+			// String[] pingyinArray = Exchange(temp);
+			// Set<String> pinyinSet = new HashSet<String>();
+			if (temp != null && temp.length != 0) {
+				for (int i = 0; i < temp.length; i++) {
+					String str = temp[i][0];
+					if (str != null && !"".equals(str)) {
 						char ss = temp[i][0].charAt(0);
-						sb.append(ss+"");
+						sb.append(ss + "");
 					}
-				
+
 				}
 			}
-		
+
 			return sb.toString();
 		}
 		return "";
 	}
 
-	/**  
-	  * 获取拼音集合  
-	  * @author wyh  
-	  * @param src  
-	  * @return Set<String>  
-	  */  
-	public static String getPinyinAll(String src){   
+	/**
+	 * 获取拼音集合
+	 * 
+	 * @author wyh
+	 * @param src
+	 * @return Set<String>
+	 */
+	public static String getPinyinAll(String src) {
 		StringBuffer sb = new StringBuffer();
-	  if(src!=null && !src.trim().equalsIgnoreCase("")){   
-	   char[] srcChar ;   
-	   srcChar=src.toCharArray();   
-	   //汉语拼音格式输出类   
-	   HanyuPinyinOutputFormat hanYuPinOutputFormat = new HanyuPinyinOutputFormat();   
-	  
-	//输出设置，大小写，音标方式等   
-	   hanYuPinOutputFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);    
-	   hanYuPinOutputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);  
-	   hanYuPinOutputFormat.setVCharType(HanyuPinyinVCharType.WITH_V);   
-	      
-	   String[][] temp = new String[src.length()][];   
-	   for(int i=0;i<srcChar.length;i++){   
-	    char c = srcChar[i];   
-	    //是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)   
-	    if(String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")){   
-	     try{   
-	      temp[i] = PinyinHelper.toHanyuPinyinStringArray(srcChar[i], hanYuPinOutputFormat);   
-	     }catch(BadHanyuPinyinOutputFormatCombination e) {   
-	      e.printStackTrace();   
-	     }   
-	    }else if(((int)c>=65 && (int)c<=90) || ((int)c>=97 && (int)c<=122)){   
-	     temp[i] = new String[]{String.valueOf(srcChar[i])};   
-	    }else{   
-	     temp[i] = new String[]{""};   
-	    }   
-	   }   
-	   String[] pingyinArray = Exchange(temp);   
-	   Set<String> pinyinSet = new HashSet<String>();   
-	   for(int i=0;i<pingyinArray.length;i++){   
-		   sb.append(pingyinArray[i]);   
-	   }   
-	   return sb.toString();   
-	  }   
-	  return null;   
-	 } 
-	 
+		if (src != null && !src.trim().equalsIgnoreCase("")) {
+			char[] srcChar;
+			srcChar = src.toCharArray();
+			// 汉语拼音格式输出类
+			HanyuPinyinOutputFormat hanYuPinOutputFormat = new HanyuPinyinOutputFormat();
+
+			// 输出设置，大小写，音标方式等
+			hanYuPinOutputFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+			hanYuPinOutputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+			hanYuPinOutputFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
+
+			String[][] temp = new String[src.length()][];
+			for (int i = 0; i < srcChar.length; i++) {
+				char c = srcChar[i];
+				// 是中文或者a-z或者A-Z转换拼音(我的需求，是保留中文或者a-z或者A-Z)
+				if (String.valueOf(c).matches("[\\u4E00-\\u9FA5]+")) {
+					try {
+						temp[i] = PinyinHelper.toHanyuPinyinStringArray(
+								srcChar[i], hanYuPinOutputFormat);
+					} catch (BadHanyuPinyinOutputFormatCombination e) {
+						e.printStackTrace();
+					}
+				} else if (((int) c >= 65 && (int) c <= 90)
+						|| ((int) c >= 97 && (int) c <= 122)) {
+					temp[i] = new String[] { String.valueOf(srcChar[i]) };
+				} else {
+					temp[i] = new String[] { "" };
+				}
+			}
+			String[] pingyinArray = Exchange(temp);
+			Set<String> pinyinSet = new HashSet<String>();
+			for (int i = 0; i < pingyinArray.length; i++) {
+				sb.append(pingyinArray[i]);
+			}
+			return sb.toString();
+		}
+		return null;
+	}
+
 	/**
 	 * 递归
 	 * 

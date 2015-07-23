@@ -55,7 +55,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CityActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity  android:name="com.site.view.CityActivity" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.SearchActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LineDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.LinesActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
@@ -66,21 +66,21 @@
          
          
          <activity
-            android:name="com.site.ui.MainActivity" android:screenOrientation="portrait" >
+            android:name="com.site.ui.MainActivity" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         
         <activity
             android:name="com.site.ui.AlbumActivity"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
         <activity
-            android:name="com.site.ui.ImageFile" >
+            android:name="com.site.ui.ImageFile" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
-            android:name="com.site.ui.ShowAllPhoto" >
+            android:name="com.site.ui.ShowAllPhoto" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
-            android:name="com.site.ui.GalleryActivity">
+            android:name="com.site.ui.GalleryActivity" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
           
 </application>

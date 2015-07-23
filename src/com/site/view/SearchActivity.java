@@ -39,134 +39,127 @@ import com.site.model.SearchLine;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
-
-public class SearchActivity extends BaseActivity implements OnItemClickListener
-{
+public class SearchActivity extends BaseActivity implements OnItemClickListener {
 	@ViewInject(R.id.title)
 	private TextView title;
-	
+
 	@ViewInject(R.id.editUser)
 	private TextView editUser;
-	
+
 	@ViewInject(R.id.site)
 	private TextView site;
-	
+
 	@ViewInject(R.id.edit)
 	private EditText edit;
-	
+
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
-	
+
 	private List<SearchLine> searchLines;
 	private ListView list;
-	
+
 	SearchLineAdapter adapter;
-	String cityId="";
-	
+	String cityId = "";
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_list);
-		this.list=(ListView) findViewById(R.id.comlist);
+		this.list = (ListView) findViewById(R.id.comlist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
 		initView();
 	}
 
-	
 	@OnClick(R.id.site)
-	public void toCity(View v)
-	{
+	public void toCity(View v) {
 		finish();
 	}
 
 	@OnClick(R.id.editUser)
-	public void toSearch(View v)
-	{
+	public void toSearch(View v) {
 		Intent intent = new Intent(SearchActivity.this, CityActivity.class);
 		startActivity(intent);
 		exit();
 	}
-	
+
 	@Override
-	protected void initView()
-	{
+	protected void initView() {
 		// TODO Auto-generated method stub
-		 cityId=SiteUtil.getCity();
-		 
-	    title.setText("站点查询");
-	    site.setText("周边站点");
-	    editUser.setText("");
-	    
-	    edit.setOnEditorActionListener(new OnEditorActionListener() {
-			
+		cityId = SiteUtil.getCity();
+
+		title.setText("站点查询");
+		site.setText("周边站点");
+		editUser.setText("");
+
+		edit.setOnEditorActionListener(new OnEditorActionListener() {
+
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) 
-			{
-				if(actionId ==EditorInfo.IME_ACTION_SEARCH)
-				{
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					// 先隐藏键盘
 					InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(inputMethodManager.isActive())
-                    {
-                            inputMethodManager.hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    }
-                    RequestParams param = webInterface.getLineName(cityId,v.getText()+"","0");
+					if (inputMethodManager.isActive()) {
+						inputMethodManager.hideSoftInputFromWindow(
+								SearchActivity.this.getCurrentFocus()
+										.getWindowToken(), 0);
+					}
+					RequestParams param = webInterface.getLineName(cityId,
+							v.getText() + "", "0");
 					invokeWebServer(param, GET_LIST);
 				}
 				return false;
 			}
 		});
-	    
-//		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
-//		 edit.addTextChangedListener(new TextWatcher() {
-//				
-//				@Override
-//				public void onTextChanged(CharSequence s, int start, int before, int count) {
-//					// TODO Auto-generated method stub
-//				
-//				}
-//				
-//				@Override
-//				public void beforeTextChanged(CharSequence s, int start, int count,
-//						int after) {
-//					// TODO Auto-generated method stub
-//				}
-//				
-//				@Override
-//				public void afterTextChanged(Editable s) 
-//				{
-//					// TODO Auto-generated method stub
-//					String text = edit.getText().toString();
-//					if (text != null && !text.trim().equalsIgnoreCase("")) 
-//					{
-//						if(cityId==null || "".equals(cityId) || "null".equals(cityId))
-//						{
-//							SiteUtil.infoAlert(SearchActivity.this,"定位失败,稍后再试...");
-//							return;
-//						} 
-//						
-//						RequestParams param = webInterface.getLineName(cityId,text,"0");
-//						invokeWebServer(param, GET_LIST);
-//					}else
-//					{
-////						list.setAdapter(adapter);
-////						adapter.setTeams(teamList.getTeams());
-////						adapter.notifyDataSetChanged();
-////						adpterFlag="faculty";
-//					}
-//				}
-//			});
+
+		// edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
+		// edit.addTextChangedListener(new TextWatcher() {
+		//
+		// @Override
+		// public void onTextChanged(CharSequence s, int start, int before, int
+		// count) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void beforeTextChanged(CharSequence s, int start, int count,
+		// int after) {
+		// // TODO Auto-generated method stub
+		// }
+		//
+		// @Override
+		// public void afterTextChanged(Editable s)
+		// {
+		// // TODO Auto-generated method stub
+		// String text = edit.getText().toString();
+		// if (text != null && !text.trim().equalsIgnoreCase(""))
+		// {
+		// if(cityId==null || "".equals(cityId) || "null".equals(cityId))
+		// {
+		// SiteUtil.infoAlert(SearchActivity.this,"定位失败,稍后再试...");
+		// return;
+		// }
+		//
+		// RequestParams param = webInterface.getLineName(cityId,text,"0");
+		// invokeWebServer(param, GET_LIST);
+		// }else
+		// {
+		// // list.setAdapter(adapter);
+		// // adapter.setTeams(teamList.getTeams());
+		// // adapter.notifyDataSetChanged();
+		// // adpterFlag="faculty";
+		// }
+		// }
+		// });
 	}
 
 	@Override
-	protected void initValue()
-	{
-		City city=(City) getIntent().getSerializableExtra("city");
-		
-		
+	protected void initValue() {
+		City city = (City) getIntent().getSerializableExtra("city");
+
 	}
 
 	/**
@@ -174,37 +167,33 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	 * 
 	 * @param param
 	 */
-	private void invokeWebServer(RequestParams param, int responseCode)
-	{
+	private void invokeWebServer(RequestParams param, int responseCode) {
 		SiteUtil.LOG_D(getClass(), "connect to web server");
-		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
-		if (httpHandler != null)
-		{
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(
+				responseCode);
+		if (httpHandler != null) {
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lineName, param, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_lineName,
+				param, requestCallBack);
 	}
 
 	/**
 	 * 获取后台返回的数据
 	 */
-	class MineRequestCallBack extends RequestCallBack<String>
-	{
+	class MineRequestCallBack extends RequestCallBack<String> {
 
 		private int responseCode;
 
-		public MineRequestCallBack(int responseCode)
-		{
+		public MineRequestCallBack(int responseCode) {
 			super();
 			this.responseCode = responseCode;
 		}
 
 		@Override
-		public void onFailure(HttpException error, String msg)
-		{
+		public void onFailure(HttpException error, String msg) {
 			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
 
@@ -212,16 +201,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		}
 
 		@Override
-		public void onSuccess(ResponseInfo<String> arg0)
-		{
+		public void onSuccess(ResponseInfo<String> arg0) {
 			// TODO Auto-generated method stub
 			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
-			switch (responseCode)
-			{
+			switch (responseCode) {
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
 				break;
@@ -233,34 +219,29 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	/*
 	 * 处理返回结果数据
 	 */
-	private void returnMsg(String json, int code)
-	{
-		try
-		{
-		JsonParser jsonParser = new JsonParser();
-		JsonElement jsonElement = jsonParser.parse(json);
-		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
-		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("stoplist");
-		Gson gson = new Gson();
-		this.searchLines = gson.fromJson(nearby, new TypeToken<List<SearchLine>>()
-		{
-		}.getType());
-		adapter = new SearchLineAdapter(SearchActivity.this, searchLines);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.searchLines.size()==0)
-		{
-			layout.setVisibility(View.VISIBLE);
-			list.setVisibility(View.GONE);
-		}else
-		{
-			layout.setVisibility(View.GONE);
-			list.setVisibility(View.VISIBLE);
-		}
-	}catch(Exception e)
-		{
+	private void returnMsg(String json, int code) {
+		try {
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(json);
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
+			JsonObject data = jsonr.getAsJsonObject("data");
+			JsonArray nearby = data.getAsJsonArray("stoplist");
+			Gson gson = new Gson();
+			this.searchLines = gson.fromJson(nearby,
+					new TypeToken<List<SearchLine>>() {
+					}.getType());
+			adapter = new SearchLineAdapter(SearchActivity.this, searchLines);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			if (this.searchLines.size() == 0) {
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			} else {
+				layout.setVisibility(View.GONE);
+				list.setVisibility(View.VISIBLE);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
@@ -268,12 +249,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-	{
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(SearchActivity.this, LinesActivity.class);
 		SearchLine searchLine = searchLines.get(position);
-		 
+
 		Bundle bundle = new Bundle();
 		intent.putExtra("cityId", cityId);
 		intent.putExtra("stopName", searchLine.getStopName());

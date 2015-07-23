@@ -1,16 +1,15 @@
 package com.site.model;
 
-
 public class Car implements java.io.Serializable {
 
 	// Fields
 
 	private String carNo;
-	
+
 	private String deltStops;
-	
+
 	private String lineName;
-	
+
 	private String lineId;
 
 	public String getCarNo() {
@@ -45,6 +44,4 @@ public class Car implements java.io.Serializable {
 		this.lineId = lineId;
 	}
 
-	 
-	 
 }

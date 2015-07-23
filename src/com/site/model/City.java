@@ -1,16 +1,15 @@
 package com.site.model;
 
-
 public class City implements java.io.Serializable {
 
 	// Fields
 
 	private String cityName;
-	
+
 	private String cityId;
-	
+
 	private String lng;
-	
+
 	private String lat;
 
 	public String getCityName() {
@@ -44,5 +43,5 @@ public class City implements java.io.Serializable {
 	public void setCityId(String cityId) {
 		this.cityId = cityId;
 	}
-	 
+
 }

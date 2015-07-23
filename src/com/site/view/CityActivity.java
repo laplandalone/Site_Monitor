@@ -32,59 +32,48 @@ import com.site.model.City;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
 
- 
-public class CityActivity extends BaseActivity implements OnItemClickListener
-{
+public class CityActivity extends BaseActivity implements OnItemClickListener {
 	@ViewInject(R.id.title)
 	private TextView title;
-	
+
 	@ViewInject(R.id.editUser)
 	private TextView editUser;
-	
+
 	@ViewInject(R.id.site)
 	private TextView site;
-	
-	
+
 	@ViewInject(R.id.contentnull)
 	private RelativeLayout layout;
-	
+
 	private List<City> cities;
 	private ListView list;
-	
- 
-	
-	CityAdapter
-	adapter;
-	String adpterFlag="normal";
-	
+
+	CityAdapter adapter;
+	String adpterFlag = "normal";
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.city_list);
-		this.list=(ListView) findViewById(R.id.citylist);
+		this.list = (ListView) findViewById(R.id.citylist);
 		ViewUtils.inject(this);
 		addActivity(this);
 		initValue();
 		initView();
 	}
 
-	 
-
 	@Override
-	protected void initView()
-	{
+	protected void initView() {
 		// TODO Auto-generated method stub
-		String typeName=getIntent().getStringExtra("typeName");
+		String typeName = getIntent().getStringExtra("typeName");
 		title.setText("选择城市");
 		editUser.setVisibility(View.INVISIBLE);
 		site.setText("周边站点");
-		 
+
 	}
 
 	@Override
-	protected void initValue()
-	{
+	protected void initValue() {
 		// TODO Auto-generated method stub
 		dialog.setMessage("正在加载,请稍后...");
 		dialog.show();
@@ -93,46 +82,42 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	@OnClick(R.id.site)
-	public void site(View v)
-	{
+	public void site(View v) {
 		finish();
 	}
+
 	/**
 	 * 链接web服务
 	 * 
 	 * @param param
 	 */
-	private void invokeWebServer(RequestParams param, int responseCode)
-	{
+	private void invokeWebServer(RequestParams param, int responseCode) {
 		SiteUtil.LOG_D(getClass(), "connect to web server");
-		MineRequestCallBack requestCallBack = new MineRequestCallBack(responseCode);
-		if (httpHandler != null)
-		{
+		MineRequestCallBack requestCallBack = new MineRequestCallBack(
+				responseCode);
+		if (httpHandler != null) {
 			httpHandler.cancel();
 		}
-		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_citylist, null, requestCallBack);
+		httpHandler = mHttpUtils.send(HttpMethod.POST, Constant.URL_citylist,
+				null, requestCallBack);
 	}
 
 	/**
 	 * 获取后台返回的数据
 	 */
-	class MineRequestCallBack extends RequestCallBack<String>
-	{
+	class MineRequestCallBack extends RequestCallBack<String> {
 
 		private int responseCode;
 
-		public MineRequestCallBack(int responseCode)
-		{
+		public MineRequestCallBack(int responseCode) {
 			super();
 			this.responseCode = responseCode;
 		}
 
 		@Override
-		public void onFailure(HttpException error, String msg)
-		{
+		public void onFailure(HttpException error, String msg) {
 			SiteUtil.LOG_D(getClass(), "onFailure-->msg=" + msg);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
 
@@ -140,16 +125,13 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 		}
 
 		@Override
-		public void onSuccess(ResponseInfo<String> arg0)
-		{
+		public void onSuccess(ResponseInfo<String> arg0) {
 			// TODO Auto-generated method stub
 			SiteUtil.LOG_D(getClass(), "result=" + arg0.result);
-			if (dialog.isShowing())
-			{
+			if (dialog.isShowing()) {
 				dialog.cancel();
 			}
-			switch (responseCode)
-			{
+			switch (responseCode) {
 			case GET_LIST:
 				returnMsg(arg0.result, GET_LIST);
 				break;
@@ -161,41 +143,37 @@ public class CityActivity extends BaseActivity implements OnItemClickListener
 	/*
 	 * 处理返回结果数据
 	 */
-	private void returnMsg(String json, int code)
-	{
-		try{
-		JsonParser jsonParser = new JsonParser();
-		JsonElement jsonElement = jsonParser.parse(json);
-		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
-		JsonObject data =  jsonr.getAsJsonObject("data");
-		JsonArray nearby  =  data.getAsJsonArray("cities");
-		Gson gson = new Gson();
-		this.cities = gson.fromJson(nearby, new TypeToken<List<City>>()
-		{
-		}.getType());
-		adapter = new CityAdapter(CityActivity.this, cities);
-		this.list.setAdapter(adapter);
-		this.list.setOnItemClickListener(this);
-		if(this.cities.size()==0)
-		{
+	private void returnMsg(String json, int code) {
+		try {
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(json);
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			JsonObject jsonr = jsonObject.getAsJsonObject("jsonr");
+			JsonObject data = jsonr.getAsJsonObject("data");
+			JsonArray nearby = data.getAsJsonArray("cities");
+			Gson gson = new Gson();
+			this.cities = gson.fromJson(nearby, new TypeToken<List<City>>() {
+			}.getType());
+			adapter = new CityAdapter(CityActivity.this, cities);
+			this.list.setAdapter(adapter);
+			this.list.setOnItemClickListener(this);
+			if (this.cities.size() == 0) {
+				layout.setVisibility(View.VISIBLE);
+				list.setVisibility(View.GONE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
 		}
-	}catch(Exception e)
-	{
-		e.printStackTrace();
-		layout.setVisibility(View.VISIBLE);
-		list.setVisibility(View.GONE);
-	}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-	{
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(CityActivity.this, NearByActivity.class);
-		City city =cities.get(position); 
+		City city = cities.get(position);
 		SiteUtil.writeCity(city.getCityId());
 		SiteUtil.writeCityName(city.getCityName());
 		startActivity(intent);

@@ -1,6 +1,5 @@
 package com.site.model;
 
-
 public class Line implements java.io.Serializable {
 
 	// Fields
@@ -14,11 +13,11 @@ public class Line implements java.io.Serializable {
 	}
 
 	private String endStopName;
-	
+
 	private String lineName;
-	
+
 	private String nextStop;
-	
+
 	private String lineId;
 
 	public String getNextStop() {
@@ -44,6 +43,5 @@ public class Line implements java.io.Serializable {
 	public void setLineName(String lineName) {
 		this.lineName = lineName;
 	}
-	
-	 
+
 }

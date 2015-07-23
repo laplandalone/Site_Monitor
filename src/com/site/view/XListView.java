@@ -270,7 +270,7 @@ public class XListView extends ListView implements OnScrollListener {
 			if (mLastY == -1) {
 				mLastY = ev.getRawY();
 			}
-	
+
 			switch (ev.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				mLastY = ev.getRawY();
@@ -313,7 +313,7 @@ public class XListView extends ListView implements OnScrollListener {
 				break;
 			}
 			return super.onTouchEvent(ev);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
