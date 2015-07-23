@@ -2,17 +2,20 @@ package com.site.view;
 
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -96,45 +99,66 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 	    title.setText("站点查询");
 	    site.setText("周边站点");
 	    editUser.setText("");
-		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
-		 edit.addTextChangedListener(new TextWatcher() {
-				
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					// TODO Auto-generated method stub
-				
-				}
-				
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
-					// TODO Auto-generated method stub
-				}
-				
-				@Override
-				public void afterTextChanged(Editable s) 
+	    
+	    edit.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) 
+			{
+				if(actionId ==EditorInfo.IME_ACTION_SEARCH)
 				{
-					// TODO Auto-generated method stub
-					String text = edit.getText().toString();
-					if (text != null && !text.trim().equalsIgnoreCase("")) 
-					{
-						if(cityId==null || "".equals(cityId) || "null".equals(cityId))
-						{
-							SiteUtil.infoAlert(SearchActivity.this,"定位失败,稍后再试...");
-							return;
-						} 
-						
-						RequestParams param = webInterface.getLineName(cityId,text,"0");
-						invokeWebServer(param, GET_LIST);
-					}else
-					{
-//						list.setAdapter(adapter);
-//						adapter.setTeams(teamList.getTeams());
-//						adapter.notifyDataSetChanged();
-//						adpterFlag="faculty";
-					}
+					// 先隐藏键盘
+					InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if(inputMethodManager.isActive())
+                    {
+                            inputMethodManager.hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
+                    RequestParams param = webInterface.getLineName(cityId,v.getText()+"","0");
+					invokeWebServer(param, GET_LIST);
 				}
-			});
+				return false;
+			}
+		});
+	    
+//		 edit.setOnFocusChangeListener(onFocusAutoClearHintListener);
+//		 edit.addTextChangedListener(new TextWatcher() {
+//				
+//				@Override
+//				public void onTextChanged(CharSequence s, int start, int before, int count) {
+//					// TODO Auto-generated method stub
+//				
+//				}
+//				
+//				@Override
+//				public void beforeTextChanged(CharSequence s, int start, int count,
+//						int after) {
+//					// TODO Auto-generated method stub
+//				}
+//				
+//				@Override
+//				public void afterTextChanged(Editable s) 
+//				{
+//					// TODO Auto-generated method stub
+//					String text = edit.getText().toString();
+//					if (text != null && !text.trim().equalsIgnoreCase("")) 
+//					{
+//						if(cityId==null || "".equals(cityId) || "null".equals(cityId))
+//						{
+//							SiteUtil.infoAlert(SearchActivity.this,"定位失败,稍后再试...");
+//							return;
+//						} 
+//						
+//						RequestParams param = webInterface.getLineName(cityId,text,"0");
+//						invokeWebServer(param, GET_LIST);
+//					}else
+//					{
+////						list.setAdapter(adapter);
+////						adapter.setTeams(teamList.getTeams());
+////						adapter.notifyDataSetChanged();
+////						adpterFlag="faculty";
+//					}
+//				}
+//			});
 	}
 
 	@Override
@@ -230,9 +254,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener
 		{
 			layout.setVisibility(View.VISIBLE);
 			list.setVisibility(View.GONE);
+		}else
+		{
+			layout.setVisibility(View.GONE);
+			list.setVisibility(View.VISIBLE);
 		}
-	}
-		catch(Exception e)
+	}catch(Exception e)
 		{
 			e.printStackTrace();
 			layout.setVisibility(View.VISIBLE);

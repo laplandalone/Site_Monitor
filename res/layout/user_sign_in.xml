@@ -15,7 +15,7 @@
         
         <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="7.0dip">
             <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="3.0dip" android:layout_weight="1.0">
-                <Button android:id="@+id/sign_in" android:background="@drawable/visit_bg" android:layout_width="fill_parent" android:layout_height="35.0dip" android:text="取消" />
+                <Button android:id="@+id/cancel" android:background="@drawable/visit_bg" android:layout_width="fill_parent" android:layout_height="35.0dip" android:text="取消" />
             </LinearLayout>
             <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" android:layout_weight="1.0">
                 <Button android:id="@+id/submit" android:background="@drawable/visit_bg" android:layout_width="fill_parent" android:layout_height="35.0dip"  android:text="到站"/>

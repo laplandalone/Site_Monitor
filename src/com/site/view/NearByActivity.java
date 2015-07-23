@@ -70,9 +70,9 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 		this.list=(ListView) findViewById(R.id.newlist);
 		ViewUtils.inject(this);
 		addActivity(this);
-		
-		initView();
 		initValue();
+		initView();
+		
 	}
 
 	
@@ -111,9 +111,6 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			if(cityName!=null && !"".equals(cityName) && !"null".equals(cityName) )
 			{
 				site.setText(SiteUtil.getCityName());
-			}else
-			{
-				SiteUtil.infoAlert(NearByActivity.this,"定位失败,稍后再试...");
 			}
 		}
 		
@@ -254,8 +251,12 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			{
 				layout.setVisibility(View.VISIBLE);
 				list.setVisibility(View.GONE);
+			}else
+			{
+				layout.setVisibility(View.GONE);
+				list.setVisibility(View.VISIBLE);
 			} 
-				refreshableView.finishRefreshing();
+			refreshableView.finishRefreshing();
 			 
 			break;
 		case GET_CITY:
@@ -280,6 +281,8 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener
 			}
 			if(b)
 			{
+				
+				SiteUtil.infoAlert(NearByActivity.this,"定位失败,稍后再试...");
 				refreshableView.finishRefreshing();	
 			}
 			break;

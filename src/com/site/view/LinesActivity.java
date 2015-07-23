@@ -219,6 +219,10 @@ public class LinesActivity extends BaseActivity implements OnItemClickListener
 			{
 				layout.setVisibility(View.VISIBLE);
 				list.setVisibility(View.GONE);
+			}else
+			{
+				layout.setVisibility(View.GONE);
+				list.setVisibility(View.VISIBLE);
 			}
 		}catch(Exception e)
 		{

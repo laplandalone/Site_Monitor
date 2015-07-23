@@ -2,7 +2,7 @@
 <LinearLayout android:gravity="center" android:id="@id/search" android:layout_marginTop="10.0dip"   android:layout_width="fill_parent" android:layout_height="50.0dip" android:baselineAligned="false"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <FrameLayout android:layout_width="0.0dip" android:layout_marginLeft="13.0dip" android:layout_marginRight="13.0dip" android:layout_height="fill_parent"   android:layout_marginBottom="6.0dip" android:layout_weight="1.0">
-        <EditText android:background="@drawable/search" android:textSize="16.0sp" android:paddingLeft="45.0dip" android:textColor="#ffc3c3c3" android:id="@+id/edit" android:layout_marginTop="5.0dip"    android:layout_width="fill_parent" android:layout_height="fill_parent" android:hint="@string/hello" android:singleLine="true"  />
+        <EditText android:imeOptions="actionSearch" android:background="@drawable/search" android:textSize="16.0sp" android:paddingLeft="45.0dip" android:textColor="#ffc3c3c3" android:id="@+id/edit" android:layout_marginTop="5.0dip"    android:layout_width="fill_parent" android:layout_height="fill_parent" android:hint="@string/hello" android:singleLine="true"  />
         <ImageView android:layout_marginLeft="13.0dip" android:layout_gravity="left|center" android:layout_marginTop="5.0dip" android:background="@drawable/btn_search" android:layout_width="24.0dip" android:layout_height="24.0dip" />
     </FrameLayout>
 </LinearLayout>

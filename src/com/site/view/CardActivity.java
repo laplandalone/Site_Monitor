@@ -117,6 +117,13 @@ public class CardActivity extends BaseActivity implements OnItemClickListener
 		finish();
 	}
 	
+	@OnClick(R.id.site)
+	public void cancel(View v)
+	{
+		finish();
+	}
+	
+	
 	@OnClick(R.id.submit)
 	public void submit(View v)
 	{

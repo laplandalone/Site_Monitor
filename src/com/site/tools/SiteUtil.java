@@ -470,7 +470,39 @@ public class SiteUtil {
 	        } 
 	        return ishasSpace; 
 	   } 
-	  
+	  public static Bitmap compressBitmapT(String path,String name) {
+			if (path != null) {
+				File file = new File(path);
+				if (file.exists()) 
+				{
+					BitmapFactory.Options opts = new BitmapFactory.Options();
+//					opts.inJustDecodeBounds = true;
+					opts.inSampleSize=1;
+					long size=file.length()/1024;
+					 if(size>3000)
+					{
+						opts.inSampleSize = 10;
+					}else if(size>1000 && size<3000)
+					{
+						opts.inSampleSize = 6;
+					}else if(size>500 && size<1000)
+					{
+						opts.inSampleSize = 5;
+					} 
+					Bitmap bitmap = BitmapFactory.decodeFile(file.getPath(),opts);
+					
+					if (bitmap == null)  // 若获取图片失败就取消压缩
+					{
+						return null;
+					}
+				 
+					saveFileBitmap(name, bitmap, 100);
+					return bitmap;
+				}
+			}
+			return null;
+		}
+
 	 
 		public static Bitmap compressBitmap(String path,String name) {
 			if (path != null) {
