@@ -28,6 +28,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.lurencun.android.system.DoubleClickExit;
+import com.pgyersdk.update.PgyUpdateManager;
 import com.site.BaseActivity;
 import com.site.R;
 import com.site.adapter.NearBysListAdapter;
@@ -73,7 +74,8 @@ public class NearByActivity extends BaseActivity implements OnItemClickListener 
 		addActivity(this);
 		initValue();
 		initView();
-
+		String appId ="2fc1230139ae03ee7a81f4493e2608fb"; //蒲公英注册或上传应用获取的AppId
+		PgyUpdateManager.register(this, appId);
 	}
 
 	@OnClick(R.id.site)

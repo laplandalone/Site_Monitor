@@ -13,6 +13,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
+import com.pgyersdk.crash.PgyCrashManager;
 import com.site.tools.SiteUtil;
 
 public class RegApplication extends Application {
