@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="layout_temp612">请输入站牌</string>
+    <string name="layout_temp612">请输入车辆编号</string>
     <string name="hello">搜索站名</string>
     
     <string name="app_name">路测工具</string>

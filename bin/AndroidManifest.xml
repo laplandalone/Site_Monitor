@@ -62,8 +62,8 @@
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.QueryActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.CancelActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-         <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
-         
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.view.WebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/>
+          <activity android:configChanges="orientation|keyboardHidden" android:name="com.site.ui.UploadActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden"/> 
          
          <activity
             android:name="com.site.ui.MainActivity" android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden" >

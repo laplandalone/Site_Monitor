@@ -275,13 +275,8 @@ public class WebActivity extends BaseActivity {
 									switch (which) {
 									case 0:
 										try {
-											Intent intent = new Intent(
-													MediaStore.ACTION_IMAGE_CAPTURE);
-											intent.putExtra(
-													MediaStore.EXTRA_OUTPUT,
-													Uri.fromFile(new File(
-															Constant.IMG_PATH,
-															mPicName)));
+											Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+											intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constant.IMG_PATH,mPicName)));
 
 											startActivityForResult(intent, 1);
 										} catch (Exception e) {

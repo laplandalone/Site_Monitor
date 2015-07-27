@@ -765,7 +765,7 @@ public class SiteUtil {
 		int options = 60;
 		// 这里的200只是一个参考数
 		// 压缩后的图片质量在此值左右浮动，浮动值很小
-		while (baos.toByteArray().length / 1024 > 200) {
+		while (baos.toByteArray().length / 1024 >600) {
 			baos.reset();
 			options -= 1;
 			if (options == 1) {

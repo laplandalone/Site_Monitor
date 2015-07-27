@@ -3,12 +3,15 @@ package com.site.view;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -35,11 +38,9 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.site.BaseActivity;
 import com.site.R;
 import com.site.adapter.LineAdapter;
-import com.site.application.RegApplication;
 import com.site.model.Car;
 import com.site.tools.Constant;
 import com.site.tools.SiteUtil;
-import com.site.tools.StringUtil;
 import com.site.ui.MainActivity;
 
 @SuppressLint("ResourceAsColor")
@@ -89,7 +90,6 @@ public class LineDetailActivity extends BaseActivity implements
 	@OnClick(R.id.lineName)
 	public void toMap(View v) {
 		Intent intent = new Intent(LineDetailActivity.this, MainActivity.class);
-		finish(MainActivity.class);
 		intent.putExtra("lineIds", lineIds);
 		startActivity(intent);
 	}
@@ -114,7 +114,26 @@ public class LineDetailActivity extends BaseActivity implements
 		initCar();
 	}
 
-	public void initCar() {
+	public void initCar() 
+	{
+		WindowManager windowManager = getWindowManager();
+		Display display = windowManager.getDefaultDisplay();
+		int screenWidth = display.getWidth();
+		int spacedip480=10;
+		int spacedip720=20;
+		int space=0;
+		
+		if(screenWidth==480)
+		{
+			space=spacedip480;
+		}else
+		{
+			space=spacedip720;
+		}
+		
+		int ww=(screenWidth-space*4)/3;
+//		ww=dip2px(this, ww);
+		
 		String lines = getIntent().getStringExtra("lines");
 		String lineIdStr = getIntent().getStringExtra("lineIds");
 		String[] lineNames = lines.split(",");
@@ -122,31 +141,32 @@ public class LineDetailActivity extends BaseActivity implements
 		int count = 0;
 		layout.removeAllViews();
 		LinearLayout layout2 = null;
-		for (int i = 0; i < lineNames.length; i++) {
+		for (int i = 0; i < lineNames.length; i++)
+		{
 			String name = lineNames[i];
 			String lineId = lineIds[i];
-			if (count == 0) {
-				LinearLayout.LayoutParams linearLayout1 = new LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
+			if (count == 0)
+			{
+				LinearLayout.LayoutParams linearLayout1 = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 				layout2 = new LinearLayout(this);
 				layout2.setLayoutParams(linearLayout1);
 				layout2.setOrientation(LinearLayout.HORIZONTAL);
 				layout.addView(layout2);
 			}
 			count++;
-			if (count == 3) {
+			if (count == 3)
+			{
 				count = 0;
 			}
 
 			Button btn1 = new Button(this);
 			btn1.setText(name);
+			btn1.setTextSize(12);
 			btn1.setTag(R.id.tag_one, name);
 			btn1.setTag(R.id.tag_two, lineId);
 			btn1.setBackgroundResource(R.drawable.bg);
-			LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(
-					200, 150);
-			linearLayout.setMargins(20, 20, 20, 20);// 设置边距
+			LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(ww, 120);
+			linearLayout.setMargins(space/2, 10, space/2, 10);// 设置边距
 			btn1.setLayoutParams(linearLayout);
 			layout2.addView(btn1);
 
@@ -169,6 +189,18 @@ public class LineDetailActivity extends BaseActivity implements
 		}
 	}
 
+	public static int dip2px(Context context, float dipValue)
+	{
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dipValue * scale + 0.5f);
+	}
+
+	public static int px2dip(Context context, float pxValue)
+	{
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (pxValue / scale + 0.5f);
+	}
+	
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			// 要做的事情
@@ -210,6 +242,7 @@ public class LineDetailActivity extends BaseActivity implements
 		if (lineIds != null && lineIds.length() > 0) {
 			lineIds = lineIds.substring(0, lineIds.length() - 1);
 		}
+		
 		RequestParams param = webInterface.query(cityId, stopId, stopName,
 				lineIds);
 		invokeWebServer(param, GET_LIST);

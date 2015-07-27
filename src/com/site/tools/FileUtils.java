@@ -1,16 +1,18 @@
 package com.site.tools;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import android.graphics.Bitmap;
 import android.os.Environment;
 
 public class FileUtils {
 
 	public static String SDPATH = Environment.getExternalStorageDirectory()
-			+ "/Photo_LJ/";
+			+ "/Ahoto/";
 
 	public static void saveBitmap(Bitmap bm, String picName) {
 		try {
@@ -21,10 +23,13 @@ public class FileUtils {
 			if (f.exists()) {
 				f.delete();
 			}
-			FileOutputStream out = new FileOutputStream(f);
-			bm.compress(Bitmap.CompressFormat.JPEG, 90, out);
-			out.flush();
-			out.close();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+			
+			FileOutputStream fos = new FileOutputStream(SDPATH+picName + ".JPEG");
+			fos.write(baos.toByteArray());
+			fos.close();
+			 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

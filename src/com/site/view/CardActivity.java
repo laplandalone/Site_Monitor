@@ -110,7 +110,7 @@ public class CardActivity extends BaseActivity implements OnItemClickListener {
 		finish();
 	}
 
-	@OnClick(R.id.site)
+	@OnClick(R.id.cancel)
 	public void cancel(View v) {
 		finish();
 	}

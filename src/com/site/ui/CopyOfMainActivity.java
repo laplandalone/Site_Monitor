@@ -1,13 +1,18 @@
 package com.site.ui;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,9 +52,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -66,19 +69,20 @@ import com.site.BaseActivity;
 import com.site.R;
 import com.site.tools.Bimp;
 import com.site.tools.Constant;
+import com.site.tools.FileUtils;
 import com.site.tools.ImageItem;
 import com.site.tools.PublicWay;
 import com.site.tools.Res;
 import com.site.tools.SiteUtil;
-import com.site.upload.FileUploadAsyncTask;
 import com.site.upload.FormFile;
+import com.site.upload.SocketHttpRequester;
 
 /**
  * 首页面activity
  * 
  * @version 2014年10月18日 下午11:48:34
  */
-public class MainActivity extends BaseActivity {
+public class CopyOfMainActivity extends BaseActivity {
 
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
@@ -90,11 +94,10 @@ public class MainActivity extends BaseActivity {
 	private ProgressBar mPgBar;
 	private TextView mTvProgress;
 
-	private Map<String,String>paramMap;
 	private FormFile[] formFiles;
-	private File[] files;
+	private MyTask mTask;
 	private View upView;
-	private String mPicName;
+
 	/* 定位相关 */
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
@@ -103,8 +106,7 @@ public class MainActivity extends BaseActivity {
 	private BaiduMap baiduMap;
 	boolean isFirstLoc = true;// 是否首次定位
 	private String lineIds;
-	private ProgressDialog pd;
-	
+
 	@ViewInject(R.id.title)
 	private TextView title;
 
@@ -138,10 +140,16 @@ public class MainActivity extends BaseActivity {
 		addActivity(this);
 		ViewUtils.inject(this);
 
+		upView = getLayoutInflater().inflate(R.layout.filebrowser_uploading,
+				null);
+		mPgBar = (ProgressBar) upView
+				.findViewById(R.id.pb_filebrowser_uploading);
+		mTvProgress = (TextView) upView
+				.findViewById(R.id.tv_filebrowser_uploading);
+
 		initView();
 		initValue();
 
-		
 	}
 
 	@Override
@@ -154,7 +162,7 @@ public class MainActivity extends BaseActivity {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		baiduMap = mMapView.getMap();
 		// 开启定位图层
-//		baiduMap.setMyLocationEnabled(true);
+		baiduMap.setMyLocationEnabled(true);
 		// 定位初始化
 		mLocClient = new LocationClient(this);
 		mLocClient.registerLocationListener(myListener);
@@ -163,46 +171,15 @@ public class MainActivity extends BaseActivity {
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(72000);
 		mLocClient.setLocOption(option);
-		String l=SiteUtil.getLongitude();
-		String ln=SiteUtil.getLatitude();
-		double lng = Double.parseDouble(l);
-		double lan =Double.parseDouble(SiteUtil.getLatitude());
-		LatLng cenpt = new LatLng(lan, lng);
-
 		// 普通地图
 		baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 		// 开启交通图线
-//		baiduMap.setTrafficEnabled(true);
+		baiduMap.setTrafficEnabled(true);
 		// 设置比例尺
-		
-		baiduMap.setOnMapClickListener(listener);
-		mLocClient.start();
+		baiduMap.setMapStatus(MapStatusUpdateFactory
+				.newMapStatus(new MapStatus.Builder().zoom(16).build()));
 
-		baiduMap.setOnMapStatusChangeListener( new BaiduMap.OnMapStatusChangeListener() {
-            /**
-             * 手势操作地图，设置地图状态等操作导致地图状态开始改变。
-             * @param status 地图状态改变开始时的地图状态
-             */
-            public void onMapStatusChangeStart(MapStatus status){
-            }
-            /**
-             * 地图状态变化中
-             * @param status 当前地图状态
-             */
-            public void onMapStatusChange(MapStatus status){
-            }
-            /**
-             * 地图状态改变结束
-             * @param status 地图状态改变结束后的地图状态
-             */
-            public void onMapStatusChangeFinish(MapStatus status)
-            {
-                LatLng ll=status.target;
-                SiteUtil.writeLongitude(ll.longitude+"");
-                SiteUtil.writeLatitude(ll.latitude+"");
-                Log.d("map change","sts ch fs:"+ll.latitude+","+ll.longitude+"");
-            }
-        });
+		mLocClient.start();
 	}
 
 	@Override
@@ -212,36 +189,200 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@OnClick(R.id.input_img)
-	public void submit(View v)
-	{
-		pd = new ProgressDialog(this);
-		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pd.setMessage("上传中....");
-		pd.setCancelable(false);
-		pd.show();
+	public void submit(View v) {
+
+		new AlertDialog.Builder(CopyOfMainActivity.this).setTitle("上传进度")
+				.setView(upView).create().show();
 		ArrayList<ImageItem> imageItems = Bimp.tempSelectBitmap;
 		formFiles = new FormFile[imageItems.size()];
-		files=new File[imageItems.size()];
+		 
 		for (int i=0;i<imageItems.size();i++) 
 		{
 			ImageItem item=imageItems.get(i);
 			Bitmap bitmap = item.getBitmap();
 			String path = item.getImagePath();
+			if (path == null || "".equals(path))// 拍照没有路径
+			{
+				item.setImagePath(path);
+			}
+			path = Constant.IMG_PATH + getPicName();
 			SiteUtil.compressBitmap(bitmap, path);
+
 			File imageFile = new File(path);
-			files[i]=imageFile;
+			FormFile formFile = new FormFile(String.valueOf(new Date().getTime()) + i + ".jpg", imageFile, "image","application/octet-stream");
+			formFiles[i] = formFile;
 		}
-		FileUploadAsyncTask task = new FileUploadAsyncTask(this,pd);
-		task.execute(files);
+
+		mTask = new MyTask();
+		mTask.execute();
 	}
 
 	private String getPicName() {
 		return new Date().getTime() + ".jpg";
 	}
 
-	
-	
-	
+	private class MyTask extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected void onPostExecute(String result) {
+			submitResult(result);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			mTvProgress.setText("loading...");
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			mPgBar.setProgress(values[0]);
+			mTvProgress.setText("loading..." + values[0] + "%");
+		}
+
+		@Override
+		protected String doInBackground(String... param) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("cityId", SiteUtil.getCity());
+			params.put("linelist", SiteUtil.getLineIds());
+			params.put("stopName", SiteUtil.getStopName());
+			params.put("stopId", SiteUtil.getStopId());
+			params.put("jingdu", SiteUtil.getLongitude());
+			params.put("weidu", SiteUtil.getLatitude());
+
+			try {
+				return post(Constant.UPLOAD_URL, params, formFiles);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		public String post(String path, Map<String, String> params,
+				FormFile[] files) throws Exception {
+			final String BOUNDARY = "---------------------------7da2137580612"; // 数据分隔线
+			final String endline = "--" + BOUNDARY + "--\r\n";// 数据结束标志
+			SiteUtil.LOG_D(SocketHttpRequester.class, "upload--->post");
+			int fileDataLength = 0;
+			for (FormFile uploadFile : files) {// 得到文件类型数据的总长度
+				SiteUtil.LOG_D(CopyOfMainActivity.class, uploadFile.getFilname());
+				StringBuilder fileExplain = new StringBuilder();
+				fileExplain.append("--");
+				fileExplain.append(BOUNDARY);
+				fileExplain.append("\r\n");
+				fileExplain.append("Content-Disposition: form-data;name=\""+ uploadFile.getParameterName() + "\";filename=\""+ uploadFile.getFilname() + "\"\r\n");
+				fileExplain.append("Content-Type: "+ uploadFile.getContentType() + "\r\n\r\n");
+				fileExplain.append("\r\n");
+				fileDataLength += fileExplain.length();
+				if (uploadFile.getInStream() != null)
+				{
+					long len = uploadFile.getFile().length();
+					SiteUtil.LOG_D(SocketHttpRequester.class, "File size:"+ len);
+					if (uploadFile.getFile() != null) {
+						fileDataLength += len;
+					} else {
+						fileDataLength += len;
+					}
+				} else {
+					fileDataLength += uploadFile.getData().length;
+				}
+			}
+			StringBuilder textEntity = new StringBuilder();
+			for (Map.Entry<String, String> entry : params.entrySet()) {// 构造文本类型参数的实体数据
+				textEntity.append("--");
+				textEntity.append(BOUNDARY);
+				textEntity.append("\r\n");
+				textEntity.append("Content-Disposition: form-data; name=\""+ entry.getKey() + "\"\r\n\r\n");
+				textEntity.append(entry.getValue());
+				textEntity.append("\r\n");
+			}
+			// 计算传输给服务器的实体数据总长度
+			int dataLength = textEntity.toString().getBytes().length+ fileDataLength + endline.getBytes().length;
+
+			URL url = new URL(path);
+			int port = url.getPort() == -1 ? 80 : url.getPort();
+			Socket socket = new Socket(InetAddress.getByName(url.getHost()),
+					port);
+			Log.i("hbgz", "socket connected is " + socket.isConnected());
+			OutputStream outStream = socket.getOutputStream();
+			// 下面完成HTTP请求头的发送
+			String requestmethod = "POST " + url.getPath() + " HTTP/1.1\r\n";
+			outStream.write(requestmethod.getBytes());
+			String accept = "Accept: image/gif, image/jpeg, image/pjpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*\r\n";
+			outStream.write(accept.getBytes());
+			String language = "Accept-Language: zh-CN\r\n";
+			outStream.write(language.getBytes());
+			String contenttype = "Content-Type: multipart/form-data; boundary="+ BOUNDARY + "\r\n";
+			outStream.write(contenttype.getBytes());
+			String contentlength = "Content-Length: " + dataLength + "\r\n";
+			outStream.write(contentlength.getBytes());
+			String alive = "Connection: Keep-Alive\r\n";
+			outStream.write(alive.getBytes());
+			String host = "Host: " + url.getHost() + ":" + port + "\r\n";
+			outStream.write(host.getBytes());
+			// 写完HTTP请求头后根据HTTP协议再写一个回车换行
+			outStream.write("\r\n".getBytes());
+			// 把所有文本类型的实体数据发送出来
+			outStream.write(textEntity.toString().getBytes());
+			// 把所有文件类型的实体数据发送出来
+			int length = 0;
+			for (FormFile uploadFile : files)
+			{
+				StringBuilder fileEntity = new StringBuilder();
+		
+				fileEntity.append("--");
+				fileEntity.append(BOUNDARY);
+				fileEntity.append("\r\n");
+				fileEntity.append("Content-Disposition: form-data;name=\"" +uploadFile.getParameterName() + "\";filename=\"" +uploadFile.getFilname() + "\"\r\n");
+				fileEntity.append("Content-Type: "+ uploadFile.getContentType() + "\r\n\r\n");
+				outStream.write(fileEntity.toString().getBytes());
+				System.out.println(fileEntity);
+				if (uploadFile.getInStream() != null)
+				{
+					byte[] buffer = new byte[1024];
+					int len = 0;
+					
+					while ((len = uploadFile.getInStream().read(buffer, 0, 1024)) != -1) 
+					{
+						outStream.write(buffer, 0, len);
+						length += len;
+						publishProgress((int) ((length / (float) dataLength) * 100));
+					}
+					uploadFile.getInStream().close();
+				} else
+				{
+					outStream.write(uploadFile.getData(), 0,uploadFile.getData().length);
+				}
+				outStream.write("\r\n".getBytes());
+			}
+			// 下面发送数据结束标志，表示数据已经结束
+			outStream.write(endline.getBytes());
+			outStream.flush();
+			InputStreamReader reader = new InputStreamReader(
+					socket.getInputStream());
+			int i = 0;
+			char[] buffer = new char[1024];
+			while ((i = reader.read(buffer)) != -1) {
+				boolean requestCodeSuccess = false;
+				boolean uploadSuccess = false;
+				String str = new String(buffer);
+
+				int start = str.trim().indexOf("{");
+				int end = str.trim().indexOf("}");
+				if (start > -1 && end > 0) {
+					return str.substring(start, end + 1);
+				}
+
+			}
+			outStream.flush();
+			outStream.close();
+			reader.close();
+			socket.close();
+			return null;
+
+		}
+	}
+
 	public void submitResult(String json)
 	{
 		JsonParser jsonParser = new JsonParser();
@@ -283,7 +424,7 @@ public class MainActivity extends BaseActivity {
 	
 	public void Init() {
 
-		pop = new PopupWindow(MainActivity.this);
+		pop = new PopupWindow(CopyOfMainActivity.this);
 
 		View view = getLayoutInflater().inflate(R.layout.item_popupwindows,
 				null);
@@ -319,7 +460,7 @@ public class MainActivity extends BaseActivity {
 		});
 		bt2.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,AlbumActivity.class);
+				Intent intent = new Intent(CopyOfMainActivity.this,AlbumActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.activity_translate_in,
 						R.anim.activity_translate_out);
@@ -347,10 +488,10 @@ public class MainActivity extends BaseActivity {
 				if (arg2 == Bimp.tempSelectBitmap.size()) {
 					Log.i("ddddddd", "----------");
 					ll_popup.startAnimation(AnimationUtils.loadAnimation(
-							MainActivity.this, R.anim.activity_translate_in));
+							CopyOfMainActivity.this, R.anim.activity_translate_in));
 					pop.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
 				} else {
-					Intent intent = new Intent(MainActivity.this,
+					Intent intent = new Intent(CopyOfMainActivity.this,
 							GalleryActivity.class);
 					intent.putExtra("position", "1");
 					intent.putExtra("ID", arg2);
@@ -487,10 +628,8 @@ public class MainActivity extends BaseActivity {
 	private static final int TAKE_PICTURE = 0x000001;
 
 	public void photo() {
-		mPicName=getPicName();
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constant.IMG_PATH+mPicName)));
-		startActivityForResult(intent, TAKE_PICTURE);
+		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(openCameraIntent, TAKE_PICTURE);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -499,20 +638,12 @@ public class MainActivity extends BaseActivity {
 			if (Bimp.tempSelectBitmap.size() < 6 && resultCode == RESULT_OK) {
 
 				String fileName = String.valueOf(System.currentTimeMillis());
-//				Bitmap bm = (Bitmap) data.getExtras().get("data");
-//				FileUtils.saveBitmap(bm, fileName);
-				File imageFile = new File(Constant.IMG_PATH, mPicName);
-				File file = new File(imageFile.getAbsolutePath());
-				// SiteUtil.compressBitmapT(imageFile.getAbsolutePath(), mPicName);
-				if (file.exists())
-				{
-					Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-					ImageItem takePhoto = new ImageItem();
-					takePhoto.setBitmap(bitmap);
-					takePhoto.setImagePath(imageFile.getAbsolutePath());
-					Bimp.tempSelectBitmap.add(takePhoto);
-				}
-				
+				Bitmap bm = (Bitmap) data.getExtras().get("data");
+				FileUtils.saveBitmap(bm, fileName);
+
+				ImageItem takePhoto = new ImageItem();
+				takePhoto.setBitmap(bm);
+				Bimp.tempSelectBitmap.add(takePhoto);
 			}
 			break;
 		}
@@ -550,32 +681,12 @@ public class MainActivity extends BaseActivity {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(location.getLatitude(),
 						location.getLongitude());
-//				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-//				baiduMap.animateMapStatus(u);
-				baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().target(ll).zoom(16).build()));
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				baiduMap.animateMapStatus(u);
 			}
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {
 		}
 	}
-	
-	 OnMapClickListener listener = new OnMapClickListener()  {
-
-		@Override
-		public void onMapClick(LatLng arg0)
-		{
-			// TODO Auto-generated method stub
-			System.out.println(arg0.latitude);
-			System.out.println(arg0.longitude);
-//			mLocClient.setLocOption(LatLng);
-		}
-
-		@Override
-		public boolean onMapPoiClick(MapPoi arg0) {
-			// TODO Auto-generated method stub
-			return false;
-		}  
-		    
-		};
 }

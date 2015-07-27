@@ -32,8 +32,15 @@ public class RegApplication extends Application {
 		SDKInitializer.initialize(this);
 		startLocation();
 		locationClient.start();
-		SiteUtil.writeCity("000");
-		SiteUtil.writeCityName("武汉");
+		String cityId=SiteUtil.getCity();
+		 
+		if(cityId==null || "".equals(cityId))
+		{
+			SiteUtil.writeCity("000");
+			SiteUtil.writeCityName("武汉");
+		}
+		
+	
 
 	}
 

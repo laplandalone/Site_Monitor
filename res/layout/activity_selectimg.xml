@@ -15,12 +15,19 @@
         android:layout_height="wrap_content"
         android:background="@drawable/nav_horizontal_line" />
 
-    <com.baidu.mapapi.map.MapView
+      <LinearLayout android:layout_weight="1.0" android:gravity="center"  android:orientation="horizontal"     android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" >
+       <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0"
+        android:layout_height="fill_parent"
+         
         android:clickable="true" />
+            <ImageView android:layout_gravity="center"   android:background="@drawable/baidu_icon" android:layout_width="30.0dip" android:layout_height="30.0dip" />
+        </FrameLayout>
+      </LinearLayout>
+      
+  
 
     <GridView  android:layout_gravity="center"
         android:layout_marginTop="10.0dip"
