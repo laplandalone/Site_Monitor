@@ -14,7 +14,6 @@ public class pinyinUtil {
 	/**
 	 * 字符串集合转换字符串(逗号分隔)
 	 * 
-	 * @author wyh
 	 * @param stringSet
 	 * @return
 	 */

@@ -25,9 +25,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
   
-/** 
- * Created by ZHOUZ on 14-2-3. 
- */  
+ 
 public class ZHttpRequest  
 {  
     protected String url = "";  

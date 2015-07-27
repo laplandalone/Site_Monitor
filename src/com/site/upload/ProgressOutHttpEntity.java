@@ -10,7 +10,6 @@ import org.apache.http.entity.HttpEntityWrapper;
 /**
  * ProgressOutHttpEntity：输出流(OutputStream)时记录已发送字节数
  * 
- * @author Cow
  * 
  */
 public class ProgressOutHttpEntity extends HttpEntityWrapper {

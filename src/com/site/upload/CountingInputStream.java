@@ -6,9 +6,6 @@ import java.io.InputStream;
 
 /**
  * 重写FilterInputStream，实现进度监听的功能
- * 
- * @author Cow
- * 
  */
 public class CountingInputStream extends FilterInputStream {
 
