@@ -30,6 +30,9 @@ import com.site.adapter.MyProgressDialog;
 import com.site.application.RegApplication;
 import com.site.tools.SiteUtil;
 
+/**
+ *
+ */
 public abstract class BaseActivity extends FragmentActivity {
 
 	public HttpHandler httpHandler;
